@@ -1,12 +1,19 @@
+<?
+session_start(); // usu de sesion 
+session_destroy(); // elimiinar sesion del archivo (cerrar sesion)
+
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+	<title></title>
+	
 </head>
 <body>
-    <label>Esto es el login<label>
+<!-- inclusion de menu a index   -->
+<? include "menu.php" ?>
+
+
 </body>
 </html>
+
