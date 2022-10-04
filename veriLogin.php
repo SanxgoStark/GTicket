@@ -5,11 +5,12 @@ session_start();// quiere almacenar info en el servidor
 var_dump($_POST);
 
 // servidor,usuario,la clave,bd
-$EstatusConexion=mysqli_connect("localhost","User","1234","salesmanagement");
+$EstatusConexion=mysqli_connect("localhost","root","","db_tickets");
 
 // se pregunta sobre el estatus de la conexion
 if($EstatusConexion==null){
 	echo "no se pudo conectar";
+	
 }else{
 	echo "si se pudo conectar";
 }
@@ -18,11 +19,11 @@ if($EstatusConexion==null){
 // $consulta = "SELECT * FROM usuario where Email='".$_POST['email']."' and Clave=password('".$_POST['clave']."')";
 
 // consulta de maestro
-$consulta="SELECT * FROM usuario where nomb_usua='".$_POST['usuario']."' and pass_usua=password('".$_POST['contraseña']."')   ";
+$consulta="SELECT * FROM usuario where usuario_usu='".$_POST['usuario']."' and password_usu=MD5('".$_POST['contraseña']."')   ";
 
-// echo $consulta;
+echo $consulta;
 
-// exit; // para abortar codigo
+//exit; // para abortar codigo
 
 // consulta
 $bloqueRegistros=mysqli_query($EstatusConexion,$consulta); // regresa el bloque de registros que provoca la consulta
@@ -41,37 +42,33 @@ if(mysqli_num_rows($bloqueRegistros))
 	{
 		$registro = mysqli_fetch_object($bloqueRegistros); // tomar un registro fetch
 
-		$_SESSION['nomb_usua'] = $registro->nomb_usua;
-		$_SESSION['Id'] = $registro->Id;
+		$_SESSION['usuario_usu'] = $registro->usuario_usu;
+		$_SESSION['id'] = $registro->id;
 		$_SESSION['fk_id_rol'] = $registro->fk_id_rol;
 
-		// var_dump($registro);
-		// exit;
+		//var_dump($registro);
+		//exit;
 
 		// // actualizar el usuario en cuestion a la fecha de hoy 
 		// $query="UPDATE usuario set fech_Ult_Acceso='".date("Y-m-d H:i:s")."'where id=".$_SESSION['idUsuario'];
 
 		// mysqli_query($query);
 
-		if ($_SESSION['fk_id_rol'] == 1) { // 1 es gerente
+		if ($_SESSION['fk_id_rol'] == 2) { // 2 es admin
 			// se inicializa la variable ed sesion para lalista de compra
-			$_SESSION['listadoCanasta'] = array();
-			$_SESSION['total'] = 0;
-			header("location: admin/home.php");
-		}else{
+			header("location: admin/home_admin.php");
+		}else{ // 1 es user
 			// $_SESSION['nombre']=$_SESSION['idUsuario']= // variable global, SE GENERA SESSION
 			
 			// se inicializa la variable ed sesion para lalista de compra
-			$_SESSION['listadodecompra']=array();
-			$_SESSION['total'] = 0;
-			header("location: home.php");	
+			header("location: home_user.php");	
 		}
 
 		
 	}
 else // los datos de identidficacion no corresponden
 	
- 	header("location: login.php?e=1"); // se manda a recuerso login
+ 	header("location: index.php?e=1"); // se manda a recuerso login
 
 // si imprime 0 el registro no existe en base de datos
 // si imprime 1 el restro existe en la base de datos
