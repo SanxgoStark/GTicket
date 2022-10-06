@@ -41,11 +41,12 @@ mysqli_close($EstatusConexion);
 if(mysqli_num_rows($bloqueRegistros))
 	{
 		$registro = mysqli_fetch_object($bloqueRegistros); // tomar un registro fetch
-
+		
+		//exit;
 		$_SESSION['usuario_usu'] = $registro->usuario_usu;
 		$_SESSION['id'] = $registro->id;
 		$_SESSION['fk_id_rol'] = $registro->fk_id_rol;
-
+		
 		//var_dump($registro);
 		//exit;
 
