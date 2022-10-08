@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="../css/bootstraplux.css">
+  <link rel="stylesheet" type="text/css" href="../css/all.css">
+  <link rel="stylesheet" type="text/css" href="../css/custom.css">
+
+</head>
+<body>
+
+<nav style="position:;" class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">GTicket</a>
+
+      <li class="nav-item">
+        <a style="color: white" class="nav-link" href="home_admin.php"><i class="fas fa-home"></i> Home</a>
+      </li>
+
+      <li class="nav-item">
+        <a style="color: white" class="nav-link" href="empleados.php"><i class="fas fa-user-plus"></i>G.Empleados</a>
+      </li>
+ 
+ <div>
+   <button type="button" class="btn btn-dark disabled"><?=$_SESSION['usuario_usu'];
+ ?></button>
+
+ <button onclick="" type="button" class="btn btn-success"><a style="color:white" href="../index.php"><i class="fas fa-sign-out-alt"></i></a></button>
+ </div>   
+ 
+
+  </div>
+  
+  
+</nav>
+</div> <!-- fin del div id fondo -->
+
+
+</body>
+</html>
+
+
+
