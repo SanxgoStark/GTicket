@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<!-- uso de framework java script jquery -->
+	<script src="jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+	<h1 class="saludo">Hola soy h1</h1>
+	<p id="parrafo">Hola soy parrafo</p>
+	<div>div antes de que cargue</div>
+
+<script>
+	
+		// primero el documento tiene que estar cargado
+		// cuando el doc este listo o termine de cargar
+		$(document).ready(function(){
+			alert('Hola mundo');
+			// acceso por medio de id y cambio de texto
+			$('#parrafo').text("Holi");
+			// acceso por medio de clase
+			$('.saludo').css({'background-color':'red'});
+			// modificacion de etiquetas
+			$('div').text("Soy el div") 
+
+			// var t = $(.saludo).html();
+			// alert(t);
+
+		});
+
+
+
+</script>
+
+
+</body>
+</html>

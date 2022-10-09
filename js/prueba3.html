@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<!-- uso de framework java script jquery -->
+	<script src="jquery-3.6.0.min.js"></script>
+
+	<script>
+		// estrctura basica de jquery, cargar primero el documento
+		$(document).ready(function(){
+			$('#id1').click(function(){
+				$("#contenido").load("seccion.php")
+			});	
+		});
+
+	</script>
+</head>
+<body>
+
+	<a href="#" id="id1">prueba.html</a>
+	<br>
+	<table border="1">
+		<tr>
+			<td> <!-- columna -->
+				Hola soy yo
+			</td>
+			<!-- id con el contenido que se va a reescribir -->
+			<td id="contenido">
+				
+			</td>
+		</tr>
+	</table>
+
+</body>
+</html>

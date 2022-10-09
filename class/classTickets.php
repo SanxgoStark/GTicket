@@ -38,6 +38,19 @@ if(!isset($_SESSION['usuario_usu']))
 
 			$result=""; // variable para acumular el resultado
 			switch ($accion) {
+                
+                // metodo para caja de busqueda de tickets (barra)
+                case 'buscar':
+					//echo "entre";
+					$consulta ="SELECT T.id as Ticket,fechacreacion_tic as Creado,fechamodif_tic as Modificado,asunto_tic as Asunto,nombre_est as Estatus,nombre_pri as Prioridad,nivel_niv as Nivel, CONCAT(nombre_emp,' ',apellidop_emp) as Atiende FROM Ticket T
+                    join empleado E ON E.id = T.empasig_tic where nombre_est like '%".$_REQUEST['ticket']."%' order by nombre_est";
+					$this->consulta($consulta);
+
+					$result=$this->imprimeTabla($consulta,true,array("delete","formupdate"));
+
+
+				break;
+
 				case 'insert':
 
 				// echo var_dump($_POST['idRegistro']);
@@ -70,8 +83,8 @@ if(!isset($_SESSION['usuario_usu']))
 
                 //$cad = "select * from ticket";
 
-                $cad = "SELECT T.id,fechacreacion_tic as Creado,fechamodif_tic as Modificado,asunto_tic as Asunto,nombre_est as Estatus,nombre_pri as Prioridad,nivel_niv as Nivel,empasig_tic as Atiende FROM Ticket T
-                    join empleado E ON E.id = T.id";
+                $cad = "SELECT T.id as Ticket,fechacreacion_tic as Creado,fechamodif_tic as Modificado,asunto_tic as Asunto,nombre_est as Estatus,nombre_pri as Prioridad,nivel_niv as Nivel, CONCAT(nombre_emp,' ',apellidop_emp) as Atiende FROM Ticket T
+                    join empleado E ON E.id = T.empasig_tic";
 
 
 					$result=$this->imprimeTabla($cad,true,array("delete","formupdate"));

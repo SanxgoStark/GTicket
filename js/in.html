@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>recarga seccion de pagina</title>
+	<!-- uso de framework java script jquery -->
+	<script src="jquery-3.6.0.min.js"></script>
+
+
+</head>
+<body>
+
+	
+
+	<h2>recargar seccion de web autimaticamente cada cierto tiempo</h2>
+	<div id="seccionRecargar">
+		hola
+	</div>
+	
+
+</body>
+</html>
+
+<script>
+		// estrctura basica de jquery, cargar primero el documento
+		$(document).ready(function(){
+			setInterval(
+					// funcion de recarga cada 2 seg (2000 ms)
+					function(){
+						$('#seccionRecargar').load('seccion.php');
+					},2000
+				);
+		});
+	</script>
