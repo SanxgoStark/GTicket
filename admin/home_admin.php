@@ -34,9 +34,9 @@ if(!isset($_SESSION['usuario_usu']))
 	<h2 style="margin-top: 15px" align="center">Tickets Recientes</h2>
 
     <div style="background-color: rgba(255,255,255,0.9);
-					   margin-top: 15px;">
+					   margin-top: 15px;width:600px;">
 
-	<form id="formTickets">
+	<form id="formTickets" style="width:600px;">
         <input type="hidden" name="accion" value="buscar">
         <input class="form-control" type="text" name="ticket" id="ticket" onkeyup="venta('buscar')" placeholder="buscar">
     </form>
