@@ -15,11 +15,11 @@
     <a class="navbar-brand" href="#">GTicket</a>
 
       <li class="nav-item">
-        <a style="color: white" class="nav-link" href="home_admin.php"><i class="fas fa-home"></i> Home</a>
+        <a style="color: white" class="nav-link" href="home_admin.php"><i class="<--!aqui icono de fontawesome!-->"></i> Home</a>
       </li>
 
       <li class="nav-item">
-        <a style="color: white" class="nav-link" href="empleados.php"><i class="fas fa-user-plus"></i>G.Empleados</a>
+        <a style="color: white" class="nav-link" href="empleados.php"><i class=""></i>G.Empleados</a>
       </li>
  
  <div>
