@@ -9,13 +9,13 @@
 
 // asegurarme que la ssession existe
 // isset permite saber si una variable existe
-if(!isset($_SESSION['usuario_usu'])) 
+if(!isset($_SESSION['nombre_usuario'])) 
 	{
 		// si no esta el isset de la sesion has esto
 
 		session_start(); // si no existe arracca las sesiones
 		// si se inician las sesiones y aun asi no existe es acceso ilegal
-		if(!isset($_SESSION['usuario_usu'])) exit; // ya no hagas nada}
+		if(!isset($_SESSION['nombre_usuario'])) exit; // ya no hagas nada}
 		//else // si es un administrador dejrlo pasar aqui con codigo
 	}
 	

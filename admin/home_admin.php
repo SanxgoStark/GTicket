@@ -6,7 +6,7 @@ session_start();
 // por cada recurso restringido,debemos preguntar si paso porel sistema de logeo
 // isset permite saber si una variable existe
 
-if(!isset($_SESSION['usuario_usu']))
+if(!isset($_SESSION['nombre_usuario']))
 	{header("location: ../index.php?e=2"); // acceso ilegal
 	exit; // ya no hagas nada}
 }

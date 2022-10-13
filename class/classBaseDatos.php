@@ -21,7 +21,7 @@ class BaseDatos
 		// para hacer usu de elemento interno de la clase debo de utilizar this->
 
 		// servidor,usuario,la clave,bd
-		$this->EstatusConexion=mysqli_connect("localhost","root","","db_tickets");
+		$this->EstatusConexion=mysqli_connect("localhost","root","","db_ticketsv2");
 	}
 
 	function cerrarConexion(){

@@ -5,21 +5,23 @@ session_start();// quiere almacenar info en el servidor
 var_dump($_POST);
 
 // servidor,usuario,la clave,bd
-$EstatusConexion=mysqli_connect("localhost","root","","db_tickets");
+$EstatusConexion=mysqli_connect("localhost","root","","db_ticketsv2");
 
 // se pregunta sobre el estatus de la conexion
 if($EstatusConexion==null){
 	echo "no se pudo conectar";
+
 	
 }else{
 	echo "si se pudo conectar";
+
 }
 
 // codigo sql
 // $consulta = "SELECT * FROM usuario where Email='".$_POST['email']."' and Clave=password('".$_POST['clave']."')";
 
 // consulta de maestro
-$consulta="SELECT * FROM usuario where usuario_usu='".$_POST['usuario']."' and password_usu=MD5('".$_POST['contraseña']."')   ";
+$consulta="SELECT * FROM usuarios where nombre_usuario='".$_POST['usuario']."' and password_usuario=MD5('".$_POST['contraseña']."')   ";
 
 echo $consulta;
 
@@ -43,9 +45,9 @@ if(mysqli_num_rows($bloqueRegistros))
 		$registro = mysqli_fetch_object($bloqueRegistros); // tomar un registro fetch
 		
 		//exit;
-		$_SESSION['usuario_usu'] = $registro->usuario_usu;
+		$_SESSION['nombre_usuario'] = $registro->nombre_usuario;
 		$_SESSION['id'] = $registro->id;
-		$_SESSION['fk_id_rol'] = $registro->fk_id_rol;
+		$_SESSION['rol_id'] = $registro->rol_id;
 		
 		//var_dump($registro);
 		//exit;
@@ -55,7 +57,7 @@ if(mysqli_num_rows($bloqueRegistros))
 
 		// mysqli_query($query);
 
-		if ($_SESSION['fk_id_rol'] == 2) { // 2 es admin
+		if ($_SESSION['rol_id'] == 2) { // 2 es admin
 			// se inicializa la variable ed sesion para lalista de compra
 			header("location: admin/home_admin.php");
 		}else{ // 1 es user

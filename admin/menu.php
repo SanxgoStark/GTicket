@@ -23,7 +23,7 @@
       </li>
  
  <div>
-   <button type="button" class="btn btn-dark disabled"><?=$_SESSION['usuario_usu'];
+   <button type="button" class="btn btn-dark disabled"><?=$_SESSION['nombre_usuario'];
  ?></button>
 
  <button onclick="" type="button" class="btn btn-success"><a style="color:white" href="../index.php"><i class="fas fa-sign-out-alt"></i></a></button>
