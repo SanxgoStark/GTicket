@@ -38,7 +38,7 @@ if(!isset($_SESSION['nombre_usuario']))
 
 	<form id="formTickets" style="width:600px;">
         <input type="hidden" name="accion" value="buscar">
-        <input class="form-control" type="text" name="ticket" id="ticket" onkeyup="venta('buscar')" placeholder="&#xf002;buscar">
+        <input class="form-control" type="text" name="ticket" id="ticket" onkeyup="ticket('buscar')" placeholder="&#xf002;buscar">
     </form>
    	
 	</div>	
