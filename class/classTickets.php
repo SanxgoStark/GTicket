@@ -46,7 +46,7 @@ if(!isset($_SESSION['nombre_usuario']))
                     join empleados E ON E.id = T.empledo_asignado_id where estatus_ticket like '%".$_REQUEST['ticket']."%' order by estatus_ticket";
 					$this->consulta($consulta);
 
-					$result=$this->imprimeTabla($consulta,true,array("delete","formupdate"));
+					$result=$this->imprimeTabla($consulta,true,array("formupdate","delete"));
 
 
 				break;
@@ -87,7 +87,7 @@ if(!isset($_SESSION['nombre_usuario']))
                     join empleados E ON E.id = T.empledo_asignado_id";
 
 
-					$result=$this->imprimeTabla($cad,true,array("delete","formupdate"));
+					$result=$this->imprimeTabla($cad,true,array("formupdate","delete"));
 
 					break;
 
