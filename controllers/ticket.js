@@ -3,10 +3,10 @@ var estado = false;
 
 
 
-function venta(accion,Id){
-	
+function tickets(accion,Id){
+	//console.log('entre controlador');
 	switch(accion){
-
+		
 		case 'addCanasta':
 			alert(accion);
 			// agregar producto a canasta (grafico y en session)
@@ -26,7 +26,7 @@ function venta(accion,Id){
 		break;
 
 		case 'buscar':
-			// console.log('entre controlador');
+			
 			// datos={'producto':$("#Producto").val(),'accion':accion}; // forma numero 1
 			datos=$("#formTickets").serialize(); // forma numero 2
 

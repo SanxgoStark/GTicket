@@ -21,7 +21,7 @@ if(!isset($_SESSION['nombre_usuario']))
 	<link rel="stylesheet" type="text/css" href="../css/custom.css">
 	<link rel="stylesheet" type="text/css" href="../css/bootstraplux.css">
 
-    <script src="../controllers/venta.js"></script>
+    <script src="../controllers/ticket.js"></script>
 
 	<script src="../js/jquery-3.6.0.min.js"></script>
     <script src="../js/jquery-confirm.js"></script>
@@ -38,7 +38,7 @@ if(!isset($_SESSION['nombre_usuario']))
 
 	<form id="formTickets" style="width:600px;">
         <input type="hidden" name="accion" value="buscar">
-        <input class="form-control" type="text" name="ticket" id="ticket" onkeyup="ticket('buscar')" placeholder="&#xf002;buscar">
+        <input class="form-control" type="text" name="ticket" id="ticket" onkeyup="tickets('buscar')" placeholder="">
     </form>
    	
 	</div>	
