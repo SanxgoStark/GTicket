@@ -30,20 +30,18 @@ if(!isset($_SESSION['nombre_usuario']))
 <body style="background-image: radial-gradient(circle at 0% 0%, #c2ff83 0, #a3ff8d 12.5%, #81ff96 25%, #5aff9d 37.5%, #1ef3a3 50%, #00e5a7 62.5%, #00d8ac 75%, #00cdb1 87.5%, #00c4b6 100%) !important;">
 
 	<? include "menu.php" ?>
+	<div style="background-color: green;margin-top: 15px;margin-left:1%; margin-right:1%; ">
+	<h2 style="margin-top:" align="center">Tickets Recientes</h2>
+	<form id="formTickets" style="width:400px;">
+			<input type="hidden" name="accion" value="buscar">
+			<input class="form-control" type="text" name="ticket" id="ticket" onkeyup="tickets('buscar')" placeholder="">
+		</form>
+		
+	
+	</div>
+    	
     
-	<h2 style="margin-top: 15px" align="center">Tickets Recientes</h2>
-
-    <div style="background-color: rgba(255,255,255,0.9);
-					   margin-top: 15px;width:600px;margin-left:50px ;">
-
-	<form id="formTickets" style="width:600px;">
-        <input type="hidden" name="accion" value="buscar">
-        <input class="form-control" type="text" name="ticket" id="ticket" onkeyup="tickets('buscar')" placeholder="">
-    </form>
-   	
-	</div>	
-    
-    <div id="IDTickets" style="overflow-y: scroll;height: 485px;margin-top: 70px;background-color: rgba(255,255,255,0.7);" class="container">
+    <div id="IDTickets" style="overflow-y: scroll;height: 485px;width;margin-top: 40px;margin-left:1%; margin-right:1%; background-color: rgba(2550,255,255,0.9);" class="">
 
 		<? include "../class/classTickets.php" ?>
 		

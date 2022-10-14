@@ -52,11 +52,11 @@ if(!isset($_SESSION['nombre_usuario']))
 				break;
 
 				case 'insert':
-
+				
 				// echo var_dump($_POST['idRegistro']);
 
 				// armado de cadena de insersion
-					$cad='INSERT INTO empleado 
+					$cad='INSERT INTO tickets 
 					(nomb_emp,apepat_emp,apemat_emp,direccion_emp,nss_emp,fechanac_emp,genero_emp,telnum_emp,sueldo_emp,curp_emp) 
 					values("'.$_POST["nomb_emp"].'","'.$_POST['apepat_emp'].'","'.$_POST['apemat_emp'].'","'.$_POST['direccion_emp'].'","'.$_POST['nss_emp'].'","'.$_POST['fechanac_emp'].'","'.$_POST['genero_emp'].'","'.$_POST['telnum_emp'].'","'.$_POST['sueldo_emp'].'","'.$_POST['curp_emp'].'")';
 
@@ -82,7 +82,7 @@ if(!isset($_SESSION['nombre_usuario']))
     				//join usuario_emp U ON E.Id = U.Id join usuario US ON U.fk_id_usua = US.Id join rol R ON US.fk_id_rol = R.Id ORDER BY E.Id";
 
                 //$cad = "select * from ticket";
-
+				
                 $cad = "SELECT T.id as Ticket,fecha_creacion_ticket as Creado,fecha_modificacion_ticket as Modificado,asunto_ticket as Asunto,estatus_ticket as Estatus,prioridad_ticket as Prioridad,nivel_ticket as Nivel, CONCAT(nombre_empleado,' ',apellido_paterno) as Atiende FROM tickets T
                     join empleados E ON E.id = T.empledo_asignado_id";
 
@@ -134,12 +134,15 @@ if(!isset($_SESSION['nombre_usuario']))
 					$registrou=$this->sacaTupla("SELECT * FROM usuario WHERE Id=".$_POST['idRegistro']);
 
 				case 'formNew':
+					//echo "formNew";
+					//var_dump($registro);
+					//exit;
 					$result.='<div class="container" style="margin-top:40px">
 					<form method="post">';
 					if (isset($registro))
 						$result.='
 					<input type="hidden" name="accion" value="update">
-					<input type="hidden" name="idRegistro" value="'.$registro['Id'].'">';
+					<input type="hidden" name="idRegistro" value="'.$registro['id'].'">';
 					else
 						$result.='
 					<input type="hidden" name="accion" value="insert">';
@@ -207,12 +210,6 @@ if(!isset($_SESSION['nombre_usuario']))
 					<label class="col-md-4">Contraseña * </label>
 					<div class="col-md-8">
 					<input placeholder="Ingrese su CURP" required="" type="text" name="pass_usua" class="form-control" value="'.(isset($registrou)?$registrou['pass_usua']:"").'">
-					</div>
-
-					<label class="col-md-4">Rol * </label>
-					<div class="col-md-8">';
-					$result.=$this->cajaDesplegable("rol","fk_id_rol","Id","nomb_rol",isset($registrou)?$registrou["fk_id_rol"]:0);
-					$result.='
 					</div>
 
 					<label class="col-md-4">Clave X * </label>
