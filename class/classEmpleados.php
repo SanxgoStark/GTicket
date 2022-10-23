@@ -9,13 +9,13 @@
 
 // asegurarme que la ssession existe
 // isset permite saber si una variable existe
-if(!isset($_SESSION['usuario_usu'])) 
+if(!isset($_SESSION['nombre_usuario'])) 
 	{
 		// si no esta el isset de la sesion has esto
 
 		session_start(); // si no existe arracca las sesiones
 		// si se inician las sesiones y aun asi no existe es acceso ilegal
-		if(!isset($_SESSION['usuario_usu'])) exit; // ya no hagas nada}
+		if(!isset($_SESSION['nombre_usuario'])) exit; // ya no hagas nada}
 		//else // si es un administrador dejrlo pasar aqui con codigo
 	}
 	
@@ -38,14 +38,29 @@ if(!isset($_SESSION['usuario_usu']))
 
 			$result=""; // variable para acumular el resultado
 			switch ($accion) {
+
+				// metodo para caja de busqueda de tickets (barra)
+                case 'buscar':
+					//echo "entre";
+					//$consulta ="SELECT E.id as Ticket,fecha_creacion_ticket as Creado,fecha_modificacion_ticket as Modificado,asunto_ticket as Asunto,estatus_ticket as Estatus,prioridad_ticket as Prioridad,nivel_ticket as Nivel, CONCAT(nombre_empleado,' ',apellido_paterno) as Atiende FROM tickets T
+                    //join empleados E ON E.id = T.empledo_asignado_id where estatus_ticket like '%".$_REQUEST['ticket']."%' order by estatus_ticket";
+					$consulta = "SELECT id,nombre_empleado as Nombre,apellido_paterno as Apellido_P,apellido_materno as Apellido_M,titulo_empleado as Titulo,numero_telefono as Telefono,correo_empleado as Correo,departamento_id as Departamento FROM empleados
+					where titulo_empleado like '%".$_REQUEST['empleado']."%' order by titulo_empleado";
+					$this->consulta($consulta);
+
+					$result=$this->imprimeTabla($consulta,true,array("formupdate","delete","adduser"));
+
+
+				break;
+
 				case 'insert':
 
 				// echo var_dump($_POST['idRegistro']);
 
 				// armado de cadena de insersion
-					$cad='INSERT INTO empleado 
-					(nomb_emp,apepat_emp,apemat_emp,direccion_emp,nss_emp,fechanac_emp,genero_emp,telnum_emp,sueldo_emp,curp_emp) 
-					values("'.$_POST["nomb_emp"].'","'.$_POST['apepat_emp'].'","'.$_POST['apemat_emp'].'","'.$_POST['direccion_emp'].'","'.$_POST['nss_emp'].'","'.$_POST['fechanac_emp'].'","'.$_POST['genero_emp'].'","'.$_POST['telnum_emp'].'","'.$_POST['sueldo_emp'].'","'.$_POST['curp_emp'].'")';
+					$cad='INSERT INTO empleados 
+					(nombre_empleado,apellido_paterno,apellido_materno,titulo_empleado,numero_telefono,correo_empleado,departamento_id) 
+					values("'.$_POST["nombre_empleado"].'","'.$_POST['apellido_paterno'].'","'.$_POST['apellido_materno'].'","'.$_POST['titulo_empleado'].'","'.$_POST['numero_telefono'].'","'.$_POST['correo_empleado'].'","'.$_POST['departamento_id'].'")';
 
 
 
@@ -53,7 +68,7 @@ if(!isset($_SESSION['usuario_usu']))
 					$this->consulta($cad);
 					// se llama a funcion que crea usuario con el mismo id que el 
 					// empleado y ademas crea la relacion de usuario con empleado
-					$this->creausuario();
+					//$this->creausuario();------------------------------------------ importante
 					$result.=$this->proceso('list');
 					
 					break;
@@ -65,42 +80,41 @@ if(!isset($_SESSION['usuario_usu']))
 				// INNER JOIN `estatusfactura` EF ON F.`IdEstatus` = EF.`IdEstatusFactura`
 				// INNER JOIN `formapago` FP ON F.`idFormaPago` = FP.`IdFormaPago`ORDER BY IdFactura";
 
-				$cad = "SELECT E.Id,CONCAT(nombre_emp,' ',apellidop_emp,' ',apellidom_emp)as Empleado,direccion_emp as Direccion,fechanac_emp as Nacimiento,telnum_emp as Telefono,nomb_usua as Usuario,nomb_rol as Rol FROM empleado E
-    				join usuario_emp U ON E.Id = U.Id join usuario US ON U.fk_id_usua = US.Id join rol R ON US.fk_id_rol = R.Id ORDER BY E.Id";
+				$cad = "SELECT E.id,nombre_empleado as Nombre,apellido_paterno as Apellido_P,apellido_materno as Apellido_M,titulo_empleado as Titulo,numero_telefono as Telefono,correo_empleado as Correo,D.nombre_departamento as Departamento FROM empleados E
+				INNER JOIN `departamentos` D ON E.`departamento_id` = D.`id`ORDER BY E.id";
+				//$cad = "Select * from empleados";
 
-
-					$result=$this->imprimeTabla($cad,true,array("delete","formupdate"));
+					$result=$this->imprimeTabla($cad,true,array("delete","formupdate","adduser"));
 
 					break;
 
 				case 'delete':
-					$this->consulta("DELETE FROM empleado WHERE Id ='".$_POST['idRegistro']."'");
+					$this->consulta("DELETE FROM empleados WHERE id ='".$_POST['idRegistro']."'");
 
-					$this->consulta("DELETE FROM usuario WHERE Id ='".$_POST['idRegistro']."'");
+					//$this->consulta("DELETE FROM usuario WHERE Id ='".$_POST['idRegistro']."'");--- importante
 
 					$result.= $this->proceso('list');
 					break;
+				case 'adduser':
+					break;
 				
 				case 'update':
-
+					
 					// armado de cadena de insersion
-					$cad = 'UPDATE empleado SET nomb_emp ="'.$_POST["nomb_emp"].'", 
-											apepat_emp="'.$_POST['apepat_emp'].'",
-											apemat_emp="'.$_POST['apemat_emp'].'",
-									  direccion_emp="'.$_POST['direccion_emp'].'",
-									  nss_emp="'.$_POST['nss_emp'].'",
-									  fechanac_emp="'.$_POST['fechanac_emp'].'",
-									  genero_emp="'.$_POST['genero_emp'].'",
-									  telnum_emp="'.$_POST['telnum_emp'].'",
-									  sueldo_emp="'.$_POST['sueldo_emp'].'",
-									  curp_emp="'.$_POST['curp_emp'].'"
-					WHERE Id = "'.$_POST["idRegistro"].'"';
+					$cad = 'UPDATE empleados SET nombre_empleado ="'.$_POST["nombre_empleado"].'", 
+											apellido_paterno="'.$_POST['apellido_paterno'].'",
+											apellido_materno="'.$_POST['apellido_materno'].'",
+									  titulo_empleado="'.$_POST['titulo_empleado'].'",
+									  numero_telefono="'.$_POST['numero_telefono'].'",
+									  correo_empleado="'.$_POST['correo_empleado'].'",
+									  departamento_id="'.$_POST['departamento_id'].'"
+					WHERE id = "'.$_POST["idRegistro"].'"';
 
 					//ejecuta la cadena
 					$this->consulta($cad);
 
 					// Update para usuario
-					$this->updateUsuario();
+					//$this->updateUsuario();
 
 
 					$result.=$this->proceso('list');
@@ -110,10 +124,10 @@ if(!isset($_SESSION['usuario_usu']))
 					break;
 
 				case 'formupdate':
-					$registro=$this->sacaTupla("SELECT * FROM empleado WHERE Id=".$_POST['idRegistro']); 
+					$registro=$this->sacaTupla("SELECT * FROM empleados WHERE id=".$_POST['idRegistro']); 
 
 					// registro usuario
-					$registrou=$this->sacaTupla("SELECT * FROM usuario WHERE Id=".$_POST['idRegistro']);
+					//$registrou=$this->sacaTupla("SELECT * FROM usuario WHERE Id=".$_POST['idRegistro']);
 
 				case 'formNew':
 					$result.='<div class="container" style="margin-top:40px">
@@ -121,7 +135,7 @@ if(!isset($_SESSION['usuario_usu']))
 					if (isset($registro))
 						$result.='
 					<input type="hidden" name="accion" value="update">
-					<input type="hidden" name="idRegistro" value="'.$registro['Id'].'">';
+					<input type="hidden" name="idRegistro" value="'.$registro['id'].'">';
 					else
 						$result.='
 					<input type="hidden" name="accion" value="insert">';
@@ -133,73 +147,38 @@ if(!isset($_SESSION['usuario_usu']))
 
 					<label class="col-md-4">Nombre * </label>
 					<div class="col-md-8">
-					<input placeholder="Nombre" required="" type="text" name="nomb_emp" class="form-control" value="'.(isset($registro)?$registro['nomb_emp']:"").'">
+					<input placeholder="Nombre" required="" type="text" name="nombre_empleado" class="form-control" value="'.(isset($registro)?$registro['nombre_empleado']:"").'">
 					</div>
 
-					<label class="col-md-4">Primer Apellido * </label>
+					<label class="col-md-4">Apellido P.* </label>
 					<div class="col-md-8">
-					<input placeholder="Apellido Paterno" required="" type="text" name="apepat_emp" class="form-control" value="'.(isset($registro)?$registro['apepat_emp']:"").'">
+					<input placeholder="Apellido Paterno" required="" type="text" name="apellido_paterno" class="form-control" value="'.(isset($registro)?$registro['apellido_paterno']:"").'">
 					</div>
 
-					<label class="col-md-4">Segundo Apellido * </label>
+					<label class="col-md-4">Apellido M.* </label>
 					<div class="col-md-8">
-					<input placeholder="Apellido materno" required="" type="text" name="apemat_emp" class="form-control" value="'.(isset($registro)?$registro['apemat_emp']:"").'">
+					<input placeholder="Apellido materno" required="" type="text" name="apellido_materno" class="form-control" value="'.(isset($registro)?$registro['apellido_materno']:"").'">
 					</div>
 
-					<label class="col-md-4">Direccion * </label>
+					<label class="col-md-4">Titulo* </label>
 					<div class="col-md-8">
-					<input placeholder="Ingrese su direccion" required="" type="text" name="direccion_emp" class="form-control" value="'.(isset($registro)?$registro['direccion_emp']:"").'">
+					<input placeholder="Ingrese su titulo" required="" type="text" name="titulo_empleado" class="form-control" value="'.(isset($registro)?$registro['titulo_empleado']:"").'">
 					</div>
 
-					<label class="col-md-4">NSS * </label>
+					<label class="col-md-4">Telefono* </label>
 					<div class="col-md-8">
-					<input placeholder="Ingrese su NSS" required="" type="text" name="nss_emp" class="form-control" value="'.(isset($registro)?$registro['nss_emp']:"").'">
+					<input placeholder="Ingrese su telefono" required="" type="text" name="numero_telefono" class="form-control" value="'.(isset($registro)?$registro['numero_telefono']:"").'">
 					</div>
 
-					<label class="col-md-4">Nacimiento * </label>
+					<label class="col-md-4">Correo* </label>
 					<div class="col-md-8">
-					<input placeholder="Ingrese su año de nacimiento" required="" type="date" name="fechanac_emp" class="form-control" value="'.(isset($registro)?$registro['fechanac_emp']:"").'">
+					<input placeholder="Ingrese su correo" required="" type="text" name="correo_empleado" class="form-control" value="'.(isset($registro)?$registro['correo_empleado']:"").'">
 					</div>
 
-					<label class="col-md-4">Genero * </label>
-					<div class="col-md-8">
-					<input placeholder="Ingrese su genero" required="" type="text" name="genero_emp" class="form-control" value="'.(isset($registro)?$registro['genero_emp']:"").'">
-					</div>
-
-					<label class="col-md-4">Telefono * </label>
-					<div class="col-md-8">
-					<input placeholder="Ingrese su genero" required="" type="text" name="telnum_emp" class="form-control" value="'.(isset($registro)?$registro['telnum_emp']:"").'">
-					</div>
-
-					<label class="col-md-4">Sueldo * </label>
-					<div class="col-md-8">
-					<input placeholder="Ingrese su sueldo" required="" type="num" name="sueldo_emp" class="form-control" value="'.(isset($registro)?$registro['sueldo_emp']:"").'">
-					</div>
-
-					<label class="col-md-4">CURP * </label>
-					<div class="col-md-8">
-					<input placeholder="Ingrese su CURP" required="" type="text" name="curp_emp" class="form-control" value="'.(isset($registro)?$registro['curp_emp']:"").'">
-					</div>
-
-					<label class="col-md-4">Usuario * </label>
-					<div class="col-md-8">
-					<input placeholder="Ingrese su CURP" required="" type="text" name="nomb_usua" class="form-control" value="'.(isset($registrou)?$registrou['nomb_usua']:"").'">
-					</div>
-
-					<label class="col-md-4">Contraseña * </label>
-					<div class="col-md-8">
-					<input placeholder="Ingrese su CURP" required="" type="text" name="pass_usua" class="form-control" value="'.(isset($registrou)?$registrou['pass_usua']:"").'">
-					</div>
-
-					<label class="col-md-4">Rol * </label>
+					<label class="col-md-4">Departamento * </label>
 					<div class="col-md-8">';
-					$result.=$this->cajaDesplegable("rol","fk_id_rol","Id","nomb_rol",isset($registrou)?$registrou["fk_id_rol"]:0);
+					$result.=$this->cajaDesplegable("departamentos","departamento_id","id","nombre_departamento",isset($registro)?$registro['departamento_id']:"");
 					$result.='
-					</div>
-
-					<label class="col-md-4">Clave X * </label>
-					<div class="col-md-8">
-					<input placeholder="Ingrese su CURP" required="" type="text" name="clave_cancelv" class="form-control" value="'.(isset($registrou)?$registrou['clave_cancelv']:"").'">
 					</div>
 
 					</div>
@@ -300,6 +279,20 @@ if(!isset($_SESSION['usuario_usu']))
 		        
 		        foreach ($iconos as $value) {
 		        	switch ($value) {
+
+						// metodo para caja de busqueda de tickets (barra)
+						case 'buscar':
+							echo "entre";
+							exit;
+							$consulta ="SELECT T.id as Ticket,fecha_creacion_ticket as Creado,fecha_modificacion_ticket as Modificado,asunto_ticket as Asunto,estatus_ticket as Estatus,prioridad_ticket as Prioridad,nivel_ticket as Nivel, CONCAT(nombre_empleado,' ',apellido_paterno) as Atiende FROM tickets T
+							join empleados E ON E.id = T.empledo_asignado_id where estatus_ticket like '%".$_REQUEST['ticket']."%' order by estatus_ticket";
+							$this->consulta($consulta);
+		
+							$result=$this->imprimeTabla($consulta,true,array("formupdate","delete","adduser"));
+		
+		
+						break;
+
 		        		case 'delete':
 		        		// echo $registro[0];
 		        			$result.='<td width="6%"><form method="post"><input type="hidden" value="'.$value.'" name="accion"/>
@@ -321,6 +314,10 @@ if(!isset($_SESSION['usuario_usu']))
 		        			</form>
 		        			</td>';
 		        			break;
+						case 'adduser':
+							$result.='<td colspan="'.count($iconos).'">'.(($formNew)?'<form method="post"><input type="hidden" value="formNew" name="accion"/><button class="btn btn-info"><i title="Editar registro" class="fa fa-user-circle-o">gggg</i></button></form>':"&nbsp;").'</td>';
+							
+							break;
 		        	}
 		        	
 		        }

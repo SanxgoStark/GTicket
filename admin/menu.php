@@ -19,7 +19,7 @@
       </li>
 
       <li class="nav-item">
-        <a style="color: white" class="nav-link" href="empleados.php"><i class=""></i>G.Empleados</a>
+        <a style="color: white" class="nav-link" href="gestion_emp.php"><i class=""></i>G.Empleados</a>
       </li>
  
  <div>
