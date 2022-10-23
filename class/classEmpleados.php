@@ -123,6 +123,11 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					break;
 
+				case 'adduser':
+					echo "hola";
+					
+					break;
+
 				case 'formupdate':
 					$registro=$this->sacaTupla("SELECT * FROM empleados WHERE id=".$_POST['idRegistro']); 
 
@@ -258,8 +263,7 @@ if(!isset($_SESSION['nombre_usuario']))
 					$this->consulta($cad);
 		}
 
-		function imprimeTabla($query,$formNew=false,$iconos=array()){
-
+		function imprimeTabla($query,$formNew=false,$iconos=array("")){
 			$result="";
 			$this->consulta($query);
 			$result.='<table style="margin-top:" class="table table-hover table-ligh table-striped">';
@@ -289,19 +293,28 @@ if(!isset($_SESSION['nombre_usuario']))
 							$this->consulta($consulta);
 		
 							$result=$this->imprimeTabla($consulta,true,array("formupdate","delete","adduser"));
-		
-		
 						break;
 
 		        		case 'delete':
 		        		// echo $registro[0];
-		        			$result.='<td width="6%"><form method="post"><input type="hidden" value="'.$value.'" name="accion"/>
-                     <input type="hidden" name="idRegistro" value = "'.$registro[0].'">
-        			<button class="btn btn-danger"><i title="Borrar registro" class="fas fa-trash"></i></button></form></td>';
+		        			$result.='<td width="6%">
+							<form method="post"><input type="hidden" value="'.$value.'" name="accion"/>
+                     		<input type="hidden" name="idRegistro" value = "'.$registro[0].'">
+        					<button class="btn btn-danger">
+							<i title="Borrar registro" class="fas fa-trash"></i>
+							</button>
+							</form></td>';
 		        			break;
+
 		        		case 'editar':
-		        			$result.='<td colspan="'.count($iconos).'">'.(($formNew)?'<form method="post"><input type="hidden" value="formNew" name="accion"/><button class="btn btn-success"><i title="Editar registro" class="fas fa-plus-circle"></i></button></form>':"&nbsp;").'</td>';
+		        			$result.='<td colspan="'.count($iconos).'">'.(($formNew)?'<form method="post">
+							<input type="hidden" value="formNew" name="accion"/>
+							<button class="btn btn-success">
+							<i title="Editar registro" class="fas fa-plus-circle"></i>
+							</button>
+							</form>':"&nbsp;").'</td>';
 		        			break;
+
 		        		case 'formupdate':
 		        		
 		        			$result.='<td width="6%">
@@ -314,9 +327,17 @@ if(!isset($_SESSION['nombre_usuario']))
 		        			</form>
 		        			</td>';
 		        			break;
+
 						case 'adduser':
-							$result.='<td colspan="'.count($iconos).'">'.(($formNew)?'<form method="post"><input type="hidden" value="formNew" name="accion"/><button class="btn btn-info"><i title="Editar registro" class="fa fa-user-circle-o">gggg</i></button></form>':"&nbsp;").'</td>';
-							
+							$result.='<td width="6%">
+		        			<form method="post">
+		        			<input type="hidden" value="'.$value.'" name="accion">
+		        			<input type="hidden" value="'.$registro[0].'" name="idRegistro">
+		        			<button class="btn btn-info">
+		        			<i title="Editar registro" class="fa fa-user-circle"></i>
+		        			</button>
+		        			</form>
+		        			</td>';
 							break;
 		        	}
 		        	
