@@ -44,11 +44,13 @@ if(!isset($_SESSION['nombre_usuario']))
 					//echo "entre";
 					//$consulta ="SELECT E.id as Ticket,fecha_creacion_ticket as Creado,fecha_modificacion_ticket as Modificado,asunto_ticket as Asunto,estatus_ticket as Estatus,prioridad_ticket as Prioridad,nivel_ticket as Nivel, CONCAT(nombre_empleado,' ',apellido_paterno) as Atiende FROM tickets T
                     //join empleados E ON E.id = T.empledo_asignado_id where estatus_ticket like '%".$_REQUEST['ticket']."%' order by estatus_ticket";
-					$consulta = "SELECT id,nombre_empleado as Nombre,apellido_paterno as Apellido_P,apellido_materno as Apellido_M,titulo_empleado as Titulo,numero_telefono as Telefono,correo_empleado as Correo,departamento_id as Departamento FROM empleados
-					where titulo_empleado like '%".$_REQUEST['empleado']."%' order by titulo_empleado";
+					$consulta = "SELECT E.id,nombre_empleado as Nombre,apellido_paterno as Apellido_P,apellido_materno as Apellido_M,titulo_empleado as Titulo,numero_telefono as Telefono,correo_empleado as Correo,D.nombre_departamento as Departamento FROM empleados E
+					INNER JOIN `departamentos` D ON E.`departamento_id` = D.`id` where titulo_empleado like '%".$_REQUEST['empleado']."%' order by titulo_empleado";
 					$this->consulta($consulta);
 
-					$result=$this->imprimeTabla($consulta,true,array("formupdate","delete","adduser"));
+					
+
+					$result=$this->imprimeTabla($consulta,true,array("formupdate","delete","formuser"));
 
 
 				break;
@@ -84,7 +86,7 @@ if(!isset($_SESSION['nombre_usuario']))
 				INNER JOIN `departamentos` D ON E.`departamento_id` = D.`id`ORDER BY E.id";
 				//$cad = "Select * from empleados";
 
-					$result=$this->imprimeTabla($cad,true,array("delete","formupdate","adduser"));
+					$result=$this->imprimeTabla($cad,true,array("delete","formupdate","formuser"));
 
 					break;
 
@@ -95,9 +97,7 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					$result.= $this->proceso('list');
 					break;
-				case 'adduser':
-					break;
-				
+		
 				case 'update':
 					
 					// armado de cadena de insersion
@@ -123,9 +123,62 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					break;
 
-				case 'adduser':
-					echo "hola";
+				case 'insertuser':
+					// programar despues del formuser
+					// caso para insertar usuario y hacer vinculacion del usuario con el empleado
+					break;
+				case 'updateuser':
 					
+					break;
+
+				// caso para form de actualizacion de usuario
+				case 'formUpuser':
+					$registro=$this->sacaTupla("SELECT * FROM usuarios WHERE id=".$_POST['idRegistro']); 	
+				case 'formNewuser':
+					// caso para form de creacion de nuevo usuario
+					$result.='<div class="container" style="margin-top:40px">
+					<form method="post">';
+					if (isset($registro))
+						$result.='
+					<input type="hidden" name="accion" value="updateuser">
+					<input type="hidden" name="idRegistro" value="'.$registro['id'].'">';
+					else
+					$result.='
+					<input type="hidden" name="accion" value="insertuser">';
+					$result.='
+					<div class="row mt-4">
+
+					<div class="col-md-6">
+					<div class="row">
+
+					<label class="col-md-4">Usuario * </label>
+					<div class="col-md-8">
+					<input placeholder="Nombre" required="" type="text" name="nombre_empleado" class="form-control" value="'.(isset($registro)?$registro['nombre_empleado']:"").'">
+					</div>
+
+					<label class="col-md-4">Password * </label>
+					<div class="col-md-8">
+					<input placeholder="Apellido Paterno" required="" type="text" name="apellido_paterno" class="form-control" value="'.(isset($registro)?$registro['apellido_paterno']:"").'">
+					</div>
+
+					<label class="col-md-4">Rol * </label>
+					<div class="col-md-8">';
+					$result.=$this->cajaDesplegable("roles","rol_id","id","nombre_rol",isset($registro)?$registro['rol_id']:"");
+					$result.='
+					</div>
+
+					</div>
+					</div>
+					</div>
+					
+
+					<small>* Campo Obligatorio</small><br>
+	
+					
+
+					<input style="margin-top:10px" type="submit" value="'.((isset($registro))?"Actualizar":"Registrar").'">
+					</form>
+					</div>';
 					break;
 
 				case 'formupdate':
@@ -292,7 +345,7 @@ if(!isset($_SESSION['nombre_usuario']))
 							join empleados E ON E.id = T.empledo_asignado_id where estatus_ticket like '%".$_REQUEST['ticket']."%' order by estatus_ticket";
 							$this->consulta($consulta);
 		
-							$result=$this->imprimeTabla($consulta,true,array("formupdate","delete","adduser"));
+							$result=$this->imprimeTabla($consulta,true,array("formupdate","delete","formuser"));
 						break;
 
 		        		case 'delete':
@@ -328,7 +381,7 @@ if(!isset($_SESSION['nombre_usuario']))
 		        			</td>';
 		        			break;
 
-						case 'adduser':
+						case 'formuser':
 							$result.='<td width="6%">
 		        			<form method="post">
 		        			<input type="hidden" value="'.$value.'" name="accion">
