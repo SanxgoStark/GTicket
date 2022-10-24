@@ -28,7 +28,8 @@ if(!isset($_SESSION['nombre_usuario']))
 		// al poner extends la tabla podra heredar el conportamiento de la calse BaseDatos
 		
 		// funcion constructor por defecto
-		function __construct(){}
+		function __construct(
+		){}
 
 		// $nomb_emp = $_POST["nomb_emp"];
 
@@ -124,17 +125,48 @@ if(!isset($_SESSION['nombre_usuario']))
 					break;
 
 				case 'insertuser':
-					// programar despues del formuser
-					// caso para insertar usuario y hacer vinculacion del usuario con el empleado
-					break;
-				case 'updateuser':
-					
+
+					// se llama a funcion que crea usuario con el mismo id que el 
+					// empleado y ademas crea la relacion de usuario con empleado
+					$this->creausuario();
+
+					$result.=$this->proceso('list');
 					break;
 
-				// caso para form de actualizacion de usuario
-				case 'formUpuser':
-					$registro=$this->sacaTupla("SELECT * FROM usuarios WHERE id=".$_POST['idRegistro']); 	
-				case 'formNewuser':
+				case 'updateuser':
+
+					//if detectar si la contraseña fue modificada
+					if($_POST['password_usuario'] !== $_POST[$pasword_uold]){
+						// armado de cadena de insersion
+						$cad = 'UPDATE usuarios SET nombre_usuario ="'.$_POST["nombre_usuario"].'", 
+						password_usuario=MD5("'.$_POST['password_usuario'].'"),
+						rol_id="'.$_POST['rol_id'].'"WHERE id = "'.$_POST["idRegistro"].'"';
+					}else{
+						$cad = 'UPDATE usuarios SET nombre_usuario ="'.$_POST["nombre_usuario"].'", 
+						password_usuario="'.$_POST[$pasword_uold].'",
+						rol_id="'.$_POST['rol_id'].'"WHERE id = "'.$_POST["idRegistro"].'"';
+					}
+
+					
+
+					//ejecuta la cadena
+					$this->consulta($cad);
+
+					// Update para usuario
+					//$this->updateUsuario();
+
+
+					$result.=$this->proceso('list');
+					break;
+ 
+					
+				case 'formuser':
+					$registro=$this->sacaTupla("SELECT * FROM usuarios WHERE id=".$_POST['idRegistro']);
+					//var_dump($registro);
+					
+					
+					//echo $_POST['idRegistro']; // id del empleado
+					//echo var_dump($registro);
 					// caso para form de creacion de nuevo usuario
 					$result.='<div class="container" style="margin-top:40px">
 					<form method="post">';
@@ -153,12 +185,12 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					<label class="col-md-4">Usuario * </label>
 					<div class="col-md-8">
-					<input placeholder="Nombre" required="" type="text" name="nombre_empleado" class="form-control" value="'.(isset($registro)?$registro['nombre_empleado']:"").'">
+					<input placeholder="Usuario" required="" type="text" name="nombre_usuario" class="form-control" value="'.(isset($registro)?$registro['nombre_usuario']:"").'">
 					</div>
 
 					<label class="col-md-4">Password * </label>
 					<div class="col-md-8">
-					<input placeholder="Apellido Paterno" required="" type="text" name="apellido_paterno" class="form-control" value="'.(isset($registro)?$registro['apellido_paterno']:"").'">
+					<input placeholder="Password" required="" type="text" name="password_usuario" class="form-control" value="'.(isset($registro)?$registro['password_usuario']:"").'">
 					</div>
 
 					<label class="col-md-4">Rol * </label>
@@ -269,7 +301,7 @@ if(!isset($_SESSION['nombre_usuario']))
 
 		// funcion para obtener el ultimo empleado
 		function maxempleado(){
-			$cad="SELECT * FROM empleado ORDER BY Id DESC LIMIT 1";
+			$cad="SELECT * FROM empleadoS ORDER BY Id DESC LIMIT 1";
 
 
 			$res = $this->consult($cad);
@@ -277,7 +309,7 @@ if(!isset($_SESSION['nombre_usuario']))
 
 			// volcar datos, provenientes de una consulta mysql, dentro de un array php
 			$volcadoarray = mysqli_fetch_array($res);
-			$maxemp = $volcadoarray['Id'];
+			$maxemp = $volcadoarray['id'];
 
 			return $maxemp;
 		}
@@ -289,9 +321,9 @@ if(!isset($_SESSION['nombre_usuario']))
 
 			// echo var_dump($maxemp);
 
-			$cad='INSERT INTO usuario 
-			(Id,nomb_usua,pass_usua,fk_id_rol,clave_cancelv) 
-				values('.$maximoemp.',"'.$_POST["nomb_usua"].'","'.$_POST["pass_usua"].'","'.$_POST["fk_id_rol"].'","'.$_POST["clave_cancelv"].'")';
+			$cad='INSERT INTO usuarios 
+			(id,nombre_usuario,password_usuario,rol_id) 
+				values('.$maximoemp.',"'.$_POST["nombre_usuario"].'","'.MD5($_POST["password_usuario"]).'","'.$_POST["rol_id"].'")';
 
 					//ejecuta la cadena
 					$this->consulta($cad);
@@ -300,16 +332,16 @@ if(!isset($_SESSION['nombre_usuario']))
 					// en empleado como en usuario se creo anterior mente un
 					// registro con el mismo id, ahora se utliza el mismo id
 					// para la relacion 
-					$this->usuario_emp($maximoemp,$maximoemp);
+					$this->usuario_empleado($maximoemp,$maximoemp);
 
 					
 		}
 
 		// creacion de relacion usuario y empleado
-		function usuario_emp($id_usuario,$id_empleado){
+		function usuario_empleado($id_usuario,$id_empleado){
 
-			$cad='INSERT INTO usuario_emp 
-			(fk_id_usua,Id) 
+			$cad='INSERT INTO usuario_empleado 
+			(usuario_id,empleado_id) 
 				values('.$id_usuario.','.$id_empleado.')';
 
 					//ejecuta la cadena
@@ -345,7 +377,7 @@ if(!isset($_SESSION['nombre_usuario']))
 							join empleados E ON E.id = T.empledo_asignado_id where estatus_ticket like '%".$_REQUEST['ticket']."%' order by estatus_ticket";
 							$this->consulta($consulta);
 		
-							$result=$this->imprimeTabla($consulta,true,array("formupdate","delete","formuser"));
+							$result=$this->imprimeTabla($consulta,true,array("formupdate","delete","formNewuser"));
 						break;
 
 		        		case 'delete':
