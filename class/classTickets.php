@@ -87,14 +87,12 @@ if(!isset($_SESSION['nombre_usuario']))
                     join empleados E ON E.id = T.empledo_asignado_id";
 
 
-					$result=$this->imprimeTabla($cad,true,array("formupdate","delete"));
+					$result=$this->imprimeTabla($cad,true,array("formupdate","delete","cuestionario"));
 
 					break;
 
 				case 'delete':
-					$this->consulta("DELETE FROM empleado WHERE Id ='".$_POST['idRegistro']."'");
-
-					$this->consulta("DELETE FROM usuario WHERE Id ='".$_POST['idRegistro']."'");
+					$this->consulta("DELETE FROM tickets WHERE Id ='".$_POST['idRegistro']."'");
 
 					$result.= $this->proceso('list');
 					break;
@@ -137,7 +135,7 @@ if(!isset($_SESSION['nombre_usuario']))
 					//echo "formNew";
 					//var_dump($registro);
 					//exit;
-					$result.='<div class="container" style="margin-top:40px">
+					$result.='<div class="" style="margin-top:">
 					<form method="post">';
 					if (isset($registro))
 						$result.='
@@ -147,6 +145,23 @@ if(!isset($_SESSION['nombre_usuario']))
 						$result.='
 					<input type="hidden" name="accion" value="insert">';
 					$result.='
+
+					<div style="background-color:green;height:auto;float:left;width:50%">
+
+					<div class="content-flexbox" style="background-color:orange;height:auto;float:left;width:100%">
+
+						<div style="background-color:white;height:auto;width:32.3%;display:inline-block;">
+							sss
+						</div>
+						<div style="background-color:lightblue;height:auto;width:32.3%;display:inline-block;">
+							aaa
+						</div>
+						<div align="center" style=" background-color:lightgrey;height:auto;width:31.3%;float:right;">
+							<label>N:00000001</label>
+						</div>
+
+					</div>
+
 					<div class="row mt-4">
 
 					<div class="col-md-6">
@@ -217,16 +232,30 @@ if(!isset($_SESSION['nombre_usuario']))
 					<input placeholder="Ingrese su CURP" required="" type="text" name="clave_cancelv" class="form-control" value="'.(isset($registrou)?$registrou['clave_cancelv']:"").'">
 					</div>
 
-					</div>
-					</div>
-					</div>
-					
-
 					<small>* Campo Obligatorio</small><br>
 	
 					
 
 					<input style="margin-top:10px" type="submit" value="'.((isset($registro))?"Actualizar":"Registrar").'">
+
+					</div>
+					</div>
+					</div>
+					</div>
+					
+					</div>
+					<div style="background-color:pink;height:auto;float:right;width:50%">
+						<div style="background-color:grey;height:50%;float:top;width:auto;">
+						<h1>asasasa</h1>
+						</div>
+						<div style="background-color:yellow;height:50%;float:top;width:auto">
+						sdsd
+						</div>
+					</div>
+					
+					
+					
+					
 					</form>
 					</div>';
 					break;
@@ -336,6 +365,19 @@ if(!isset($_SESSION['nombre_usuario']))
 		        			</form>
 		        			</td>';
 		        			break;
+
+						case 'cuestionario':
+		        		
+		        			$result.='<td width="6%">
+		        			<form method="post">
+		        			<input type="hidden" value="'.$value.'" name="accion">
+		        			<input type="hidden" value="'.$registro[0].'" name="idRegistro">
+		        			<button class="btn btn-warning">
+		        			<i title="Editar registro" class="fa fa-list-alt"></i>
+		        			</button>
+		        			</form>
+		        			</td>';
+		        			break;	
 		        	}
 		        	
 		        }
