@@ -160,8 +160,12 @@ if(!isset($_SESSION['nombre_usuario']))
 				case 'formuser':
 					$registro=$this->sacaTupla("SELECT * FROM usuarios WHERE id=".$_POST['idRegistro']);
 					//var_dump($registro);
-
-					$_SESSION['password_usuarioold'] = $registro['password_usuario'];
+					// seccion para comprobar si $registro['password_usuario'] contiene algo
+					if(isset($registro['password_usuario'])){
+						// si contiene algo lo salva en una variable de sesion
+						$_SESSION['password_usuarioold'] = $registro['password_usuario'];
+					}
+					
 					//echo $_SESSION['password_usuarioold'];
 					//var_dump($_SESSION);
 					
