@@ -79,22 +79,16 @@ if(!isset($_SESSION['nombre_usuario']))
 				// listado que me permite hacer cosas	
 				case 'list': 
 
-				// $cad = "SELECT IdFactura,`IdCita`,EF.Estatus, FP.FormaPago, `Descripcion` from `facturacion` F  
-				// INNER JOIN `estatusfactura` EF ON F.`IdEstatus` = EF.`IdEstatusFactura`
-				// INNER JOIN `formapago` FP ON F.`idFormaPago` = FP.`IdFormaPago`ORDER BY IdFactura";
-
 				$cad = "SELECT E.id,nombre_empleado as Nombre,apellido_paterno as Apellido_P,apellido_materno as Apellido_M,titulo_empleado as Titulo,numero_telefono as Telefono,correo_empleado as Correo,D.nombre_departamento as Departamento FROM empleados E
 				INNER JOIN `departamentos` D ON E.`departamento_id` = D.`id`ORDER BY E.id";
 				//$cad = "Select * from empleados";
 
-					$result=$this->imprimeTabla($cad,true,array("delete","formupdate","formuser"));
+					$result=$this->imprimeTabla($cad,true,array("formupdate","delete","formuser"));
 
 					break;
 
 				case 'delete':
 					$this->consulta("DELETE FROM empleados WHERE id ='".$_POST['idRegistro']."'");
-
-					//$this->consulta("DELETE FROM usuario WHERE Id ='".$_POST['idRegistro']."'");--- importante
 
 					$result.= $this->proceso('list');
 					break;
@@ -134,19 +128,22 @@ if(!isset($_SESSION['nombre_usuario']))
 					break;
 
 				case 'updateuser':
-
-					//if detectar si la contraseña fue modificada
-					if($_POST['password_usuario'] !== $_POST[$pasword_uold]){
-						// armado de cadena de insersion
+					//echo "entre a updateuser";
+					//echo $_SESSION['password_usuarioold'];
+					//echo "/----/";
+					//echo $_POST['password_usuario'];
+					//exit;
+					if($_SESSION['password_usuarioold'] !== $_POST['password_usuario']){
+						//echo "la contraseña es diferente a la anterior";
 						$cad = 'UPDATE usuarios SET nombre_usuario ="'.$_POST["nombre_usuario"].'", 
 						password_usuario=MD5("'.$_POST['password_usuario'].'"),
 						rol_id="'.$_POST['rol_id'].'"WHERE id = "'.$_POST["idRegistro"].'"';
 					}else{
+						//echo "la contraseña no es diferente de la anterior";
 						$cad = 'UPDATE usuarios SET nombre_usuario ="'.$_POST["nombre_usuario"].'", 
-						password_usuario="'.$_POST[$pasword_uold].'",
+						password_usuario="'.$_POST['password_usuario'].'",
 						rol_id="'.$_POST['rol_id'].'"WHERE id = "'.$_POST["idRegistro"].'"';
 					}
-
 					
 
 					//ejecuta la cadena
@@ -163,17 +160,21 @@ if(!isset($_SESSION['nombre_usuario']))
 				case 'formuser':
 					$registro=$this->sacaTupla("SELECT * FROM usuarios WHERE id=".$_POST['idRegistro']);
 					//var_dump($registro);
-					
+
+					$_SESSION['password_usuarioold'] = $registro['password_usuario'];
+					//echo $_SESSION['password_usuarioold'];
+					//var_dump($_SESSION);
 					
 					//echo $_POST['idRegistro']; // id del empleado
 					//echo var_dump($registro);
 					// caso para form de creacion de nuevo usuario
-					$result.='<div class="container" style="margin-top:40px">
+					$result.='<div class="" style="margin-top:40px;margin-left:1%;margin-right:1%">
 					<form method="post">';
 					if (isset($registro))
 						$result.='
 					<input type="hidden" name="accion" value="updateuser">
 					<input type="hidden" name="idRegistro" value="'.$registro['id'].'">';
+					
 					else
 					$result.='
 					<input type="hidden" name="accion" value="insertuser">';
@@ -208,9 +209,16 @@ if(!isset($_SESSION['nombre_usuario']))
 	
 					
 
-					<input style="margin-top:10px" type="submit" value="'.((isset($registro))?"Actualizar":"Registrar").'">
+					<div style="background-color:;margin-top:22%">
+						<div style="background-color:;margin-left: 80%;width: 313px;">
+							<input style=";margin-left:; aling:" type="submit" class="btn btn-secondary" value="Guardar">
+							<button style="margin-left:50px;width: auto" type="button" class="btn btn-secondary"><a href="../admin/gestion_emp.php">Cancelar</a></button>	
+						</div>
+					</div>
+
 					</form>
 					</div>';
+					
 					break;
 
 				case 'formupdate':
@@ -220,7 +228,7 @@ if(!isset($_SESSION['nombre_usuario']))
 					//$registrou=$this->sacaTupla("SELECT * FROM usuario WHERE Id=".$_POST['idRegistro']);
 
 				case 'formNew':
-					$result.='<div class="container" style="margin-top:40px">
+					$result.='<div class="" style="margin-top:40px;margin-left:1%;margin-right:1%">
 					<form method="post">';
 					if (isset($registro))
 						$result.='
@@ -279,8 +287,13 @@ if(!isset($_SESSION['nombre_usuario']))
 					<small>* Campo Obligatorio</small><br>
 	
 					
-
-					<input style="margin-top:10px" type="submit" value="'.((isset($registro))?"Actualizar":"Registrar").'">
+					<div style="background-color:;margin-top:10%">
+						<div style="background-color:;margin-left: 80%;width: 313px;">
+							<input style=";margin-left:; aling:" type="submit" class="btn btn-secondary" value="Guardar">
+							<button style="margin-left:50px;width: auto" type="button" class="btn btn-secondary"><a href="../admin/gestion_emp.php">Cancelar</a></button>	
+						</div>
+					</div>
+					
 					</form>
 					</div>';
 					break;
