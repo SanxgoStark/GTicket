@@ -146,118 +146,216 @@ if(!isset($_SESSION['nombre_usuario']))
 					<input type="hidden" name="accion" value="insert">';
 					$result.='
 
-					<div style="background-color:green;height:auto;float:left;width:50%">
+					<div style="background-color:lightgrey;height:auto;float:left;width:50%">
 
-					<div class="content-flexbox" style="background-color:orange;height:auto;float:left;width:100%">
+					<div class="content-flexbox" style="background-color:;height:auto;float:left;width:100%">
 
-						<div style="background-color:white;height:auto;width:32.3%;display:inline-block;">
-							sss
+						<div style="background-color:;height:auto;width:32.3%;display:inline-block;">
+							<div>
+							<input readonly="readonly" placeholder="F.Creacion" required="" type="text" name="nomb_emp" class="form-control" value="'.(isset($registro)?$registro['nomb_emp']:"").'">
+							</div>
 						</div>
-						<div style="background-color:lightblue;height:auto;width:32.3%;display:inline-block;">
-							aaa
+						<div style="background-color:;height:auto;width:32.3%;display:inline-block;">
+							<div>
+							<input readonly="readonly" placeholder="F.Modificacion" required="" type="text" name="nomb_emp" class="form-control" value="'.(isset($registro)?$registro['nomb_emp']:"").'">
+							</div>
 						</div>
-						<div align="center" style=" background-color:lightgrey;height:auto;width:31.3%;float:right;">
-							<label>N:00000001</label>
+						<div style="text-align: center; background-color:lightgrey;height:auto;width:31.3%;float:right;">
+							<div style="height:55px;">
+								<h4 text-align="center" style="">NT:00000001</h4>
+							</div>
 						</div>
 
 					</div>
 
-					<div class="row mt-4">
+					<div style="margin-top:8%"class="">
 
-					<div class="col-md-6">
+					<div style="margin-left:9%" class="col-md-10">
 					<div class="row">
 
-					<label class="col-md-4">Nombre * </label>
+					<label class="col-md-3">Asunto * </label>
 					<div class="col-md-8">
-					<input placeholder="Nombre" required="" type="text" name="nomb_emp" class="form-control" value="'.(isset($registro)?$registro['nomb_emp']:"").'">
+					<input placeholder="Asunto" required="" type="text" name="nomb_emp" class="form-control" value="'.(isset($registro)?$registro['nomb_emp']:"").'">
 					</div>
 
-					<label class="col-md-4">Primer Apellido * </label>
+					<label class="col-md-3">Descripcion * </label>
 					<div class="col-md-8">
-					<input placeholder="Apellido Paterno" required="" type="text" name="apepat_emp" class="form-control" value="'.(isset($registro)?$registro['apepat_emp']:"").'">
+					<input placeholder="Descripcion" required="" type="text" name="apepat_emp" class="form-control" value="'.(isset($registro)?$registro['apepat_emp']:"").'">
 					</div>
 
-					<label class="col-md-4">Segundo Apellido * </label>
+					<label class="col-md-3">Estatus * </label>
 					<div class="col-md-8">
-					<input placeholder="Apellido materno" required="" type="text" name="apemat_emp" class="form-control" value="'.(isset($registro)?$registro['apemat_emp']:"").'">
+					<div class="form-group">
+						<select class="form-select" id="exampleSelect1">
+							<option>Abierto</option>
+							<option>Cerrado</option>
+						</select>
+						</div>
 					</div>
 
-					<label class="col-md-4">Direccion * </label>
+					<label class="col-md-3">Prioridad * </label>
 					<div class="col-md-8">
-					<input placeholder="Ingrese su direccion" required="" type="text" name="direccion_emp" class="form-control" value="'.(isset($registro)?$registro['direccion_emp']:"").'">
+					<div class="form-group">
+						<select class="form-select" id="exampleSelect1">
+							<option>Normal</option>
+							<option>Media</option>
+							<option>Alta</option>
+						</select>
+						</div>
 					</div>
 
-					<label class="col-md-4">NSS * </label>
+					<label class="col-md-3">Atiende * </label>
 					<div class="col-md-8">
-					<input placeholder="Ingrese su NSS" required="" type="text" name="nss_emp" class="form-control" value="'.(isset($registro)?$registro['nss_emp']:"").'">
+					<div class="form-group">
+						<select class="form-select" id="exampleSelect1">
+							<option>Normal</option>
+							<option>Media</option>
+							<option>Alta</option>
+						</select>
+						</div>
 					</div>
 
-					<label class="col-md-4">Nacimiento * </label>
+					<label class="col-md-3">Nivel Soporte * </label>
 					<div class="col-md-8">
-					<input placeholder="Ingrese su año de nacimiento" required="" type="date" name="fechanac_emp" class="form-control" value="'.(isset($registro)?$registro['fechanac_emp']:"").'">
+					<div class="form-group">
+						<select class="form-select" id="exampleSelect1">
+							<option>N1</option>
+							<option>N2</option>
+						</select>
+						</div>
 					</div>
 
-					<label class="col-md-4">Genero * </label>
+					<label class="col-md-3" class="form-group">Nota * </label>
 					<div class="col-md-8">
-					<input placeholder="Ingrese su genero" required="" type="text" name="genero_emp" class="form-control" value="'.(isset($registro)?$registro['genero_emp']:"").'">
+      				<textarea class="form-control" id="exampleTextarea" rows="2"></textarea>
 					</div>
 
-					<label class="col-md-4">Telefono * </label>
-					<div class="col-md-8">
-					<input placeholder="Ingrese su genero" required="" type="text" name="telnum_emp" class="form-control" value="'.(isset($registro)?$registro['telnum_emp']:"").'">
-					</div>
-
-					<label class="col-md-4">Sueldo * </label>
-					<div class="col-md-8">
-					<input placeholder="Ingrese su sueldo" required="" type="num" name="sueldo_emp" class="form-control" value="'.(isset($registro)?$registro['sueldo_emp']:"").'">
-					</div>
-
-					<label class="col-md-4">CURP * </label>
-					<div class="col-md-8">
-					<input placeholder="Ingrese su CURP" required="" type="text" name="curp_emp" class="form-control" value="'.(isset($registro)?$registro['curp_emp']:"").'">
-					</div>
-
-					<label class="col-md-4">Usuario * </label>
-					<div class="col-md-8">
-					<input placeholder="Ingrese su CURP" required="" type="text" name="nomb_usua" class="form-control" value="'.(isset($registrou)?$registrou['nomb_usua']:"").'">
-					</div>
-
-					<label class="col-md-4">Contraseña * </label>
-					<div class="col-md-8">
-					<input placeholder="Ingrese su CURP" required="" type="text" name="pass_usua" class="form-control" value="'.(isset($registrou)?$registrou['pass_usua']:"").'">
-					</div>
-
-					<label class="col-md-4">Clave X * </label>
-					<div class="col-md-8">
-					<input placeholder="Ingrese su CURP" required="" type="text" name="clave_cancelv" class="form-control" value="'.(isset($registrou)?$registrou['clave_cancelv']:"").'">
-					</div>
+    				<div class="form-group">
+      				<input class="form-control" type="file" id="formFile">
+   					</div>
 
 					<small>* Campo Obligatorio</small><br>
-	
+					
 					
 
-					<input style="margin-top:10px" type="submit" value="'.((isset($registro))?"Actualizar":"Registrar").'">
+					
 
 					</div>
 					</div>
 					</div>
 					</div>
-					
 					</div>
+
+
 					<div style="background-color:pink;height:auto;float:right;width:50%">
+
 						<div style="background-color:grey;height:50%;float:top;width:auto;">
-						<h1>asasasa</h1>
+							<div style="margin-top:"class="">
+							<div style="margin-left:9%" class="col-md-10">
+							<div class="row">
+
+								<label class="col-md-3">Nombre Equipo * </label>
+								<div class="col-md-8">
+								<input placeholder="Nombre Equipo" required="" type="text" name="apepat_emp" class="form-control" value="'.(isset($registro)?$registro['apepat_emp']:"").'">
+								</div>
+
+								<label class="col-md-3">Fabricante * </label>
+								<div class="col-md-8">
+								<div class="form-group">
+									<select class="form-select" id="exampleSelect1">
+										<option>HP</option>
+										<option>DELL</option>
+										<option>Otro</option>
+									</select>
+									</div>
+								</div>
+
+								<label class="col-md-3">Modelo * </label>
+								<div class="col-md-8">
+								<div class="form-group">
+									<select class="form-select" id="exampleSelect1">
+										<option>N1XZS2</option>
+										<option>67FR</option>
+									</select>
+									</div>
+								</div>
+
+								<label class="col-md-3">S.O * </label>
+								<div class="col-md-8">
+								<div class="form-group">
+									<select class="form-select" id="exampleSelect1">
+										<option>Windows 7 Enterprise</option>
+										<option>Windows 10 Pro</option>
+										<option>Windows 10 Home</option>
+										<option>Windows 10 Enterprise</option>
+										<option>Windows 11 Pro</option>
+									</select>
+									</div>
+								</div>
+
+							</div>
+							</div>
+							</div>
+
 						</div>
-						<div style="background-color:yellow;height:50%;float:top;width:auto">
-						sdsd
+
+						<div style=";background-color:yellow;height:50%;float:top;width:auto">
+
+							<div style="margin-top:"class="">
+							<div style="margin-left:9%" class="col-md-10">
+							<div class="row">
+
+							<label class="form-label mt-4">¿Que tipo de conexion tiene actualmente?</label>
+								<div class="col-md-8">
+								<div class="form-group">
+									<select class="form-select" id="exampleSelect1">
+										<option>Si</option>
+										<option>No</option>
+									</select>
+									</div>
+								</div>
+
+								<label class="form-label mt-4">¿Que aplicacion usaba cuando sucedio el error?</label>
+								<div class="col-md-8">
+								<div class="form-group">
+									<select class="form-select" id="exampleSelect1">
+										<option>HP</option>
+										<option>DELL</option>
+										<option>Otro</option>
+									</select>
+									</div>
+								</div>
+
+								<label class="form-label mt-4">¿A instalado drivers o actualizaciones recientemente?</label>
+								<div class="col-md-8">
+									<div class="form-group">
+									<select class="form-select" id="exampleSelect1">
+									<option>Si</option>
+									<option>No</option>
+									</select>
+									</div>
+								</div>
+
+							</div>
+							</div>
+							</div>
+
+						</div>
+
+					
+					</div>
+
+					<div style="background-color:;margin-top:10%">
+						<div style="background-color:;margin-left: 80%;width: 313px;">
+							<input style=";margin-left:; aling:" type="submit" class="btn btn-secondary" value="Guardar">
+							<button style="margin-left:50px;width: auto" type="button" class="btn btn-secondary"><a href="../admin/gestion_emp.php">Cancelar</a></button>	
 						</div>
 					</div>
-					
-					
-					
 					
 					</form>
+					
 					</div>';
+					
 					break;
 
 			}
