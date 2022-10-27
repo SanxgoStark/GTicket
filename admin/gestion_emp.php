@@ -30,7 +30,7 @@ if(!isset($_SESSION['nombre_usuario']))
 	<? include "menu.php" ?>
 
     <div style="background-color:;margin-top: 15px;margin-left:1%; margin-right:1%; ">
-	    <h2 style="margin-top: 15px" align="center">Empleados </h2>
+	    <h2 style="margin-top: 15px" align="center" id="titulo">Empleados </h2>
         <form id="formEmpleados" style="width:400px;">
 			<input type="hidden" name="accion" value="buscar">
 			<input class="form-control" type="text" name="empleado" id="empleado" onkeyup="empleados('buscar')" placeholder="">

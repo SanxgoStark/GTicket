@@ -236,6 +236,11 @@ if(!isset($_SESSION['nombre_usuario']))
 					<form method="post">';
 					if (isset($registro))
 						$result.='
+
+						<script>
+							document.getElementById("titulo").innerHTML="crear empleado";
+						</script>
+
 					<input type="hidden" name="accion" value="update">
 					<input type="hidden" name="idRegistro" value="'.$registro['id'].'">';
 					else

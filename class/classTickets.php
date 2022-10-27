@@ -146,7 +146,7 @@ if(!isset($_SESSION['nombre_usuario']))
 					<input type="hidden" name="accion" value="insert">';
 					$result.='
 
-					<div style="background-color:lightgrey;height:auto;float:left;width:50%">
+					<div style="background-color:;height:auto;float:left;width:50%">
 
 					<div class="content-flexbox" style="background-color:;height:auto;float:left;width:100%">
 
@@ -160,9 +160,9 @@ if(!isset($_SESSION['nombre_usuario']))
 							<input readonly="readonly" placeholder="F.Modificacion" required="" type="text" name="nomb_emp" class="form-control" value="'.(isset($registro)?$registro['nomb_emp']:"").'">
 							</div>
 						</div>
-						<div style="text-align: center; background-color:lightgrey;height:auto;width:31.3%;float:right;">
-							<div style="height:55px;">
-								<h4 text-align="center" style="">NT:00000001</h4>
+						<div  style=";background-color:;height:auto;width:31.3%;float:right;">
+							<div style="height:55px;margin-top:15px">
+								<h4 style="font-weight: 900; margin-top:" align="center">NT:00000001</h4>
 							</div>
 						</div>
 
@@ -173,18 +173,18 @@ if(!isset($_SESSION['nombre_usuario']))
 					<div style="margin-left:9%" class="col-md-10">
 					<div class="row">
 
-					<label class="col-md-3">Asunto * </label>
-					<div class="col-md-8">
+					<label style="margin-top:10px" class="col-md-3">Asunto * </label>
+					<div style="margin-top:10px" class="col-md-8">
 					<input placeholder="Asunto" required="" type="text" name="nomb_emp" class="form-control" value="'.(isset($registro)?$registro['nomb_emp']:"").'">
 					</div>
 
-					<label class="col-md-3">Descripcion * </label>
-					<div class="col-md-8">
+					<label style="margin-top:10px" class="col-md-3">Descripcion * </label>
+					<div style="margin-top:10px" class="col-md-8">
 					<input placeholder="Descripcion" required="" type="text" name="apepat_emp" class="form-control" value="'.(isset($registro)?$registro['apepat_emp']:"").'">
 					</div>
 
-					<label class="col-md-3">Estatus * </label>
-					<div class="col-md-8">
+					<label style="margin-top:10px" class="col-md-3">Estatus * </label>
+					<div style="margin-top:10px" class="col-md-8">
 					<div class="form-group">
 						<select class="form-select" id="exampleSelect1">
 							<option>Abierto</option>
@@ -193,8 +193,8 @@ if(!isset($_SESSION['nombre_usuario']))
 						</div>
 					</div>
 
-					<label class="col-md-3">Prioridad * </label>
-					<div class="col-md-8">
+					<label style="margin-top:10px" class="col-md-3">Prioridad * </label>
+					<div style="margin-top:10px" class="col-md-8">
 					<div class="form-group">
 						<select class="form-select" id="exampleSelect1">
 							<option>Normal</option>
@@ -204,8 +204,8 @@ if(!isset($_SESSION['nombre_usuario']))
 						</div>
 					</div>
 
-					<label class="col-md-3">Atiende * </label>
-					<div class="col-md-8">
+					<label style="margin-top:10px" class="col-md-3">Atiende * </label>
+					<div style="margin-top:10px" class="col-md-8">
 					<div class="form-group">
 						<select class="form-select" id="exampleSelect1">
 							<option>Normal</option>
@@ -215,8 +215,8 @@ if(!isset($_SESSION['nombre_usuario']))
 						</div>
 					</div>
 
-					<label class="col-md-3">Nivel Soporte * </label>
-					<div class="col-md-8">
+					<label style="margin-top:10px" class="col-md-3">Nivel Soporte * </label>
+					<div style="margin-top:10px" class="col-md-8">
 					<div class="form-group">
 						<select class="form-select" id="exampleSelect1">
 							<option>N1</option>
@@ -225,21 +225,17 @@ if(!isset($_SESSION['nombre_usuario']))
 						</div>
 					</div>
 
-					<label class="col-md-3" class="form-group">Nota * </label>
-					<div class="col-md-8">
+					<label style="margin-top:10px" class="col-md-3" class="form-group">Nota * </label>
+					<div style="margin-top:10px" class="col-md-8">
       				<textarea class="form-control" id="exampleTextarea" rows="2"></textarea>
 					</div>
 
-    				<div class="form-group">
+					<small style="margin-top:10px" >* Campo Obligatorio</small><br>
+
+    				<div style="float:right;width:500px;margin-top:3%" class="form-group">
       				<input class="form-control" type="file" id="formFile">
    					</div>
 
-					<small>* Campo Obligatorio</small><br>
-					
-					
-
-					
-
 					</div>
 					</div>
 					</div>
@@ -247,9 +243,9 @@ if(!isset($_SESSION['nombre_usuario']))
 					</div>
 
 
-					<div style="background-color:pink;height:auto;float:right;width:50%">
+					<div style="background-color:;height:auto;float:right;width:50%">
 
-						<div style="background-color:grey;height:50%;float:top;width:auto;">
+						<div style="background-color:;height:50%;float:top;width:auto;">
 							<div style="margin-top:"class="">
 							<div style="margin-left:9%" class="col-md-10">
 							<div class="row">
@@ -259,8 +255,8 @@ if(!isset($_SESSION['nombre_usuario']))
 								<input placeholder="Nombre Equipo" required="" type="text" name="apepat_emp" class="form-control" value="'.(isset($registro)?$registro['apepat_emp']:"").'">
 								</div>
 
-								<label class="col-md-3">Fabricante * </label>
-								<div class="col-md-8">
+								<label style="margin-top:10px" class="col-md-3">Fabricante * </label>
+								<div style="margin-top:10px" class="col-md-8">
 								<div class="form-group">
 									<select class="form-select" id="exampleSelect1">
 										<option>HP</option>
@@ -270,8 +266,8 @@ if(!isset($_SESSION['nombre_usuario']))
 									</div>
 								</div>
 
-								<label class="col-md-3">Modelo * </label>
-								<div class="col-md-8">
+								<label style="margin-top:10px" class="col-md-3">Modelo * </label>
+								<div style="margin-top:10px" class="col-md-8">
 								<div class="form-group">
 									<select class="form-select" id="exampleSelect1">
 										<option>N1XZS2</option>
@@ -280,8 +276,8 @@ if(!isset($_SESSION['nombre_usuario']))
 									</div>
 								</div>
 
-								<label class="col-md-3">S.O * </label>
-								<div class="col-md-8">
+								<label style="margin-top:10px" class="col-md-3">S.O * </label>
+								<div style="margin-top:10px" class="col-md-8">
 								<div class="form-group">
 									<select class="form-select" id="exampleSelect1">
 										<option>Windows 7 Enterprise</option>
@@ -299,7 +295,38 @@ if(!isset($_SESSION['nombre_usuario']))
 
 						</div>
 
-						<div style=";background-color:yellow;height:50%;float:top;width:auto">
+						<div style=";background-color:;height:50%;float:top;width:auto">
+
+							<div style=";background-color:;height:auto;float:right;width:50%;height:auto">
+							
+								<div style="margin-top:"class="">
+								<div style="margin-left:" class="col-md-10">
+								<div class="row">
+
+									<label class="form-label mt-4">Autor</label>
+									<div class="col-md-8">
+									<div class="form-group">
+										<select class="form-select" id="exampleSelect1">
+											<option>Estrada-U</option>
+											<option>Hernandez-A</option>
+										</select>
+									</div>
+									</div>
+
+									<label class="form-label mt-4">Tipo de cuestionario</label>
+									<div class="col-md-8">
+									<div class="form-group">
+										<select class="form-select" id="exampleSelect1">
+											<option>Si</option>
+											<option>No</option>
+										</select>
+									</div>
+									</div>
+
+								</div>
+								</div>
+								</div>
+							</div>
 
 							<div style="margin-top:"class="">
 							<div style="margin-left:9%" class="col-md-10">
@@ -338,17 +365,20 @@ if(!isset($_SESSION['nombre_usuario']))
 
 							</div>
 							</div>
+							
 							</div>
+
+							
 
 						</div>
 
 					
 					</div>
 
-					<div style="background-color:;margin-top:10%">
+					<div style="background-color:;margin-top:30%">
 						<div style="background-color:;margin-left: 80%;width: 313px;">
 							<input style=";margin-left:; aling:" type="submit" class="btn btn-secondary" value="Guardar">
-							<button style="margin-left:50px;width: auto" type="button" class="btn btn-secondary"><a href="../admin/gestion_emp.php">Cancelar</a></button>	
+							<button style="margin-left:50px;width: auto" type="button" class="btn btn-secondary"><a href="../admin/home_admin.php">Cancelar</a></button>	
 						</div>
 					</div>
 					
