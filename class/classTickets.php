@@ -206,14 +206,13 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					<label style="margin-top:10px" class="col-md-3">Atiende * </label>
 					<div style="margin-top:10px" class="col-md-8">
-					<div class="form-group">
-						<select class="form-select" id="exampleSelect1">
-							<option>Normal</option>
-							<option>Media</option>
-							<option>Alta</option>
-						</select>
-						</div>
+					<div class="col-md-8">';
+					$result.=$this->cajaDesplegable("usuarios","usuario_id","id","nombre_usuario",isset($registro)?$registro['usuario_id']:"");
+					$result.='
 					</div>
+					</div>
+
+					
 
 					<label style="margin-top:10px" class="col-md-3">Nivel Soporte * </label>
 					<div style="margin-top:10px" class="col-md-8">
@@ -304,14 +303,13 @@ if(!isset($_SESSION['nombre_usuario']))
 								<div class="row">
 
 									<label class="form-label mt-4">Autor</label>
-									<div class="col-md-8">
-									<div class="form-group">
-										<select class="form-select" id="exampleSelect1">
-											<option>Estrada-U</option>
-											<option>Hernandez-A</option>
-										</select>
+									<div style="" class="col-md-8">
+									<div class="col-md-8">';
+									$result.=$this->cajaDesplegable("usuarios","usuario_id","id","nombre_usuario",isset($registro)?$registro['usuario_id']:"");
+									$result.='
 									</div>
 									</div>
+					
 
 									<label class="form-label mt-4">Tipo de cuestionario</label>
 									<div class="col-md-8">
