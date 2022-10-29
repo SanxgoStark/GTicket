@@ -53,22 +53,24 @@ if(!isset($_SESSION['nombre_usuario']))
 
 				case 'insert':
 				
-				echo var_dump($_POST);
-				exit;
-				// echo var_dump($_POST['idRegistro']);
+				//echo var_dump($_POST);
+				//exit;
 
 				// armado de cadena de insersion
 					$cad='INSERT INTO tickets 
-					(nomb_emp,apepat_emp,apemat_emp,direccion_emp,nss_emp,fechanac_emp,genero_emp,telnum_emp,sueldo_emp,curp_emp) 
-					values("'.$_POST["nomb_emp"].'","'.$_POST['apepat_emp'].'","'.$_POST['apemat_emp'].'","'.$_POST['direccion_emp'].'","'.$_POST['nss_emp'].'","'.$_POST['fechanac_emp'].'","'.$_POST['genero_emp'].'","'.$_POST['telnum_emp'].'","'.$_POST['sueldo_emp'].'","'.$_POST['curp_emp'].'")';
-
-
+					(fecha_creacion_ticket,fecha_modificacion_ticket,asunto_ticket,descripcion_ticket,estatus_ticket,prioridad_ticket,empledo_asignado_id,autor_id,nivel_ticket,nota_ticket,nombre_equipo_ticket,fabricante_ticket,modelo_equipo_ticket,tipo_conexion_ticket,nombre_aplicacion_ticket,si_driver_update,nombre_driver_update,sistema_operativo_ticket,tipo_cuestionario) 
+					values("'.$_POST["fecha_creacion_ticket"].'","'.$_POST['fecha_modificacion_ticket'].'"
+					,"'.$_POST['asunto_ticket'].'","'.$_POST['descripcion_ticket'].'","'.$_POST['estatus_ticket'].'"
+					,"'.$_POST['prioridad_ticket'].'","'.$_POST['autor_id'].'","'.$_POST['empleado_asignado_id'].'"
+					,"'.$_POST['nivel_ticket'].'","'.$_POST['nota_ticket'].'","'.$_POST['nombre_equipo_ticket'].'"
+					,"'.$_POST['fabricante_ticket'].'","'.$_POST['modelo_equipo_ticket'].'","'.$_POST['tipo_conexion_ticket'].'"
+					,"'.$_POST['nombre_aplicacion_ticket'].'","'.$_POST['si_driver_update'].'","/*nombre_driver_update*/"
+					,"'.$_POST['sistema_operativo_ticket'].'","'.$_POST['tipo_cuestionario'].'")';
 
 					//ejecuta la cadena
 					$this->consulta($cad);
-					// se llama a funcion que crea usuario con el mismo id que el 
-					// empleado y ademas crea la relacion de usuario con empleado
-					$this->creausuario();
+					$this->insertarimagen();
+					
 					$result.=$this->proceso('list');
 					
 					break;
@@ -146,7 +148,7 @@ if(!isset($_SESSION['nombre_usuario']))
 					//var_dump($registro);
 					//exit;
 					$result.='<div class="" style="margin-top:">
-					<form method="post">';
+					<form action="" method="post" enctype="multipart/form-data">';
 					if (isset($registro))
 						$result.='
 					<input type="hidden" name="accion" value="update">
@@ -202,7 +204,7 @@ if(!isset($_SESSION['nombre_usuario']))
 						</select>
 						</div>
 					</div>
-
+ 
 					<label style="margin-top:10px" class="col-md-3">Prioridad * </label>
 					<div style="margin-top:10px" class="col-md-8">
 					<div class="form-group">
@@ -242,7 +244,7 @@ if(!isset($_SESSION['nombre_usuario']))
 					<small style="margin-top:10px" >* Campo Obligatorio</small><br>
 
     				<div style="float:right;width:500px;margin-top:3%" class="form-group">
-      				<input class="form-control" type="file" name="formFile">
+      				<input class="form-control" type="file" name="imagen">
    					</div>
 
 					</div>
@@ -409,6 +411,35 @@ if(!isset($_SESSION['nombre_usuario']))
 			}
 			// puede retirnar el resultado o imprimirlo con echo
 			return $result;
+		}
+
+		function insertarimagen(){
+			$carpeta = "../imagenes/";
+		
+				if(isset($_FILES["imagen"])){
+					//echo "imagen cargada";
+					$file = $_FILES["imagen"];
+					$nombre = $file["name"];
+					$tipo = $file["type"];
+					$size = $file["size"];
+					$ruta_provisional = $file["tmp_name"];
+					echo $nombre;
+					echo $tipo;
+					echo $size;
+					$src = $carpeta.$nombre;
+					move_uploaded_file($ruta_provisional,$src);
+					//$picture = "imagenes/".$nombre;
+
+					$cad='INSERT INTO imagenes 
+					(nombre_imagen,tipo_imagen,ticked) 
+					values("'.$nombre.'"
+					,"'.$tipo.'","'.$_POST['idRegistro'].'")';
+
+					$res = $this->consult($cad);
+
+				}else{
+					//echo "No se cargo ninguna imagen";
+				}	
 		}
 
 		function updateUsuario(){
