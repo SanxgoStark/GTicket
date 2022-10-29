@@ -80,7 +80,7 @@ if(!isset($_SESSION['nombre_usuario']))
 				case 'list': 
 
 				$cad = "SELECT E.id,nombre_empleado as Nombre,apellido_paterno as Apellido_P,apellido_materno as Apellido_M,titulo_empleado as Titulo,numero_telefono as Telefono,correo_empleado as Correo,D.nombre_departamento as Departamento FROM empleados E
-				INNER JOIN `departamentos` D ON E.`departamento_id` = D.`id`ORDER BY E.id";
+				INNER JOIN `departamentos` D ON E.`departamento_id` = D.`id` WHERE estado_empleado =! 1 ORDER BY E.id";
 				//$cad = "Select * from empleados";
 
 					$result=$this->imprimeTabla($cad,true,array("formupdate","delete","formuser"));
@@ -88,7 +88,13 @@ if(!isset($_SESSION['nombre_usuario']))
 					break;
 
 				case 'delete':
-					$this->consulta("DELETE FROM empleados WHERE id ='".$_POST['idRegistro']."'");
+					//$this->consulta("DELETE FROM empleados WHERE id ='".$_POST['idRegistro']."'");
+
+					// armado de cadena de insersion
+					$cad = 'UPDATE empleados SET estado_empleado = 1 WHERE id = "'.$_POST["idRegistro"].'"';
+
+					//ejecuta la cadena
+					$this->consulta($cad);
 
 					$result.= $this->proceso('list');
 					break;
