@@ -53,6 +53,8 @@ if(!isset($_SESSION['nombre_usuario']))
 
 				case 'insert':
 				
+				echo var_dump($_POST);
+				exit;
 				// echo var_dump($_POST['idRegistro']);
 
 				// armado de cadena de insersion
@@ -100,17 +102,25 @@ if(!isset($_SESSION['nombre_usuario']))
 				case 'update':
 
 					// armado de cadena de insersion
-					$cad = 'UPDATE empleado SET nomb_emp ="'.$_POST["nomb_emp"].'", 
-											apepat_emp="'.$_POST['apepat_emp'].'",
-											apemat_emp="'.$_POST['apemat_emp'].'",
-									  direccion_emp="'.$_POST['direccion_emp'].'",
-									  nss_emp="'.$_POST['nss_emp'].'",
-									  fechanac_emp="'.$_POST['fechanac_emp'].'",
-									  genero_emp="'.$_POST['genero_emp'].'",
-									  telnum_emp="'.$_POST['telnum_emp'].'",
-									  sueldo_emp="'.$_POST['sueldo_emp'].'",
-									  curp_emp="'.$_POST['curp_emp'].'"
-					WHERE Id = "'.$_POST["idRegistro"].'"';
+					$cad = 'UPDATE tickets SET fecha_creacion_ticket ="'.$_POST["fecha_creacion_ticket"].'", 
+								fecha_modificacion_ticket="'.$_POST['fecha_modificacion_ticket'].'",
+											asunto_ticket="'.$_POST['asunto_ticket'].'",
+									  descripcion_ticket="'.$_POST['descripcion_ticket'].'",
+									  estatus_ticket="'.$_POST['estatus_ticket'].'",
+									  prioridad_ticket="'.$_POST['prioridad_ticket'].'",
+									  autor_id="'.$_POST['autor_id'].'",
+									  empleado_asignado_id="'.$_POST['empleado_asignado_id'].'",
+									  nivel_ticket="'.$_POST['nivel_ticket'].'",
+									  nota_ticket="'.$_POST['nota_ticket'].'",
+									  nombre_equipo_ticket="'.$_POST['nombre_equipo_ticket'].'",
+									  fabricante_ticket="'.$_POST['fabricante_ticket'].'",
+									  modelo_equipo_ticket="'.$_POST['modelo_equipo_ticket'].'",
+									  tipo_conexion_ticket="'.$_POST['tipo_conexion_ticket'].'",
+									  nombre_aplicacion_ticket="'.$_POST['nombre_aplicacion_ticket'].'",
+									  si_driver_update="'.$_POST['si_driver_update'].'",
+									  sistema_operativo_ticket="'.$_POST['sistema_operativo_ticket'].'",
+									  tipo_cuestionario="'.$_POST['tipo_cuestionario'].'"
+					WHERE id = "'.$_POST["idRegistro"].'"';
 
 					//ejecuta la cadena
 					$this->consulta($cad);
@@ -126,10 +136,10 @@ if(!isset($_SESSION['nombre_usuario']))
 					break;
 
 				case 'formupdate':
-					$registro=$this->sacaTupla("SELECT * FROM empleado WHERE Id=".$_POST['idRegistro']); 
+					//$registro=$this->sacaTupla("SELECT * FROM empleado WHERE Id=".$_POST['idRegistro']); 
 
 					// registro usuario
-					$registrou=$this->sacaTupla("SELECT * FROM usuario WHERE Id=".$_POST['idRegistro']);
+					$registro=$this->sacaTupla("SELECT * FROM tickets WHERE id=".$_POST['idRegistro']);
 
 				case 'formNew':
 					//echo "formNew";
@@ -152,17 +162,17 @@ if(!isset($_SESSION['nombre_usuario']))
 
 						<div style="background-color:;height:auto;width:32.3%;display:inline-block;">
 							<div>
-							<input readonly="readonly" placeholder="F.Creacion" required="" type="text" name="nomb_emp" class="form-control" value="'.(isset($registro)?$registro['nomb_emp']:"").'">
+							<input readonly="readonly" placeholder="F.Creacion" required="" type="text" name="fecha_creacion_ticket" class="form-control" value="'.(isset($registro)?$registro['fecha_creacion_ticket']:"").'">
 							</div>
 						</div>
 						<div style="background-color:;height:auto;width:32.3%;display:inline-block;">
 							<div>
-							<input readonly="readonly" placeholder="F.Modificacion" required="" type="text" name="nomb_emp" class="form-control" value="'.(isset($registro)?$registro['nomb_emp']:"").'">
+							<input readonly="readonly" placeholder="F.Modificacion" required="" type="text" name="fecha_modificacion_ticket" class="form-control" value="'.(isset($registro)?$registro['fecha_modificacion_ticket']:"").'">
 							</div>
 						</div>
 						<div  style=";background-color:;height:auto;width:31.3%;float:right;">
 							<div style="height:55px;margin-top:15px">
-								<h4 style="font-weight: 900; margin-top:" align="center">NT:00000001</h4>
+								<h4 style="font-weight: 900; margin-top:" align="center">NT: "'.(isset($registro)?$registro['id']:" ").'"</h4>
 							</div>
 						</div>
 
@@ -175,20 +185,20 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					<label style="margin-top:10px" class="col-md-3">Asunto * </label>
 					<div style="margin-top:10px" class="col-md-8">
-					<input placeholder="Asunto" required="" type="text" name="nomb_emp" class="form-control" value="'.(isset($registro)?$registro['nomb_emp']:"").'">
+					<input placeholder="Asunto" required="" type="text" name="asunto_ticket" class="form-control" value="'.(isset($registro)?$registro['asunto_ticket']:"").'">
 					</div>
 
 					<label style="margin-top:10px" class="col-md-3">Descripcion * </label>
 					<div style="margin-top:10px" class="col-md-8">
-					<input placeholder="Descripcion" required="" type="text" name="apepat_emp" class="form-control" value="'.(isset($registro)?$registro['apepat_emp']:"").'">
+					<input placeholder="Descripcion" required="" type="text" name="descripcion_ticket" class="form-control" value="'.(isset($registro)?$registro['descripcion_ticket']:"").'">
 					</div>
 
 					<label style="margin-top:10px" class="col-md-3">Estatus * </label>
 					<div style="margin-top:10px" class="col-md-8">
 					<div class="form-group">
-						<select class="form-select" id="exampleSelect1">
-							<option>Abierto</option>
-							<option>Cerrado</option>
+						<select class="form-select" name="estatus_ticket">
+							<option value="Abierto">Abierto</option>
+							<option value="Cerrado">Cerrado</option>
 						</select>
 						</div>
 					</div>
@@ -196,10 +206,10 @@ if(!isset($_SESSION['nombre_usuario']))
 					<label style="margin-top:10px" class="col-md-3">Prioridad * </label>
 					<div style="margin-top:10px" class="col-md-8">
 					<div class="form-group">
-						<select class="form-select" id="exampleSelect1">
-							<option>Normal</option>
-							<option>Media</option>
-							<option>Alta</option>
+						<select class="form-select" name="prioridad_ticket">
+							<option value="Normal">Normal</option>
+							<option value="Media">Media</option>
+							<option value="Alta">Alta</option>
 						</select>
 						</div>
 					</div>
@@ -207,7 +217,7 @@ if(!isset($_SESSION['nombre_usuario']))
 					<label style="margin-top:10px" class="col-md-3">Atiende * </label>
 					<div style="margin-top:10px" class="col-md-8">
 					<div class="col-md-8">';
-					$result.=$this->cajaDesplegable("usuarios","usuario_id","id","nombre_usuario",isset($registro)?$registro['usuario_id']:"");
+					$result.=$this->cajaDesplegable("usuarios","empleado_asignado_id","id","nombre_usuario",isset($registro)?$registro['empleado_asignado_id']:"");
 					$result.='
 					</div>
 					</div>
@@ -217,22 +227,22 @@ if(!isset($_SESSION['nombre_usuario']))
 					<label style="margin-top:10px" class="col-md-3">Nivel Soporte * </label>
 					<div style="margin-top:10px" class="col-md-8">
 					<div class="form-group">
-						<select class="form-select" id="exampleSelect1">
-							<option>N1</option>
-							<option>N2</option>
+						<select class="form-select" name="nivel_ticket">
+							<option value="N1">N1</option>
+							<option value="N2">N2</option>
 						</select>
 						</div>
 					</div>
 
 					<label style="margin-top:10px" class="col-md-3" class="form-group">Nota * </label>
 					<div style="margin-top:10px" class="col-md-8">
-      				<textarea class="form-control" id="exampleTextarea" rows="2"></textarea>
+      				<textarea type="text" name="nota_ticket" class="form-control" value="'.(isset($registro)?$registro['nota_ticket']:"").'" rows="2"></textarea>
 					</div>
 
 					<small style="margin-top:10px" >* Campo Obligatorio</small><br>
 
     				<div style="float:right;width:500px;margin-top:3%" class="form-group">
-      				<input class="form-control" type="file" id="formFile">
+      				<input class="form-control" type="file" name="formFile">
    					</div>
 
 					</div>
@@ -251,16 +261,16 @@ if(!isset($_SESSION['nombre_usuario']))
 
 								<label class="col-md-3">Nombre Equipo * </label>
 								<div class="col-md-8">
-								<input placeholder="Nombre Equipo" required="" type="text" name="apepat_emp" class="form-control" value="'.(isset($registro)?$registro['apepat_emp']:"").'">
+								<input placeholder="Nombre Equipo" required="" type="text" name="nombre_equipo_ticket" class="form-control" value="'.(isset($registro)?$registro['nombre_equipo_ticket']:"").'">
 								</div>
 
 								<label style="margin-top:10px" class="col-md-3">Fabricante * </label>
 								<div style="margin-top:10px" class="col-md-8">
 								<div class="form-group">
-									<select class="form-select" id="exampleSelect1">
-										<option>HP</option>
-										<option>DELL</option>
-										<option>Otro</option>
+									<select class="form-select" name="fabricante_ticket">
+										<option value="HP">HP</option>
+										<option value="DELL">DELL</option>
+										<option value="Otro">Otro</option>
 									</select>
 									</div>
 								</div>
@@ -268,9 +278,9 @@ if(!isset($_SESSION['nombre_usuario']))
 								<label style="margin-top:10px" class="col-md-3">Modelo * </label>
 								<div style="margin-top:10px" class="col-md-8">
 								<div class="form-group">
-									<select class="form-select" id="exampleSelect1">
-										<option>N1XZS2</option>
-										<option>67FR</option>
+									<select class="form-select" name="modelo_equipo_ticket">
+										<option value="N1XZS2">N1XZS2</option>
+										<option value="67FR">67FR</option>
 									</select>
 									</div>
 								</div>
@@ -278,12 +288,12 @@ if(!isset($_SESSION['nombre_usuario']))
 								<label style="margin-top:10px" class="col-md-3">S.O * </label>
 								<div style="margin-top:10px" class="col-md-8">
 								<div class="form-group">
-									<select class="form-select" id="exampleSelect1">
-										<option>Windows 7 Enterprise</option>
-										<option>Windows 10 Pro</option>
-										<option>Windows 10 Home</option>
-										<option>Windows 10 Enterprise</option>
-										<option>Windows 11 Pro</option>
+									<select class="form-select" name="sistema_operativo_ticket">
+										<option value="Windows 7 Enterprise">Windows 7 Enterprise</option>
+										<option value="Windows 10 Pro">Windows 10 Pro</option>
+										<option value="Windows 10 Home">Windows 10 Home</option>
+										<option value="Windows 10 Enterprise">Windows 10 Enterprise</option>
+										<option value="Windows 11 Pro">Windows 11 Pro</option>
 									</select>
 									</div>
 								</div>
@@ -305,7 +315,7 @@ if(!isset($_SESSION['nombre_usuario']))
 									<label class="form-label mt-4">Autor</label>
 									<div style="" class="col-md-8">
 									<div class="col-md-8">';
-									$result.=$this->cajaDesplegable("usuarios","usuario_id","id","nombre_usuario",isset($registro)?$registro['usuario_id']:"");
+									$result.=$this->cajaDesplegable("usuarios","autor_id","id","nombre_usuario",isset($registro)?$registro['autor_id']:"");
 									$result.='
 									</div>
 									</div>
@@ -314,9 +324,14 @@ if(!isset($_SESSION['nombre_usuario']))
 									<label class="form-label mt-4">Tipo de cuestionario</label>
 									<div class="col-md-8">
 									<div class="form-group">
-										<select class="form-select" id="exampleSelect1">
-											<option>Si</option>
-											<option>No</option>
+										<select class="form-select" name="tipo_cuestionario">
+											<option value="CCP">CCP</option>
+											<option value="SO">SO</option>
+											<option value="RED">RED</option>
+											<option value="CP">CP</option>
+											<option value="SEG">SEG</option>
+											<option value="IMP">IMP</option>
+											<option value="SOF">SOF</option>
 										</select>
 									</div>
 									</div>
@@ -333,9 +348,9 @@ if(!isset($_SESSION['nombre_usuario']))
 							<label class="form-label mt-4">¿Que tipo de conexion tiene actualmente?</label>
 								<div class="col-md-8">
 								<div class="form-group">
-									<select class="form-select" id="exampleSelect1">
-										<option>Si</option>
-										<option>No</option>
+									<select class="form-select" name="tipo_conexion_ticket">
+										<option value="Alambrica">Alambrica</option>
+										<option value="Inalambrica">Inalambrica</option>
 									</select>
 									</div>
 								</div>
@@ -343,10 +358,13 @@ if(!isset($_SESSION['nombre_usuario']))
 								<label class="form-label mt-4">¿Que aplicacion usaba cuando sucedio el error?</label>
 								<div class="col-md-8">
 								<div class="form-group">
-									<select class="form-select" id="exampleSelect1">
-										<option>HP</option>
-										<option>DELL</option>
-										<option>Otro</option>
+									<select class="form-select" name="nombre_aplicacion_ticket">
+										<option value="Word">Word</option>
+										<option value="Excel">Excel</option>
+										<option value="Powerpoint">Power Point</option>
+										<option value="SAP">SAP</option>
+										<option value="JBA">JBA</option>
+										<option value="Nonconformance">Nonconformance</option>
 									</select>
 									</div>
 								</div>
@@ -354,9 +372,9 @@ if(!isset($_SESSION['nombre_usuario']))
 								<label class="form-label mt-4">¿A instalado drivers o actualizaciones recientemente?</label>
 								<div class="col-md-8">
 									<div class="form-group">
-									<select class="form-select" id="exampleSelect1">
-									<option>Si</option>
-									<option>No</option>
+									<select class="form-select" name="si_driver_update">
+									<option value="Si">Si</option>
+									<option value="No">No</option>
 									</select>
 									</div>
 								</div>
@@ -383,6 +401,8 @@ if(!isset($_SESSION['nombre_usuario']))
 					</form>
 					
 					</div>';
+
+					//echo var_dump($_POST);
 					
 					break;
 
