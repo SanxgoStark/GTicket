@@ -69,9 +69,13 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					//ejecuta la cadena
 					$this->consulta($cad);
+
+					// funcion para insertar imagen en bd
 					$this->insertarimagen();
 					
+					
 					$result.=$this->proceso('list');
+					
 					
 					break;
 
@@ -164,17 +168,17 @@ if(!isset($_SESSION['nombre_usuario']))
 
 						<div style="background-color:;height:auto;width:32.3%;display:inline-block;">
 							<div>
-							<input readonly="readonly" placeholder="F.Creacion" required="" type="text" name="fecha_creacion_ticket" class="form-control" value="'.(isset($registro)?$registro['fecha_creacion_ticket']:"").'">
+							<input readonly="readonly" placeholder="F.Creacion" required="" type="data" name="fecha_creacion_ticket" class="form-control" value="'.(isset($registro)?$registro['fecha_creacion_ticket']:"").'">
 							</div>
 						</div>
 						<div style="background-color:;height:auto;width:32.3%;display:inline-block;">
 							<div>
-							<input readonly="readonly" placeholder="F.Modificacion" required="" type="text" name="fecha_modificacion_ticket" class="form-control" value="'.(isset($registro)?$registro['fecha_modificacion_ticket']:"").'">
+							<input readonly="readonly" placeholder="F.Modificacion" required="" type="data" name="fecha_modificacion_ticket" class="form-control" value="'.(isset($registro)?$registro['fecha_modificacion_ticket']:"").'">
 							</div>
 						</div>
 						<div  style=";background-color:;height:auto;width:31.3%;float:right;">
 							<div style="height:55px;margin-top:15px">
-								<h4 style="font-weight: 900; margin-top:" align="center">NT: "'.(isset($registro)?$registro['id']:" ").'"</h4>
+								<h4 style="font-weight: 900; margin-top:" align="center">NT: "'.(isset($registro)?$registro['id']:"").'"</h4>
 							</div>
 						</div>
 
@@ -414,32 +418,29 @@ if(!isset($_SESSION['nombre_usuario']))
 		}
 
 		function insertarimagen(){
+
+			$idlastticket = $this->maxticket();
 			$carpeta = "../imagenes/";
 		
-				if(isset($_FILES["imagen"])){
-					//echo "imagen cargada";
-					$file = $_FILES["imagen"];
-					$nombre = $file["name"];
-					$tipo = $file["type"];
-					$size = $file["size"];
-					$ruta_provisional = $file["tmp_name"];
-					echo $nombre;
-					echo $tipo;
-					echo $size;
-					$src = $carpeta.$nombre;
-					move_uploaded_file($ruta_provisional,$src);
-					//$picture = "imagenes/".$nombre;
+				//echo "imagen cargada";
+				$file = $_FILES["imagen"];
+				$nombre = $file["name"];
+				$tipo = $file["type"];
+				$size = $file["size"];
+				$ruta_provisional = $file["tmp_name"];
+				//echo $nombre;
+				//echo $tipo;
+				//echo $size;
+				$src = $carpeta.$nombre;
+				move_uploaded_file($ruta_provisional,$src);
+				//$picture = "imagenes/".$nombre;
 
-					$cad='INSERT INTO imagenes 
-					(nombre_imagen,tipo_imagen,ticked) 
-					values("'.$nombre.'"
-					,"'.$tipo.'","'.$_POST['idRegistro'].'")';
+				$cad='INSERT INTO imagenes 
+				(nombre_imagen,tipo_imagen,ticked_id) 
+				values("'.$file["name"].'"
+				,"'.$file["type"].'","'.$idlastticket.'")';
 
-					$res = $this->consult($cad);
-
-				}else{
-					//echo "No se cargo ninguna imagen";
-				}	
+				$res = $this->consult($cad);	
 		}
 
 		function updateUsuario(){
@@ -451,9 +452,9 @@ if(!isset($_SESSION['nombre_usuario']))
 			$res = $this->consult($cad);
 		}
 
-		// funcion para obtener el ultimo empleado
-		function maxempleado(){
-			$cad="SELECT * FROM empleado ORDER BY Id DESC LIMIT 1";
+		// funcion para obtener el ultimo ticket creado (solo se usa en el insert de ticket)
+		function maxticket(){
+			$cad="SELECT * FROM tickets ORDER BY id DESC LIMIT 1";
 
 
 			$res = $this->consult($cad);
@@ -461,10 +462,11 @@ if(!isset($_SESSION['nombre_usuario']))
 
 			// volcar datos, provenientes de una consulta mysql, dentro de un array php
 			$volcadoarray = mysqli_fetch_array($res);
-			$maxemp = $volcadoarray['Id'];
+			$idmaxticket = $volcadoarray['id'];
 
-			return $maxemp;
+			return $idmaxticket;
 		}
+		
 
 		function creausuario(){
 
