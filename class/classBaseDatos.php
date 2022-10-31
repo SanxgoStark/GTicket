@@ -77,6 +77,14 @@ class BaseDatos
    return $result;
 	}
 
+	function cajaDesplegablelocal($array,$campoFormulario,$existeregistro){
+		//$tiposConexion = array("Alambrico","Inalambrico","otro");
+		$result='<select name="'.$campoFormulario.'" class="form-control">';
+		foreach ($tiposConexion as $elemento) 
+     $result.='<option value="'.$elemento.'" '.(($existeregistro)?" selected ":"").'>'.$elemento.'</option>';
+   $result.="</select>";
+   return $result;
+	}
 
 	function infoCampo($columna){
 		return mysqli_fetch_field_direct($this->bloqueRegistros,$columna);

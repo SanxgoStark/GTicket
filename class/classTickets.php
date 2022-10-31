@@ -5,8 +5,10 @@
  * MODELO , CONTROLADOR
  */
 
-// las sesiones es el ecanismo de asegurarnos que el usuario se logeo correctamente
 
+
+// las sesiones es el ecanismo de asegurarnos que el usuario se logeo correctamente
+date_default_timezone_set('America/Mexico_City');
 // asegurarme que la ssession existe
 // isset permite saber si una variable existe
 if(!isset($_SESSION['nombre_usuario'])) 
@@ -25,10 +27,14 @@ if(!isset($_SESSION['nombre_usuario']))
 	// clase de estatus de espacios
 	class Tickets extends BaseDatos // clase referente a tabla espacios en la base de datos
 	{
+
+
 		// al poner extends la tabla podra heredar el conportamiento de la calse BaseDatos
 		
 		// funcion constructor por defecto
-		function __construct(){}
+		function __construct(){
+
+		}
 
 		// $nomb_emp = $_POST["nomb_emp"];
 
@@ -46,7 +52,7 @@ if(!isset($_SESSION['nombre_usuario']))
                     join empleados E ON E.id = T.empledo_asignado_id where estatus_ticket like '%".$_REQUEST['ticket']."%' order by estatus_ticket";
 					$this->consulta($consulta);
 
-					$result=$this->imprimeTabla($consulta,true,array("formupdate","delete"));
+					$result=$this->imprimeTabla($consulta,true,array("formupdate","delete","cuestionario"));
 
 
 				break;
@@ -61,7 +67,7 @@ if(!isset($_SESSION['nombre_usuario']))
 					(fecha_creacion_ticket,fecha_modificacion_ticket,asunto_ticket,descripcion_ticket,estatus_ticket,prioridad_ticket,empledo_asignado_id,autor_id,nivel_ticket,nota_ticket,nombre_equipo_ticket,fabricante_ticket,modelo_equipo_ticket,tipo_conexion_ticket,nombre_aplicacion_ticket,si_driver_update,nombre_driver_update,sistema_operativo_ticket,tipo_cuestionario) 
 					values("'.$_POST["fecha_creacion_ticket"].'","'.$_POST['fecha_modificacion_ticket'].'"
 					,"'.$_POST['asunto_ticket'].'","'.$_POST['descripcion_ticket'].'","'.$_POST['estatus_ticket'].'"
-					,"'.$_POST['prioridad_ticket'].'","'.$_POST['autor_id'].'","'.$_POST['empleado_asignado_id'].'"
+					,"'.$_POST['prioridad_ticket'].'","'.$_POST['empledo_asignado_id'].'","'.$_POST['autor_id'].'"
 					,"'.$_POST['nivel_ticket'].'","'.$_POST['nota_ticket'].'","'.$_POST['nombre_equipo_ticket'].'"
 					,"'.$_POST['fabricante_ticket'].'","'.$_POST['modelo_equipo_ticket'].'","'.$_POST['tipo_conexion_ticket'].'"
 					,"'.$_POST['nombre_aplicacion_ticket'].'","'.$_POST['si_driver_update'].'","/*nombre_driver_update*/"
@@ -81,18 +87,9 @@ if(!isset($_SESSION['nombre_usuario']))
 
 				// listado que me permite hacer cosas	
 				case 'list': 
-
-				// $cad = "SELECT IdFactura,`IdCita`,EF.Estatus, FP.FormaPago, `Descripcion` from `facturacion` F  
-				// INNER JOIN `estatusfactura` EF ON F.`IdEstatus` = EF.`IdEstatusFactura`
-				// INNER JOIN `formapago` FP ON F.`idFormaPago` = FP.`IdFormaPago`ORDER BY IdFactura";
-
-				//$cad = "SELECT E.Id,CONCAT(nombre_emp,' ',apellidop_emp,' ',apellidom_emp)as Empleado,direccion_emp as Direccion,fechanac_emp as Nacimiento,telnum_emp as Telefono,nomb_usua as Usuario,nomb_rol as Rol FROM empleado E
-    				//join usuario_emp U ON E.Id = U.Id join usuario US ON U.fk_id_usua = US.Id join rol R ON US.fk_id_rol = R.Id ORDER BY E.Id";
-
-                //$cad = "select * from ticket";
 				
                 $cad = "SELECT T.id as Ticket,fecha_creacion_ticket as Creado,fecha_modificacion_ticket as Modificado,asunto_ticket as Asunto,estatus_ticket as Estatus,prioridad_ticket as Prioridad,nivel_ticket as Nivel, CONCAT(nombre_empleado,' ',apellido_paterno) as Atiende FROM tickets T
-                    join empleados E ON E.id = T.empledo_asignado_id";
+                    join empleados E ON E.id = T.empledo_asignado_id WHERE estado_ticket =! 1 ORDER BY T.id";
 
 
 					$result=$this->imprimeTabla($cad,true,array("formupdate","delete","cuestionario"));
@@ -100,7 +97,13 @@ if(!isset($_SESSION['nombre_usuario']))
 					break;
 
 				case 'delete':
-					$this->consulta("DELETE FROM tickets WHERE Id ='".$_POST['idRegistro']."'");
+					//$this->consulta("DELETE FROM tickets WHERE Id ='".$_POST['idRegistro']."'");
+
+					// armado de cadena de actualizacion de estado
+					$cad = 'UPDATE tickets SET estado_ticket = 1 WHERE id = "'.$_POST["idRegistro"].'"';
+
+					//ejecuta la cadena
+					$this->consulta($cad);
 
 					$result.= $this->proceso('list');
 					break;
@@ -115,7 +118,7 @@ if(!isset($_SESSION['nombre_usuario']))
 									  estatus_ticket="'.$_POST['estatus_ticket'].'",
 									  prioridad_ticket="'.$_POST['prioridad_ticket'].'",
 									  autor_id="'.$_POST['autor_id'].'",
-									  empleado_asignado_id="'.$_POST['empleado_asignado_id'].'",
+									  empledo_asignado_id="'.$_POST['empledo_asignado_id'].'",
 									  nivel_ticket="'.$_POST['nivel_ticket'].'",
 									  nota_ticket="'.$_POST['nota_ticket'].'",
 									  nombre_equipo_ticket="'.$_POST['nombre_equipo_ticket'].'",
@@ -148,9 +151,14 @@ if(!isset($_SESSION['nombre_usuario']))
 					$registro=$this->sacaTupla("SELECT * FROM tickets WHERE id=".$_POST['idRegistro']);
 
 				case 'formNew':
+
+					//arreglos de selects
+					$tiposConexion = array("Alambrico","Inalambrico");
 					//echo "formNew";
-					//var_dump($registro);
+					//echo $registro["tipo_conexion_ticket"];
 					//exit;
+					$fechaActual = date('y-m-d h:i:s'); // obtencion de la fecha actual
+
 					$result.='<div class="" style="margin-top:">
 					<form action="" method="post" enctype="multipart/form-data">';
 					if (isset($registro))
@@ -168,12 +176,12 @@ if(!isset($_SESSION['nombre_usuario']))
 
 						<div style="background-color:;height:auto;width:32.3%;display:inline-block;">
 							<div>
-							<input readonly="readonly" placeholder="F.Creacion" required="" type="data" name="fecha_creacion_ticket" class="form-control" value="'.(isset($registro)?$registro['fecha_creacion_ticket']:"").'">
+							<input readonly="readonly" placeholder="F.Creacion" required="" type="data" name="fecha_creacion_ticket" class="form-control" value="'.(isset($registro)?$registro['fecha_creacion_ticket']:"$fechaActual").'">
 							</div>
 						</div>
 						<div style="background-color:;height:auto;width:32.3%;display:inline-block;">
 							<div>
-							<input readonly="readonly" placeholder="F.Modificacion" required="" type="data" name="fecha_modificacion_ticket" class="form-control" value="'.(isset($registro)?$registro['fecha_modificacion_ticket']:"").'">
+							<input readonly="readonly" placeholder="F.Modificacion" required="" type="data" name="fecha_modificacion_ticket" class="form-control" value="'.$fechaActual.'">
 							</div>
 						</div>
 						<div  style=";background-color:;height:auto;width:31.3%;float:right;">
@@ -223,7 +231,7 @@ if(!isset($_SESSION['nombre_usuario']))
 					<label style="margin-top:10px" class="col-md-3">Atiende * </label>
 					<div style="margin-top:10px" class="col-md-8">
 					<div class="col-md-8">';
-					$result.=$this->cajaDesplegable("usuarios","empleado_asignado_id","id","nombre_usuario",isset($registro)?$registro['empleado_asignado_id']:"");
+					$result.=$this->cajaDesplegable("usuarios","empledo_asignado_id","id","nombre_usuario",isset($registro)?$registro['empledo_asignado_id']:"");
 					$result.='
 					</div>
 					</div>
@@ -354,7 +362,9 @@ if(!isset($_SESSION['nombre_usuario']))
 							<label class="form-label mt-4">¿Que tipo de conexion tiene actualmente?</label>
 								<div class="col-md-8">
 								<div class="form-group">
-									<select class="form-select" name="tipo_conexion_ticket">
+									<select class="form-select" name="tipo_conexion_ticket">';
+									$result.='if("'.isset($registro).'"){.' .'<option value="'.(($registro["tipo_conexion_ticket"])? $registro["tipo_conexion_ticket"]:"").'" '.(($registro["tipo_conexion_ticket"])?" selected ":"").'>'.(($registro["tipo_conexion_ticket"])? $registro["tipo_conexion_ticket"]:'Seleccione').'</option>}';
+									$result.='	
 										<option value="Alambrica">Alambrica</option>
 										<option value="Inalambrica">Inalambrica</option>
 									</select>
