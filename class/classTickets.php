@@ -40,6 +40,21 @@ if(!isset($_SESSION['nombre_usuario']))
 
 		// que quiero hacer con esta tabla
 		function proceso($accion){
+			
+			//arreglos de selects
+			$estatusTickets = array("Abierto","Cerrado");
+			$prioridadTickets = array("Normal","Media","Alta");
+			$nivelesSoporte = array("N1","N2");
+			$fabricantes = array("HP","DELL","Otro");
+			$modelos = array("N1XZS2","67FR","Otro");
+			$sistemasOperativos = array("Windows 7 Enterprise","Windows 10 Pro","Windows 10 Home","Windows 10 Enterprise","Windows 11 Pro");
+			$tiposConexion = array("Alambrica","Inalambrica");
+			$aplicaciones = array("Word","Excel","Power Point","SAP","JBA","Nonconformance","ninguna");
+			$ifinstalldrivers = array("Si","No");
+			$tiposCuestionario = array("CCP","SO","RED","CP","SEG","IMP","SOF");
+			
+			
+			
 			// echo "pase por proceso";
 
 			$result=""; // variable para acumular el resultado
@@ -134,10 +149,6 @@ if(!isset($_SESSION['nombre_usuario']))
 					//ejecuta la cadena
 					$this->consulta($cad);
 
-					// Update para usuario
-					$this->updateUsuario();
-
-
 					$result.=$this->proceso('list');
 
 
@@ -152,8 +163,8 @@ if(!isset($_SESSION['nombre_usuario']))
 
 				case 'formNew':
 
-					//arreglos de selects
-					$tiposConexion = array("Alambrico","Inalambrico");
+					
+					
 					//echo "formNew";
 					//echo $registro["tipo_conexion_ticket"];
 					//exit;
@@ -207,26 +218,21 @@ if(!isset($_SESSION['nombre_usuario']))
 					<input placeholder="Descripcion" required="" type="text" name="descripcion_ticket" class="form-control" value="'.(isset($registro)?$registro['descripcion_ticket']:"").'">
 					</div>
 
-					<label style="margin-top:10px" class="col-md-3">Estatus * </label>
-					<div style="margin-top:10px" class="col-md-8">
-					<div class="form-group">
-						<select class="form-select" name="estatus_ticket">
-							<option value="Abierto">Abierto</option>
-							<option value="Cerrado">Cerrado</option>
-						</select>
-						</div>
-					</div>
+					<label style="margin-top:10px" class="col-md-3">Estatus *</label>
+									<div style="margin-top:10px" class="col-md-8">
+									<div class="col-md-8">';
+									$result.=$this->cajaDesplegablelocal($estatusTickets,"estatus_ticket",isset($registro)?$registro['estatus_ticket']:"");
+									$result.='
+									</div>
+									</div>
  
-					<label style="margin-top:10px" class="col-md-3">Prioridad * </label>
-					<div style="margin-top:10px" class="col-md-8">
-					<div class="form-group">
-						<select class="form-select" name="prioridad_ticket">
-							<option value="Normal">Normal</option>
-							<option value="Media">Media</option>
-							<option value="Alta">Alta</option>
-						</select>
-						</div>
-					</div>
+					<label style="margin-top:10px" class="col-md-3">Prioridad *</label>
+									<div style="margin-top:10px" class="col-md-8">
+									<div class="col-md-8">';
+									$result.=$this->cajaDesplegablelocal($prioridadTickets,"prioridad_ticket",isset($registro)?$registro['prioridad_ticket']:"");
+									$result.='
+									</div>
+									</div>
 
 					<label style="margin-top:10px" class="col-md-3">Atiende * </label>
 					<div style="margin-top:10px" class="col-md-8">
@@ -236,17 +242,13 @@ if(!isset($_SESSION['nombre_usuario']))
 					</div>
 					</div>
 
-					
-
-					<label style="margin-top:10px" class="col-md-3">Nivel Soporte * </label>
-					<div style="margin-top:10px" class="col-md-8">
-					<div class="form-group">
-						<select class="form-select" name="nivel_ticket">
-							<option value="N1">N1</option>
-							<option value="N2">N2</option>
-						</select>
-						</div>
-					</div>
+					<label style="margin-top:10px" class="col-md-3">Nivel Soporte *</label>
+									<div style="margin-top:10px" class="col-md-8">
+									<div class="col-md-8">';
+									$result.=$this->cajaDesplegablelocal($nivelesSoporte,"nivel_ticket",isset($registro)?$registro['nivel_ticket']:"");
+									$result.='
+									</div>
+									</div>
 
 					<label style="margin-top:10px" class="col-md-3" class="form-group">Nota * </label>
 					<div style="margin-top:10px" class="col-md-8">
@@ -278,39 +280,29 @@ if(!isset($_SESSION['nombre_usuario']))
 								<input placeholder="Nombre Equipo" required="" type="text" name="nombre_equipo_ticket" class="form-control" value="'.(isset($registro)?$registro['nombre_equipo_ticket']:"").'">
 								</div>
 
-								<label style="margin-top:10px" class="col-md-3">Fabricante * </label>
-								<div style="margin-top:10px" class="col-md-8">
-								<div class="form-group">
-									<select class="form-select" name="fabricante_ticket">
-										<option value="HP">HP</option>
-										<option value="DELL">DELL</option>
-										<option value="Otro">Otro</option>
-									</select>
+								<label style="margin-top:10px" class="col-md-3">Fabricante *</label>
+									<div style="margin-top:10px" class="col-md-8">
+									<div class="col-md-8">';
+									$result.=$this->cajaDesplegablelocal($fabricantes,"fabricante_ticket",isset($registro)?$registro['fabricante_ticket']:"");
+									$result.='
 									</div>
-								</div>
+									</div>
 
-								<label style="margin-top:10px" class="col-md-3">Modelo * </label>
-								<div style="margin-top:10px" class="col-md-8">
-								<div class="form-group">
-									<select class="form-select" name="modelo_equipo_ticket">
-										<option value="N1XZS2">N1XZS2</option>
-										<option value="67FR">67FR</option>
-									</select>
+								<label style="margin-top:10px" class="col-md-3">Modelo *</label>
+									<div style="margin-top:10px" class="col-md-8">
+									<div class="col-md-8">';
+									$result.=$this->cajaDesplegablelocal($modelos,"modelo_equipo_ticket",isset($registro)?$registro['modelo_equipo_ticket']:"");
+									$result.='
 									</div>
-								</div>
+									</div>
 
-								<label style="margin-top:10px" class="col-md-3">S.O * </label>
-								<div style="margin-top:10px" class="col-md-8">
-								<div class="form-group">
-									<select class="form-select" name="sistema_operativo_ticket">
-										<option value="Windows 7 Enterprise">Windows 7 Enterprise</option>
-										<option value="Windows 10 Pro">Windows 10 Pro</option>
-										<option value="Windows 10 Home">Windows 10 Home</option>
-										<option value="Windows 10 Enterprise">Windows 10 Enterprise</option>
-										<option value="Windows 11 Pro">Windows 11 Pro</option>
-									</select>
+								<label style="margin-top:10px" class="col-md-3">S.O *</label>
+									<div style="margin-top:10px" class="col-md-8">
+									<div class="col-md-8">';
+									$result.=$this->cajaDesplegablelocal($sistemasOperativos,"sistema_operativo_ticket",isset($registro)?$registro['sistema_operativo_ticket']:"");
+									$result.='
 									</div>
-								</div>
+									</div>
 
 							</div>
 							</div>
@@ -333,20 +325,13 @@ if(!isset($_SESSION['nombre_usuario']))
 									$result.='
 									</div>
 									</div>
-					
 
-									<label class="form-label mt-4">Tipo de cuestionario</label>
+
+									<label class="form-label mt-4">Tipo de cuestionario *</label>
 									<div class="col-md-8">
-									<div class="form-group">
-										<select class="form-select" name="tipo_cuestionario">
-											<option value="CCP">CCP</option>
-											<option value="SO">SO</option>
-											<option value="RED">RED</option>
-											<option value="CP">CP</option>
-											<option value="SEG">SEG</option>
-											<option value="IMP">IMP</option>
-											<option value="SOF">SOF</option>
-										</select>
+									<div class="form-group">';
+									$result.=$this->cajaDesplegablelocal($tiposCuestionario,"tipo_cuestionario",isset($registro)?$registro['tipo_cuestionario']:"");
+									$result.='
 									</div>
 									</div>
 
@@ -359,41 +344,29 @@ if(!isset($_SESSION['nombre_usuario']))
 							<div style="margin-left:9%" class="col-md-10">
 							<div class="row">
 
-							<label class="form-label mt-4">¿Que tipo de conexion tiene actualmente?</label>
-								<div class="col-md-8">
-								<div class="form-group">
-									<select class="form-select" name="tipo_conexion_ticket">';
-									$result.='if("'.isset($registro).'"){.' .'<option value="'.(($registro["tipo_conexion_ticket"])? $registro["tipo_conexion_ticket"]:"").'" '.(($registro["tipo_conexion_ticket"])?" selected ":"").'>'.(($registro["tipo_conexion_ticket"])? $registro["tipo_conexion_ticket"]:'Seleccione').'</option>}';
-									$result.='	
-										<option value="Alambrica">Alambrica</option>
-										<option value="Inalambrica">Inalambrica</option>
-									</select>
+								<label class="form-label mt-4">¿Que tipo de conexion tiene actualmente?</label>
+									<div class="col-md-8">
+									<div class="form-group">';
+									$result.=$this->cajaDesplegablelocal($tiposConexion,"tipo_conexion_ticket",isset($registro)?$registro['tipo_conexion_ticket']:"");
+									$result.='
 									</div>
-								</div>
+									</div>
 
 								<label class="form-label mt-4">¿Que aplicacion usaba cuando sucedio el error?</label>
-								<div class="col-md-8">
-								<div class="form-group">
-									<select class="form-select" name="nombre_aplicacion_ticket">
-										<option value="Word">Word</option>
-										<option value="Excel">Excel</option>
-										<option value="Powerpoint">Power Point</option>
-										<option value="SAP">SAP</option>
-										<option value="JBA">JBA</option>
-										<option value="Nonconformance">Nonconformance</option>
-									</select>
+									<div class="col-md-8">
+									<div class="form-group">';
+									$result.=$this->cajaDesplegablelocal($aplicaciones,"nombre_aplicacion_ticket",isset($registro)?$registro['nombre_aplicacion_ticket']:"");
+									$result.='
 									</div>
-								</div>
+									</div>
 
 								<label class="form-label mt-4">¿A instalado drivers o actualizaciones recientemente?</label>
-								<div class="col-md-8">
-									<div class="form-group">
-									<select class="form-select" name="si_driver_update">
-									<option value="Si">Si</option>
-									<option value="No">No</option>
-									</select>
+									<div class="col-md-8">
+									<div class="form-group">';
+									$result.=$this->cajaDesplegablelocal($ifinstalldrivers,"si_driver_update",isset($registro)?$registro['si_driver_update']:"");
+									$result.='
 									</div>
-								</div>
+									</div>
 
 							</div>
 							</div>
@@ -451,15 +424,6 @@ if(!isset($_SESSION['nombre_usuario']))
 				,"'.$file["type"].'","'.$idlastticket.'")';
 
 				$res = $this->consult($cad);	
-		}
-
-		function updateUsuario(){
-			$cad = 'UPDATE usuario SET nomb_usua="'.$_POST["nomb_usua"].'",
-									   pass_usua="'.$_POST["pass_usua"].'",
-									   fk_id_rol="'.$_POST["fk_id_rol"].'",
-									   clave_cancelv="'.$_POST["clave_cancelv"].'"
-			WHERE Id = "'.$_POST["idRegistro"].'"';
-			$res = $this->consult($cad);
 		}
 
 		// funcion para obtener el ultimo ticket creado (solo se usa en el insert de ticket)

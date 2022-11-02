@@ -77,12 +77,15 @@ class BaseDatos
    return $result;
 	}
 
-	function cajaDesplegablelocal($array,$campoFormulario,$existeregistro){
-		//$tiposConexion = array("Alambrico","Inalambrico","otro");
+	function cajaDesplegablelocal($arreglo,$campoFormulario,$registro){
+
 		$result='<select name="'.$campoFormulario.'" class="form-control">';
-		foreach ($tiposConexion as $elemento) 
-     $result.='<option value="'.$elemento.'" '.(($existeregistro)?" selected ":"").'>'.$elemento.'</option>';
+		foreach ((array)$arreglo as $elemento) 
+     $result.='<option value="'.$elemento.'" '.(($registro == $elemento)?" selected ":"").'>'.$elemento.'</option>';
    $result.="</select>";
+   echo $registro;
+
+   echo $elemento;
    return $result;
 	}
 
