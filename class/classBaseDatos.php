@@ -83,9 +83,7 @@ class BaseDatos
 		foreach ((array)$arreglo as $elemento) 
      $result.='<option value="'.$elemento.'" '.(($registro == $elemento)?" selected ":"").'>'.$elemento.'</option>';
    $result.="</select>";
-   echo $registro;
 
-   echo $elemento;
    return $result;
 	}
 
