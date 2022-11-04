@@ -8,6 +8,8 @@ if(!isset($_SESSION['nombre_usuario']))
 	{header("location: ../index.php?e=2"); // acceso ilegal
 	exit; // ya no hagas nada}
 }
+
+//echo var_dump($_POST);
 ?>
 
  
@@ -24,7 +26,7 @@ if(!isset($_SESSION['nombre_usuario']))
 	<? include "menu.php" ?>
 	<h2 style="margin-top: 15px" align="center">Cuestionario </h2>
 
-	<div style="overflow-y: scroll;height: 485px;margin-top: 70px;background-color: rgba(255,255,255,0.7);" class="container">
+	<div style="overflow-y: scroll;height:auto;margin-top:30%px;margin-left:1%; margin-right:1%;background-color:rgba(255,255,255,0.7)" class="">
 
 		<? include "../class/classCuestionarios.php" ?>
 		

@@ -154,9 +154,8 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					$result.=$this->proceso('list');
 
-
-
 					break;
+
 
 				case 'formupdate':
 					//$registro=$this->sacaTupla("SELECT * FROM empleado WHERE Id=".$_POST['idRegistro']); 
@@ -554,11 +553,11 @@ if(!isset($_SESSION['nombre_usuario']))
 						case 'cuestionario':
 		        		
 		        			$result.='<td width="6%">
-		        			<form method="post">
+		        			<form method="post" action="cuestionario.php">
 		        			<input type="hidden" value="'.$value.'" name="accion">
 		        			<input type="hidden" value="'.$registro[0].'" name="idRegistro">
 		        			<button class="btn btn-warning">
-		        			<i title="Editar registro" class="fa fa-list-alt"></i>
+		        			<i title="Cuestionario" class="fa fa-list-alt"></i>
 		        			</button>
 		        			</form>
 		        			</td>';
