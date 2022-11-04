@@ -405,57 +405,43 @@ if(!isset($_SESSION['nombre_usuario']))
 
 		function insertarimagen(){
 
+			//echo var_dump($_POST);
+			//exit;
 			$carpeta = "../imagenes/";
 
+			//echo "imagen cargada";
 			$file = $_FILES["imagen"];
 			$nombre = $file["name"];
 			$tipo = $file["type"];
 			$size = $file["size"];
 			$ruta_provisional = $file["tmp_name"];
-
-		    //echo var_dump($_POST);
-			//exit;
+			//echo $nombre;
+			//echo $tipo;
+			//echo $size;
+			$src = $carpeta.$nombre;
+			move_uploaded_file($ruta_provisional,$src);
 			//$picture = "imagenes/".$nombre;
 
 			if(isset($_POST["idRegistro"])){
 			 // cuando el ticket ya existe y se desea agregar una nueva imagen adicional
 
-				// si la longitud del nombre del archivo es diferente de 0 entonces se cargo una imagen
-				// se procede a guardarla en la ruta especificada
-				if(strlen($file["name"]) != 0){
-					$src = $carpeta.$nombre;
-					move_uploaded_file($ruta_provisional,$src);
-
-					$cad='INSERT INTO imagenes 
-					(nombre_imagen,tipo_imagen,ticked_id) 
-					values("'.$file["name"].'"
-					,"'.$file["type"].'","'.$_POST["idRegistro"].'")';
-
-					$res = $this->consult($cad);
-				}	
+			 $cad='INSERT INTO imagenes 
+			 (nombre_imagen,tipo_imagen,ticked_id) 
+			 values("'.$file["name"].'"
+			 ,"'.$file["type"].'","'.$_POST["idRegistro"].'")';
 
 			}else{
-				// cuando el ticket es nuevo aun no existe idRegistro
-				$lastticket = $this->maxticket();
+			 // cuando el ticket es nuevo aun no existe idRegistro
+			 $lastticket = $this->maxticket();
 
-				// si la longitud del nombre del archivo es diferente de 0 entonces se cargo una imagen
-				// se procede a guardarla en la ruta especificada
-				if(strlen($file["name"]) != 0){
-					$src = $carpeta.$nombre;
-					move_uploaded_file($ruta_provisional,$src);
-
-					$cad='INSERT INTO imagenes 
-					(nombre_imagen,tipo_imagen,ticked_id) 
-					values("'.$file["name"].'"
-					,"'.$file["type"].'","'.$lastticket.'")';
-
-					$res = $this->consult($cad);
-				}
-				
+			 $cad='INSERT INTO imagenes 
+			 (nombre_imagen,tipo_imagen,ticked_id) 
+			 values("'.$file["name"].'"
+			 ,"'.$file["type"].'","'.$lastticket.'")';
 
 			}	
 
-				
+			$res = $this->consult($cad);	
 		}
 
 		// funcion para obtener el ultimo ticket creado (solo se usa en el insert de ticket)
