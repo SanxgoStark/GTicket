@@ -42,15 +42,61 @@ if(!isset($_SESSION['nombre_usuario']))
 		function proceso($accion){
 
             $tipo_cuestionario = $this->consultartipo();
-			
+			$arrayanswers;
+
 			//arreglos de selects
 			$selectboolean = array("Si","No");	
 
 			$result=""; // variable para acumular el resultado
-			switch ($tipo_cuestionario) {
+			switch ($accion) {
 
-                case 'CCP':
-                    
+                case 'insert':
+
+                    $arrayanswers [0] = $_POST["r1"];
+                    $arrayanswers [1] = $_POST["r2"];
+                    $arrayanswers [2] = $_POST["r3"];
+                    $arrayanswers [3] = $_POST["r4"];
+                    $arrayanswers [4] = $_POST["r5"];
+                    $arrayanswers [5] = $_POST["r6"];
+                    $arrayanswers [6] = $_POST["r7"];
+                    $arrayanswers [7] = $_POST["r8"];
+                    $arrayanswers [8] = $_POST["r9"];
+                    $arrayanswers [9] = $_POST["r10"];
+                    $arrayanswers [10] = $_POST["r11"];
+                    $arrayanswers [11] = $_POST["r12"];
+
+                    echo var_dump($arrayanswers);
+                    //echo var_dump($_POST);
+                    exit;
+    
+                    // armado de cadena de insersion
+                        $cad='INSERT INTO tickets 
+                        (fecha_creacion_ticket,fecha_modificacion_ticket,asunto_ticket,descripcion_ticket,estatus_ticket,prioridad_ticket,empledo_asignado_id,autor_id,nivel_ticket,nota_ticket,nombre_equipo_ticket,fabricante_ticket,modelo_equipo_ticket,tipo_conexion_ticket,nombre_aplicacion_ticket,si_driver_update,nombre_driver_update,sistema_operativo_ticket,tipo_cuestionario) 
+                        values("'.$_POST["fecha_creacion_ticket"].'","'.$_POST['fecha_modificacion_ticket'].'"
+                        ,"'.$_POST['asunto_ticket'].'","'.$_POST['descripcion_ticket'].'","'.$_POST['estatus_ticket'].'"
+                        ,"'.$_POST['prioridad_ticket'].'","'.$_POST['empledo_asignado_id'].'","'.$_POST['autor_id'].'"
+                        ,"'.$_POST['nivel_ticket'].'","'.$_POST['nota_ticket'].'","'.$_POST['nombre_equipo_ticket'].'"
+                        ,"'.$_POST['fabricante_ticket'].'","'.$_POST['modelo_equipo_ticket'].'","'.$_POST['tipo_conexion_ticket'].'"
+                        ,"'.$_POST['nombre_aplicacion_ticket'].'","'.$_POST['si_driver_update'].'","/*nombre_driver_update*/"
+                        ,"'.$_POST['sistema_operativo_ticket'].'","'.$_POST['tipo_cuestionario'].'")';
+    
+                        //ejecuta la cadena
+                        $this->consulta($cad);
+    
+                        // funcion para insertar imagen en bd
+                        $this->insertarimagen();
+                        
+                        
+                        $result.=$this->proceso('list');
+                        
+                        
+                        break;
+
+
+                case 'cuestionario':
+
+                if($tipo_cuestionario == 'CCP'){
+
                     echo "formulario de Componentes de computadora portatil";
 
                     $result.='
@@ -73,38 +119,44 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					<label style="margin-top:10px" class="col-md-5">¿Qué tipo de computadora tiene?</label>
 					<div style="margin-top:10px" class="col-md-8">
-					<input placeholder="Asunto" required="" type="text" name="asunto_ticket" class="form-control" value="'.(isset($registro)?$registro['asunto_ticket']:"").'">
+                    <input type="hidden" value="1" name="pregunta_id">
+					<input placeholder="Asunto" required="" type="text" name="r1" class="form-control" value="'.(isset($registro)?$registro['asunto_ticket']:"").'">
 					</div>
 
 					<label style="margin-top:10px" class="col-md-5">¿Cuales son la marca y modelo de la computadora?</label>
 					<div style="margin-top:10px" class="col-md-8">
-					<input placeholder="Descripcion" required="" type="text" name="descripcion_ticket" class="form-control" value="'.(isset($registro)?$registro['descripcion_ticket']:"").'">
+                    <input type="hidden" value="2" name="pregunta_id">
+					<input placeholder="Descripcion" required="" type="text" name="r2" class="form-control" value="'.(isset($registro)?$registro['descripcion_ticket']:"").'">
 					</div>
 
                     <label style="margin-top:10px" class="col-md-5">¿Puede describir que ocurre al arrancar la computadora?</label>
 					<div style="margin-top:10px" class="col-md-8">
-					<input placeholder="Descripcion" required="" type="text" name="descripcion_ticket" class="form-control" value="'.(isset($registro)?$registro['descripcion_ticket']:"").'">
+                    <input type="hidden" value="3" name="pregunta_id">
+					<input placeholder="Descripcion" required="" type="text" name="r3" class="form-control" value="'.(isset($registro)?$registro['descripcion_ticket']:"").'">
 					</div>
 
                     <label style="margin-top:10px" class="col-md-5">¿Con qué frecuencia presenta la computadora problemas al arrancar? </label>
 					<div style="margin-top:10px" class="col-md-8">
-					<input placeholder="Descripcion" required="" type="text" name="descripcion_ticket" class="form-control" value="'.(isset($registro)?$registro['descripcion_ticket']:"").'">
+                    <input type="hidden" value="4" name="pregunta_id">
+					<input placeholder="Descripcion" required="" type="text" name="r4" class="form-control" value="'.(isset($registro)?$registro['descripcion_ticket']:"").'">
 					</div>
 
                     <label style="margin-top:10px" class="col-md-5">¿Cuál es la primera pantalla que ve al encender el equipo?</label>
 					<div style="margin-top:10px" class="col-md-8">
-					<input placeholder="Descripcion" required="" type="text" name="descripcion_ticket" class="form-control" value="'.(isset($registro)?$registro['descripcion_ticket']:"").'">
+                    <input type="hidden" value="5" name="pregunta_id">
+					<input placeholder="Descripcion" required="" type="text" name="r5" class="form-control" value="'.(isset($registro)?$registro['descripcion_ticket']:"").'">
 					</div>
 
                     <label style="margin-top:10px" class="col-md-5">¿Qué sonidos emite la computadora al arrancar?</label>
 					<div style="margin-top:10px" class="col-md-8">
-					<input placeholder="Descripcion" required="" type="text" name="descripcion_ticket" class="form-control" value="'.(isset($registro)?$registro['descripcion_ticket']:"").'">
+                    <input type="hidden" value="6" name="pregunta_id">
+					<input placeholder="Descripcion" required="" type="text" name="r6" class="form-control" value="'.(isset($registro)?$registro['descripcion_ticket']:"").'">
 					</div>
 
 					<label style="margin-top:10px" class="col-md-5">¿Se ha reparado recientemente la computadora?</label>
 									<div style="margin-top:10px" class="col-md-8">
 									<div class="col-md-1">';
-									$result.=$this->cajaDesplegablelocal($selectboolean,"estatus_ticket",isset($registro)?$registro['estatus_ticket']:"");
+									$result.=$this->cajaDesplegablelocal($selectboolean,"r7",isset($registro)?$registro['estatus_ticket']:"");
 									$result.='
 									</div>
 									</div>
@@ -112,7 +164,7 @@ if(!isset($_SESSION['nombre_usuario']))
 					<label style="margin-top:10px" class="col-md-5">¿Alguien más ha utilizado la computadora?</label>
 									<div style="margin-top:10px" class="col-md-8">
 									<div class="col-md-1">';
-									$result.=$this->cajaDesplegablelocal($selectboolean,"prioridad_ticket",isset($registro)?$registro['prioridad_ticket']:"");
+									$result.=$this->cajaDesplegablelocal($selectboolean,"r8",isset($registro)?$registro['prioridad_ticket']:"");
 									$result.='
 									</div>
 									</div>
@@ -120,7 +172,7 @@ if(!isset($_SESSION['nombre_usuario']))
                     <label style="margin-top:10px" class="col-md-5">¿Hay un disquete o un disco en la unidad de disquetes o en la unidad óptica?</label>
 									<div style="margin-top:10px" class="col-md-8">
 									<div class="col-md-1">';
-									$result.=$this->cajaDesplegablelocal($selectboolean,"prioridad_ticket",isset($registro)?$registro['prioridad_ticket']:"");
+									$result.=$this->cajaDesplegablelocal($selectboolean,"r9",isset($registro)?$registro['prioridad_ticket']:"");
 									$result.='
 									</div>
 									</div>
@@ -128,7 +180,7 @@ if(!isset($_SESSION['nombre_usuario']))
                     <label style="margin-top:10px" class="col-md-5">¿Tiene conectada la computadora una unidad USB?</label>
 									<div style="margin-top:10px" class="col-md-8">
 									<div class="col-md-1">';
-									$result.=$this->cajaDesplegablelocal($selectboolean,"prioridad_ticket",isset($registro)?$registro['prioridad_ticket']:"");
+									$result.=$this->cajaDesplegablelocal($selectboolean,"r10",isset($registro)?$registro['prioridad_ticket']:"");
 									$result.='
 									</div>
 									</div>
@@ -136,7 +188,7 @@ if(!isset($_SESSION['nombre_usuario']))
                     <label style="margin-top:10px" class="col-md-5">¿Puede utilizar la computadora para conectarse a una red inalámbrica?</label>
 									<div style="margin-top:10px" class="col-md-8">
 									<div class="col-md-1">';
-									$result.=$this->cajaDesplegablelocal($selectboolean,"prioridad_ticket",isset($registro)?$registro['prioridad_ticket']:"");
+									$result.=$this->cajaDesplegablelocal($selectboolean,"r11",isset($registro)?$registro['prioridad_ticket']:"");
 									$result.='
 									</div>
 									</div>
@@ -144,7 +196,7 @@ if(!isset($_SESSION['nombre_usuario']))
                     <label style="margin-top:10px" class="col-md-5">¿Está la computadora en una sala con cerradura por la noche?</label>
 									<div style="margin-top:10px" class="col-md-8">
 									<div class="col-md-1">';
-									$result.=$this->cajaDesplegablelocal($selectboolean,"prioridad_ticket",isset($registro)?$registro['prioridad_ticket']:"");
+									$result.=$this->cajaDesplegablelocal($selectboolean,"r12",isset($registro)?$registro['prioridad_ticket']:"");
 									$result.='
 									</div>
 									</div>
@@ -165,76 +217,22 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					</div>';
 
-                    return $result;
-                break;
-
-                case 'SO':
+                }if($tipo_cuestionario == 'SO'){
                     echo "formulario de Sistemas operativos";
-
-                    return $result;
-                break;
-
-                case 'RED':
+                }if($tipo_cuestionario == 'RED'){
                     echo "formulario de Redes";
-
-                    return $result;
-                break;
-
-                case 'CP':
+                }if($tipo_cuestionario == 'CP'){
                     echo "formulario de Cumputadora portatil";
-
-                    return $result;
-                break;
-
-                case 'SEG':
+                }if($tipo_cuestionario == 'SEG'){
                     echo "formulario de Seguridad";
-
-                    return $result;
-                break;
-
-                case 'IMP':
+                }if($tipo_cuestionario == 'IMP'){
                     echo "formulario de Impresoras";
-
-                    return $result;
-                break;
-
-                case 'SOF':
+                }if($tipo_cuestionario == 'SOF'){
                     echo "formulario de software";
+                }
 
                     return $result;
                 break;
-                
-                   
-
-				case 'insert':
-				
-				//echo var_dump($_POST);
-				//exit;
-
-				// armado de cadena de insersion
-					$cad='INSERT INTO tickets 
-					(fecha_creacion_ticket,fecha_modificacion_ticket,asunto_ticket,descripcion_ticket,estatus_ticket,prioridad_ticket,empledo_asignado_id,autor_id,nivel_ticket,nota_ticket,nombre_equipo_ticket,fabricante_ticket,modelo_equipo_ticket,tipo_conexion_ticket,nombre_aplicacion_ticket,si_driver_update,nombre_driver_update,sistema_operativo_ticket,tipo_cuestionario) 
-					values("'.$_POST["fecha_creacion_ticket"].'","'.$_POST['fecha_modificacion_ticket'].'"
-					,"'.$_POST['asunto_ticket'].'","'.$_POST['descripcion_ticket'].'","'.$_POST['estatus_ticket'].'"
-					,"'.$_POST['prioridad_ticket'].'","'.$_POST['empledo_asignado_id'].'","'.$_POST['autor_id'].'"
-					,"'.$_POST['nivel_ticket'].'","'.$_POST['nota_ticket'].'","'.$_POST['nombre_equipo_ticket'].'"
-					,"'.$_POST['fabricante_ticket'].'","'.$_POST['modelo_equipo_ticket'].'","'.$_POST['tipo_conexion_ticket'].'"
-					,"'.$_POST['nombre_aplicacion_ticket'].'","'.$_POST['si_driver_update'].'","/*nombre_driver_update*/"
-					,"'.$_POST['sistema_operativo_ticket'].'","'.$_POST['tipo_cuestionario'].'")';
-
-					//ejecuta la cadena
-					$this->consulta($cad);
-
-					// funcion para insertar imagen en bd
-					$this->insertarimagen();
-					
-					
-					$result.=$this->proceso('list');
-					
-					
-					break;
-
-
 				
 				case 'update':
 
