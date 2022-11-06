@@ -52,18 +52,34 @@ if(!isset($_SESSION['nombre_usuario']))
 
                 case 'insert':
 
-                    $arrayanswers [0] = $_POST["r1"];
-                    $arrayanswers [1] = $_POST["r2"];
-                    $arrayanswers [2] = $_POST["r3"];
-                    $arrayanswers [3] = $_POST["r4"];
-                    $arrayanswers [4] = $_POST["r5"];
-                    $arrayanswers [5] = $_POST["r6"];
-                    $arrayanswers [6] = $_POST["r7"];
-                    $arrayanswers [7] = $_POST["r8"];
-                    $arrayanswers [8] = $_POST["r9"];
-                    $arrayanswers [9] = $_POST["r10"];
-                    $arrayanswers [10] = $_POST["r11"];
-                    $arrayanswers [11] = $_POST["r12"];
+					if($tipo_cuestionario == "CCP"){
+						$arrayanswers [0] = $_POST["r1"];
+						$arrayanswers [1] = $_POST["r2"];
+						$arrayanswers [2] = $_POST["r3"];
+						$arrayanswers [3] = $_POST["r4"];
+						$arrayanswers [4] = $_POST["r5"];
+						$arrayanswers [5] = $_POST["r6"];
+						$arrayanswers [6] = $_POST["r7"];
+						$arrayanswers [7] = $_POST["r8"];
+						$arrayanswers [8] = $_POST["r9"];
+						$arrayanswers [9] = $_POST["r10"];
+						$arrayanswers [10] = $_POST["r11"];
+						$arrayanswers [11] = $_POST["r12"];
+					}
+					if($tipo_cuestionario == "SO"){
+						$arrayanswers [0] = $_POST["r14"];
+						$arrayanswers [1] = $_POST["r15"];
+						$arrayanswers [2] = $_POST["r16"];
+						$arrayanswers [3] = $_POST["r17"];
+						$arrayanswers [4] = $_POST["r18"];
+						$arrayanswers [5] = $_POST["r19"];
+						$arrayanswers [6] = $_POST["r20"];
+						$arrayanswers [7] = $_POST["r21"];
+						$arrayanswers [8] = $_POST["r22"];
+						$arrayanswers [9] = $_POST["r23"];
+					}
+
+                    
 
                     echo var_dump($arrayanswers);
                     //echo var_dump($_POST);
