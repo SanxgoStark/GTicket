@@ -213,12 +213,21 @@ if(!isset($_SESSION['nombre_usuario']))
 					
 					$reg = $this->consult($cad);
 
-					// volcar datos, provenientes de una consulta mysql, dentro de un array php
-					$registro = mysqli_fetch_row($reg);
+					$nreg = mysqli_num_rows($reg);
+
+					if ($nreg > 0)
+					{
+						for ($i=0; $i<$nreg; $i++)
+						{
+							$array = mysqli_fetch_array($reg);
+							$registro[$i] = $array["respuesta_pregunta"];
+						}
+			
+					}
 					
-					echo count($registro);
-					echo var_dump($registro);
-					exit;
+					//echo count($registro);
+					//echo var_dump($registro);
+					//exit;
 
                 if($tipo_cuestionario == 'CCP'){
 
