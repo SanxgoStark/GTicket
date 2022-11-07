@@ -42,7 +42,9 @@ if(!isset($_SESSION['nombre_usuario']))
 		function proceso($accion){
 
             $tipo_cuestionario = $this->consultartipo();
+			$idRegistro = intval($_POST["idRegistro"]);
 			$arrayanswers;
+			$arrayidquestions;
 
 			//arreglos de selects
 			$selectboolean = array("Si","No");	
@@ -53,6 +55,10 @@ if(!isset($_SESSION['nombre_usuario']))
                 case 'insert':
 
 					if($tipo_cuestionario == "CCP"){
+						// IDAREA = 1
+
+						$arrayidquestions = [1,2,3,4,5,6,7,8,9,10,11,12];
+
 						$arrayanswers [0] = $_POST["r1"];
 						$arrayanswers [1] = $_POST["r2"];
 						$arrayanswers [2] = $_POST["r3"];
@@ -65,8 +71,34 @@ if(!isset($_SESSION['nombre_usuario']))
 						$arrayanswers [9] = $_POST["r10"];
 						$arrayanswers [10] = $_POST["r11"];
 						$arrayanswers [11] = $_POST["r12"];
+						
+						// FUNCION PARA HACER INSERCION EN LA BASE DE DATOS (ARRAYANWERS,ARRAYIDPREGUNTA,idRegistro)
+						// $this->insertcuestionario($arrayidquestions,$arrayanswers,$idRegistro);
+
+						$cad='INSERT INTO cuestionarios 
+                        (respuesta_pregunta,ticket_id,pregunta_id) 
+                        values("'.$_POST["r1"].'",'.$idRegistro.','.$arrayidquestions[0].'),
+							  ("'.$_POST["r2"].'",'.$idRegistro.','.$arrayidquestions[1].'),
+							  ("'.$_POST["r3"].'",'.$idRegistro.','.$arrayidquestions[2].'),
+							  ("'.$_POST["r4"].'",'.$idRegistro.','.$arrayidquestions[3].'),
+							  ("'.$_POST["r5"].'",'.$idRegistro.','.$arrayidquestions[4].'),
+							  ("'.$_POST["r6"].'",'.$idRegistro.','.$arrayidquestions[5].'),
+							  ("'.$_POST["r7"].'",'.$idRegistro.','.$arrayidquestions[6].'),
+							  ("'.$_POST["r8"].'",'.$idRegistro.','.$arrayidquestions[7].'),
+							  ("'.$_POST["r9"].'",'.$idRegistro.','.$arrayidquestions[8].'),
+							  ("'.$_POST["r10"].'",'.$idRegistro.','.$arrayidquestions[9].'),
+							  ("'.$_POST["r11"].'",'.$idRegistro.','.$arrayidquestions[10].'),
+							  ("'.$_POST["r12"].'",'.$idRegistro.','.$arrayidquestions[11].')';
+    
+                        //ejecuta la cadena
+                        $this->consulta($cad);
+						
 					}
 					if($tipo_cuestionario == "SO"){
+						// IDAREA = 2
+
+						$arrayidquestions = ["14","15","16","17","18","19","20","21","22","23"];
+
 						$arrayanswers [0] = $_POST["r14"];
 						$arrayanswers [1] = $_POST["r15"];
 						$arrayanswers [2] = $_POST["r16"];
@@ -78,30 +110,94 @@ if(!isset($_SESSION['nombre_usuario']))
 						$arrayanswers [8] = $_POST["r22"];
 						$arrayanswers [9] = $_POST["r23"];
 					}
+					if($tipo_cuestionario == "RED"){
+						// IDAREA = 3
 
-                    
+						$arrayidquestions = ["24","25","26","27","28","31","33"];
+
+						$arrayanswers [0] = $_POST["r24"];
+						$arrayanswers [1] = $_POST["r25"];
+						$arrayanswers [2] = $_POST["r26"];
+						$arrayanswers [3] = $_POST["r27"];
+						$arrayanswers [4] = $_POST["r28"];
+						$arrayanswers [5] = $_POST["r31"];
+						$arrayanswers [6] = $_POST["r33"];
+					}
+					if($tipo_cuestionario == "CP"){
+						// IDAREA = 4
+
+						$arrayidquestions = ["34","35","36","37","38","39","40","41","42","43","44"];
+
+						$arrayanswers [0] = $_POST["r34"];
+						$arrayanswers [1] = $_POST["r35"];
+						$arrayanswers [2] = $_POST["r36"];
+						$arrayanswers [3] = $_POST["r37"];
+						$arrayanswers [4] = $_POST["r38"];
+						$arrayanswers [5] = $_POST["r39"];
+						$arrayanswers [6] = $_POST["r40"];
+						$arrayanswers [7] = $_POST["r41"];
+						$arrayanswers [8] = $_POST["r42"];
+						$arrayanswers [9] = $_POST["r43"];
+						$arrayanswers [10] = $_POST["r44"];
+					}
+					if($tipo_cuestionario == "SEG"){
+						// IDAREA = 5
+
+						$arrayidquestions = ["61","62","63","65","66","67","69","70","71","72","73","74","75","76"];
+
+						$arrayanswers [0] = $_POST["r61"];
+						$arrayanswers [1] = $_POST["r62"];
+						$arrayanswers [2] = $_POST["r63"];
+						$arrayanswers [3] = $_POST["r65"];
+						$arrayanswers [4] = $_POST["r66"];
+						$arrayanswers [5] = $_POST["r67"];
+						$arrayanswers [6] = $_POST["r69"];
+						$arrayanswers [7] = $_POST["r70"];
+						$arrayanswers [8] = $_POST["r71"];
+						$arrayanswers [9] = $_POST["r72"];
+						$arrayanswers [10] = $_POST["r73"];
+						$arrayanswers [11] = $_POST["r74"];
+						$arrayanswers [12] = $_POST["r75"];
+						$arrayanswers [13] = $_POST["r76"];
+					}
+					if($tipo_cuestionario == "IMP"){
+						// IDAREA = 6
+
+						$arrayidquestions = ["46","47","48","49","50","51","53","54","55","56","57","58","59","60"];
+
+						$arrayanswers [0] = $_POST["r46"];
+						$arrayanswers [1] = $_POST["r47"];
+						$arrayanswers [2] = $_POST["r48"];
+						$arrayanswers [3] = $_POST["r49"];
+						$arrayanswers [4] = $_POST["r50"];
+						$arrayanswers [5] = $_POST["r51"];
+						$arrayanswers [6] = $_POST["r53"];
+						$arrayanswers [7] = $_POST["r54"];
+						$arrayanswers [8] = $_POST["r55"];
+						$arrayanswers [9] = $_POST["r56"];
+						$arrayanswers [10] = $_POST["r57"];
+						$arrayanswers [11] = $_POST["r58"];
+						$arrayanswers [12] = $_POST["r59"];
+						$arrayanswers [13] = $_POST["r60"];
+					}
+					if($tipo_cuestionario == "SOF"){
+						// IDAREA = 7
+
+						$arrayidquestions = ["77","78","79","80","81","82","83","84"];
+
+						$arrayanswers [0] = $_POST["r77"];
+						$arrayanswers [1] = $_POST["r78"];
+						$arrayanswers [2] = $_POST["r79"];
+						$arrayanswers [3] = $_POST["r80"];
+						$arrayanswers [4] = $_POST["r81"];
+						$arrayanswers [5] = $_POST["r82"];
+						$arrayanswers [6] = $_POST["r83"];
+						$arrayanswers [7] = $_POST["r84"];
+					}
 
                     echo var_dump($arrayanswers);
                     //echo var_dump($_POST);
-                    exit;
-    
-                    // armado de cadena de insersion
-                        $cad='INSERT INTO tickets 
-                        (fecha_creacion_ticket,fecha_modificacion_ticket,asunto_ticket,descripcion_ticket,estatus_ticket,prioridad_ticket,empledo_asignado_id,autor_id,nivel_ticket,nota_ticket,nombre_equipo_ticket,fabricante_ticket,modelo_equipo_ticket,tipo_conexion_ticket,nombre_aplicacion_ticket,si_driver_update,nombre_driver_update,sistema_operativo_ticket,tipo_cuestionario) 
-                        values("'.$_POST["fecha_creacion_ticket"].'","'.$_POST['fecha_modificacion_ticket'].'"
-                        ,"'.$_POST['asunto_ticket'].'","'.$_POST['descripcion_ticket'].'","'.$_POST['estatus_ticket'].'"
-                        ,"'.$_POST['prioridad_ticket'].'","'.$_POST['empledo_asignado_id'].'","'.$_POST['autor_id'].'"
-                        ,"'.$_POST['nivel_ticket'].'","'.$_POST['nota_ticket'].'","'.$_POST['nombre_equipo_ticket'].'"
-                        ,"'.$_POST['fabricante_ticket'].'","'.$_POST['modelo_equipo_ticket'].'","'.$_POST['tipo_conexion_ticket'].'"
-                        ,"'.$_POST['nombre_aplicacion_ticket'].'","'.$_POST['si_driver_update'].'","/*nombre_driver_update*/"
-                        ,"'.$_POST['sistema_operativo_ticket'].'","'.$_POST['tipo_cuestionario'].'")';
-    
-                        //ejecuta la cadena
-                        $this->consulta($cad);
-    
-                        // funcion para insertar imagen en bd
-                        $this->insertarimagen();
-                        
+                    exit;   
                         
                         $result.=$this->proceso('list');
                         
@@ -584,6 +680,29 @@ if(!isset($_SESSION['nombre_usuario']))
 			$idmaxticket = $volcadoarray['id'];
 
 			return $idmaxticket;
+		}
+
+		function insertcuestionario($arrayidquestions,$arrayanswers,$idRegistro){
+
+			echo "entre";
+			echo count($arrayidquestions);
+			echo var_dump($arrayidquestions);
+			echo var_dump($arrayanswers);
+			echo $idRegistro;
+			//exit;
+
+			for ($i=0; $i < count($arrayidquestions); $i++) {
+
+				$cad='INSERT INTO cuestionarios 
+                        (respuesta_pregunta,ticket_id,pregunta_id,) 
+                        values("'.$arrayanswers[$i].'","'.$idRegistro.'"
+						,"'.$arrayidquestions[$i].'")';
+
+				$this->consult($cad);
+
+			}
+
+			return "echo";
 		}
 
         // funcion que cnsulta el tipo de cuestionario
