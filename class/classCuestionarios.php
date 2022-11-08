@@ -111,11 +111,27 @@ if(!isset($_SESSION['nombre_usuario']))
 						$arrayanswers [8] = $_POST["r22"];
 						$arrayanswers [9] = $_POST["r23"];
 
+						$cad='INSERT INTO cuestionarios 
+                        (respuesta_pregunta,ticket_id,pregunta_id) 
+                        values("'.$_POST["r14"].'",'.$idRegistro.','.$arrayidquestions[0].'),
+							  ("'.$_POST["r15"].'",'.$idRegistro.','.$arrayidquestions[1].'),
+							  ("'.$_POST["r16"].'",'.$idRegistro.','.$arrayidquestions[2].'),
+							  ("'.$_POST["r17"].'",'.$idRegistro.','.$arrayidquestions[3].'),
+							  ("'.$_POST["r18"].'",'.$idRegistro.','.$arrayidquestions[4].'),
+							  ("'.$_POST["r19"].'",'.$idRegistro.','.$arrayidquestions[5].'),
+							  ("'.$_POST["r20"].'",'.$idRegistro.','.$arrayidquestions[6].'),
+							  ("'.$_POST["r21"].'",'.$idRegistro.','.$arrayidquestions[7].'),
+							  ("'.$_POST["r22"].'",'.$idRegistro.','.$arrayidquestions[8].'),
+							  ("'.$_POST["r23"].'",'.$idRegistro.','.$arrayidquestions[9].')';
+
+						//ejecuta la cadena
+                        $this->consulta($cad);
+
 					}
 					if($tipo_cuestionario == "RED"){
 						// IDAREA = 3
 
-						$arrayidquestions = ["24","25","26","27","28","31","33"];
+						$arrayidquestions = [24,25,26,27,28,31,33];
 
 						$arrayanswers [0] = $_POST["r24"];
 						$arrayanswers [1] = $_POST["r25"];
@@ -124,6 +140,19 @@ if(!isset($_SESSION['nombre_usuario']))
 						$arrayanswers [4] = $_POST["r28"];
 						$arrayanswers [5] = $_POST["r31"];
 						$arrayanswers [6] = $_POST["r33"];
+
+						$cad='INSERT INTO cuestionarios 
+                        (respuesta_pregunta,ticket_id,pregunta_id) 
+                        values("'.$_POST["r24"].'",'.$idRegistro.','.$arrayidquestions[0].'),
+							  ("'.$_POST["r25"].'",'.$idRegistro.','.$arrayidquestions[1].'),
+							  ("'.$_POST["r26"].'",'.$idRegistro.','.$arrayidquestions[2].'),
+							  ("'.$_POST["r27"].'",'.$idRegistro.','.$arrayidquestions[3].'),
+							  ("'.$_POST["r28"].'",'.$idRegistro.','.$arrayidquestions[4].'),
+							  ("'.$_POST["r31"].'",'.$idRegistro.','.$arrayidquestions[5].'),
+							  ("'.$_POST["r33"].'",'.$idRegistro.','.$arrayidquestions[6].')';
+
+						//ejecuta la cadena
+                        $this->consulta($cad);
 					}
 					if($tipo_cuestionario == "CP"){
 						// IDAREA = 4
@@ -361,8 +390,206 @@ if(!isset($_SESSION['nombre_usuario']))
 
                 }else if($tipo_cuestionario == 'SO'){
                     echo "formulario de Sistemas operativos";
+
+					$result.='
+                    <div style="width: auto;background:green; aling-items:right">
+                    <span style="width:60px;height:25px;border-left:0px" class="badge bg-primary">'.$tipo_cuestionario.'</span>
+                    </div>
+                        
+                    <div class="" style="">
+					<form action="" method="post" enctype="multipart/form-data">';
+					if (isset($registro))
+						$result.='
+					<input type="hidden" name="accion" value="update">
+					<input type="hidden" name="idRegistro" value="'.$_POST["idRegistro"].'">';
+					else
+						$result.='
+					<input type="hidden" name="accion" value="insert">
+					<input type="hidden" name="idRegistro" value="'.$_POST["idRegistro"].'">';
+					$result.='
+					
+					<div style="background-color:;height:auto;float:left;width:100%">
+
+					<div style="margin-top:"class="">
+
+					<div style="margin-left:9%" class="col-md-10">
+					<div class="row">
+
+					<label style="margin-top:10px" class="col-md-5">¿Qué sistema operativo está instalado en la computadora?</label>
+					<div style="margin-top:10px" class="col-md-8">
+                    <input type="hidden" value="14" name="pregunta_id">
+					<input placeholder="Asunto" required="" type="text" name="r14" class="form-control" value="'.(isset($registro)?$registro[0]:"").'">
+					</div>
+
+					<label style="margin-top:10px" class="col-md-5">¿Qué programas ha instalado recientemente?</label>
+					<div style="margin-top:10px" class="col-md-8">
+                    <input type="hidden" value="15" name="pregunta_id">
+					<input placeholder="Descripcion" required="" type="text" name="r15" class="form-control" value="'.(isset($registro)?$registro[1]:"").'">
+					</div>
+
+                    <label style="margin-top:10px" class="col-md-5"> ¿Qué actualizaciones o paquetes de servicios se han instalado?</label>
+					<div style="margin-top:10px" class="col-md-8">
+                    <input type="hidden" value="16" name="pregunta_id">
+					<input placeholder="Descripcion" required="" type="text" name="r16" class="form-control" value="'.(isset($registro)?$registro[2]:"").'">
+					</div>
+
+                    <label style="margin-top:10px" class="col-md-5">¿Qué mensajes de error ha recibido?</label>
+					<div style="margin-top:10px" class="col-md-8">
+                    <input type="hidden" value="17" name="pregunta_id">
+					<input placeholder="Descripcion" required="" type="text" name="r17" class="form-control" value="'.(isset($registro)?$registro[3]:"").'">
+					</div>
+
+                    <label style="margin-top:10px" class="col-md-5">¿Qué estaba haciendo cuando descubrió el problema?</label>
+					<div style="margin-top:10px" class="col-md-8">
+                    <input type="hidden" value="18" name="pregunta_id">
+					<input placeholder="Descripcion" required="" type="text" name="r18" class="form-control" value="'.(isset($registro)?$registro[4]:"").'">
+					</div>
+
+					<label style="margin-top:10px" class="col-md-5">¿Alguien más ha tenido el mismo problema?</label>
+									<div style="margin-top:10px" class="col-md-8">
+									<div class="col-md-1">';
+									$result.=$this->cajaDesplegablelocal($selectboolean,"r19",isset($registro)?$registro[5]:"");
+									$result.='
+									</div>
+									</div>
+ 
+					<label style="margin-top:10px" class="col-md-5">¿Ha cambiado la contraseña últimamente?</label>
+									<div style="margin-top:10px" class="col-md-8">
+									<div class="col-md-1">';
+									$result.=$this->cajaDesplegablelocal($selectboolean,"r20",isset($registro)?$registro[6]:"");
+									$result.='
+									</div>
+									</div>
+                    
+                    <label style="margin-top:10px" class="col-md-5">¿Ha realizado cambios en su equipo?</label>
+									<div style="margin-top:10px" class="col-md-8">
+									<div class="col-md-1">';
+									$result.=$this->cajaDesplegablelocal($selectboolean,"r21",isset($registro)?$registro[7]:"");
+									$result.='
+									</div>
+									</div>
+
+                    <label style="margin-top:10px" class="col-md-5"> ¿Alguien más tiene acceso a esta computadora?</label>
+									<div style="margin-top:10px" class="col-md-8">
+									<div class="col-md-1">';
+									$result.=$this->cajaDesplegablelocal($selectboolean,"r22",isset($registro)?$registro[8]:"");
+									$result.='
+									</div>
+									</div>
+
+                    <label style="margin-top:10px" class="col-md-5">¿Ha ocurrido anteriormente este problema?</label>
+									<div style="margin-top:10px" class="col-md-8">
+									<div class="col-md-1">';
+									$result.=$this->cajaDesplegablelocal($selectboolean,"r23",isset($registro)?$registro[9]:"");
+									$result.='
+									</div>
+									</div>
+
+					</div>
+					</div>
+					</div>
+					</div>
+
+                    <div style="background-color:;">
+						<div style="background-color:;margin-left:80%;width: 313px;">
+							<input style=";margin-left:; aling:" type="submit" class="btn btn-secondary" value="Guardar">
+							<button style="margin-left:50px;width: auto" type="button" class="btn btn-secondary"><a href="../admin/home_admin.php">Cancelar</a></button>	
+						</div>
+					</div>
+					
+					</form>
+
+					</div>';
+
                 }else if($tipo_cuestionario == 'RED'){
                     echo "formulario de Redes";
+
+					$result.='
+                    <div style="width: auto;background:green; aling-items:right">
+                    <span style="width:60px;height:25px;border-left:0px" class="badge bg-primary">'.$tipo_cuestionario.'</span>
+                    </div>
+                        
+                    <div class="" style="">
+					<form action="" method="post" enctype="multipart/form-data">';
+					if (isset($registro))
+						$result.='
+					<input type="hidden" name="accion" value="update">
+					<input type="hidden" name="idRegistro" value="'.$_POST["idRegistro"].'">';
+					else
+						$result.='
+					<input type="hidden" name="accion" value="insert">
+					<input type="hidden" name="idRegistro" value="'.$_POST["idRegistro"].'">';
+					$result.='
+					
+					<div style="background-color:;height:auto;float:left;width:100%">
+
+					<div style="margin-top:"class="">
+
+					<div style="margin-left:9%" class="col-md-10">
+					<div class="row">
+
+					<label style="margin-top:10px" class="col-md-5">¿Cuándo se ha iniciado el problema?</label>
+					<div style="margin-top:10px" class="col-md-8">
+                    <input type="hidden" value="24" name="pregunta_id">
+					<input placeholder="Asunto" required="" type="text" name="r24" class="form-control" value="'.(isset($registro)?$registro[0]:"").'">
+					</div>
+
+					<label style="margin-top:10px" class="col-md-5">¿Qué indicadores LED de red están encendidos?</label>
+					<div style="margin-top:10px" class="col-md-8">
+                    <input type="hidden" value="25" name="pregunta_id">
+					<input placeholder="Descripcion" required="" type="text" name="r25" class="form-control" value="'.(isset($registro)?$registro[1]:"").'">
+					</div>
+
+                    <label style="margin-top:10px" class="col-md-5">¿Qué problemas está experimentando?</label>
+					<div style="margin-top:10px" class="col-md-8">
+                    <input type="hidden" value="26" name="pregunta_id">
+					<input placeholder="Descripcion" required="" type="text" name="r26" class="form-control" value="'.(isset($registro)?$registro[2]:"").'">
+					</div>
+
+                    <label style="margin-top:10px" class="col-md-5">¿Hay algo más que pueda decirme acerca del problema?</label>
+					<div style="margin-top:10px" class="col-md-8">
+                    <input type="hidden" value="27" name="pregunta_id">
+					<input placeholder="Descripcion" required="" type="text" name="r27" class="form-control" value="'.(isset($registro)?$registro[3]:"").'">
+					</div>
+
+                    <label style="margin-top:10px" class="col-md-5">¿Qué otros usuarios están teniendo problemas?</label>
+					<div style="margin-top:10px" class="col-md-8">
+                    <input type="hidden" value="28" name="pregunta_id">
+					<input placeholder="Descripcion" required="" type="text" name="r28" class="form-control" value="'.(isset($registro)?$registro[4]:"").'">
+					</div>
+
+					<label style="margin-top:10px" class="col-md-5">¿Ha añadido algún periférico a su computadora?</label>
+									<div style="margin-top:10px" class="col-md-8">
+									<div class="col-md-1">';
+									$result.=$this->cajaDesplegablelocal($selectboolean,"r31",isset($registro)?$registro[5]:"");
+									$result.='
+									</div>
+									</div>
+ 
+					<label style="margin-top:10px" class="col-md-5">¿Ha reiniciado su computadora?</label>
+									<div style="margin-top:10px" class="col-md-8">
+									<div class="col-md-1">';
+									$result.=$this->cajaDesplegablelocal($selectboolean,"r33",isset($registro)?$registro[6]:"");
+									$result.='
+									</div>
+									</div>
+                    
+
+					</div>
+					</div>
+					</div>
+					</div>
+
+                    <div style="background-color:;">
+						<div style="background-color:;margin-left:80%;width: 313px;">
+							<input style=";margin-left:; aling:" type="submit" class="btn btn-secondary" value="Guardar">
+							<button style="margin-left:50px;width: auto" type="button" class="btn btn-secondary"><a href="../admin/home_admin.php">Cancelar</a></button>	
+						</div>
+					</div>
+					
+					</form>
+
+					</div>';
                 }else if($tipo_cuestionario == 'CP'){
                     echo "formulario de Cumputadora portatil";
                 }else if($tipo_cuestionario == 'SEG'){
