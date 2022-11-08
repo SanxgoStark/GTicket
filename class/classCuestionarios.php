@@ -28,7 +28,6 @@ if(!isset($_SESSION['nombre_usuario']))
 	class Cuestionarios extends BaseDatos // clase referente a tabla espacios en la base de datos
 	{
 
-
 		// al poner extends la tabla podra heredar el conportamiento de la calse BaseDatos
 		
 		// funcion constructor por defecto
@@ -40,9 +39,9 @@ if(!isset($_SESSION['nombre_usuario']))
 
 		// que quiero hacer con esta tabla
 		function proceso($accion){
-
-            $tipo_cuestionario = $this->consultartipo();
-			$idRegistro = intval($_POST["idRegistro"]);
+			echo var_dump($_POST);
+			$idRegistro = $_POST["idRegistro"];
+            $tipo_cuestionario = $this->consultartipo($idRegistro);
 			$arrayanswers;
 			$arrayidquestions;
 
@@ -99,7 +98,7 @@ if(!isset($_SESSION['nombre_usuario']))
 					if($tipo_cuestionario == "SO"){
 						// IDAREA = 2
 
-						$arrayidquestions = ["14","15","16","17","18","19","20","21","22","23"];
+						$arrayidquestions = [14,15,16,17,18,19,20,21,22,23];
 
 						$arrayanswers [0] = $_POST["r14"];
 						$arrayanswers [1] = $_POST["r15"];
@@ -111,6 +110,7 @@ if(!isset($_SESSION['nombre_usuario']))
 						$arrayanswers [7] = $_POST["r21"];
 						$arrayanswers [8] = $_POST["r22"];
 						$arrayanswers [9] = $_POST["r23"];
+
 					}
 					if($tipo_cuestionario == "RED"){
 						// IDAREA = 3
@@ -197,11 +197,11 @@ if(!isset($_SESSION['nombre_usuario']))
 						$arrayanswers [7] = $_POST["r84"];
 					}
 
-                    echo var_dump($arrayanswers);
+                    //echo var_dump($arrayanswers);
                     //echo var_dump($_POST);
-                    exit;   
+                     
                         
-                        $result.=$this->proceso('list');
+                        //$result.=$this->proceso('list');
                         
                         
                         break;
@@ -232,6 +232,7 @@ if(!isset($_SESSION['nombre_usuario']))
                 if($tipo_cuestionario == 'CCP'){
 
                     echo "formulario de Componentes de computadora portatil";
+					echo $_POST["idRegistro"];
 
                     $result.='
                     <div style="width: auto;background:green; aling-items:right">
@@ -243,10 +244,12 @@ if(!isset($_SESSION['nombre_usuario']))
 					if (isset($registro))
 						$result.='
 					<input type="hidden" name="accion" value="update">
-					<input type="hidden" name="idRegistro" value="'.$idRegistro.'">';
+					<input type="hidden" name="idRegistro" value="'.$_POST["idRegistro"].'">';
 					else
 						$result.='
-					<input type="hidden" name="accion" value="insert">';
+					<input type="hidden" name="accion" value="insert">
+					<input type="hidden" name="idRegistro" value="'.$_POST["idRegistro"].'">';
+					
 					$result.='
 					
 					<div style="background-color:;height:auto;float:left;width:100%">
@@ -356,17 +359,17 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					</div>';
 
-                }if($tipo_cuestionario == 'SO'){
+                }else if($tipo_cuestionario == 'SO'){
                     echo "formulario de Sistemas operativos";
-                }if($tipo_cuestionario == 'RED'){
+                }else if($tipo_cuestionario == 'RED'){
                     echo "formulario de Redes";
-                }if($tipo_cuestionario == 'CP'){
+                }else if($tipo_cuestionario == 'CP'){
                     echo "formulario de Cumputadora portatil";
-                }if($tipo_cuestionario == 'SEG'){
+                }else if($tipo_cuestionario == 'SEG'){
                     echo "formulario de Seguridad";
-                }if($tipo_cuestionario == 'IMP'){
+                }else if($tipo_cuestionario == 'IMP'){
                     echo "formulario de Impresoras";
-                }if($tipo_cuestionario == 'SOF'){
+                }else if($tipo_cuestionario == 'SOF'){
                     echo "formulario de software";
                 }
 
@@ -390,282 +393,24 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					break;
 
-				case 'formupdate':
-					//$registro=$this->sacaTupla("SELECT * FROM empleado WHERE Id=".$_POST['idRegistro']); 
-
-					// registro usuario
-					$registro=$this->sacaTupla("SELECT * FROM tickets WHERE id=".$_POST['idRegistro']);
-
-				case 'formNew':
-
-					
-					
-					//echo "formNew";
-					//echo $registro["tipo_conexion_ticket"];
-					//exit;
-					$fechaActual = date('y-m-d h:i:s'); // obtencion de la fecha actual
-
-					$result.='<div class="" style="margin-top:">
-					<form action="" method="post" enctype="multipart/form-data">';
-					if (isset($registro))
-						$result.='
-					<input type="hidden" name="accion" value="update">
-					<input type="hidden" name="idRegistro" value="'.$registro['id'].'">';
-					else
-						$result.='
-					<input type="hidden" name="accion" value="insert">';
-					$result.='
-
-					<div style="background-color:;height:auto;float:left;width:50%">
-
-					<div class="content-flexbox" style="background-color:;height:auto;float:left;width:100%">
-
-						<div style="background-color:;height:auto;width:32.3%;display:inline-block;">
-							<div>
-							<input readonly="readonly" placeholder="F.Creacion" required="" type="data" name="fecha_creacion_ticket" class="form-control" value="'.(isset($registro)?$registro['fecha_creacion_ticket']:"$fechaActual").'">
-							</div>
-						</div>
-						<div style="background-color:;height:auto;width:32.3%;display:inline-block;">
-							<div>
-							<input readonly="readonly" placeholder="F.Modificacion" required="" type="data" name="fecha_modificacion_ticket" class="form-control" value="'.$fechaActual.'">
-							</div>
-						</div>
-						<div  style=";background-color:;height:auto;width:31.3%;float:right;">
-							<div style="height:55px;margin-top:15px">
-								<h4 style="font-weight: 900; margin-top:" align="center">NT: "'.(isset($registro)?$registro['id']:"").'"</h4>
-							</div>
-						</div>
-
-					</div>
-
-					<div style="margin-top:8%"class="">
-
-					<div style="margin-left:9%" class="col-md-10">
-					<div class="row">
-
-					<label style="margin-top:10px" class="col-md-3">Asunto * </label>
-					<div style="margin-top:10px" class="col-md-8">
-					<input placeholder="Asunto" required="" type="text" name="asunto_ticket" class="form-control" value="'.(isset($registro)?$registro['asunto_ticket']:"").'">
-					</div>
-
-					<label style="margin-top:10px" class="col-md-3">Descripcion * </label>
-					<div style="margin-top:10px" class="col-md-8">
-					<input placeholder="Descripcion" required="" type="text" name="descripcion_ticket" class="form-control" value="'.(isset($registro)?$registro['descripcion_ticket']:"").'">
-					</div>
-
-					<label style="margin-top:10px" class="col-md-3">Estatus *</label>
-									<div style="margin-top:10px" class="col-md-8">
-									<div class="col-md-8">';
-									$result.=$this->cajaDesplegablelocal($estatusTickets,"estatus_ticket",isset($registro)?$registro['estatus_ticket']:"");
-									$result.='
-									</div>
-									</div>
- 
-					<label style="margin-top:10px" class="col-md-3">Prioridad *</label>
-									<div style="margin-top:10px" class="col-md-8">
-									<div class="col-md-8">';
-									$result.=$this->cajaDesplegablelocal($prioridadTickets,"prioridad_ticket",isset($registro)?$registro['prioridad_ticket']:"");
-									$result.='
-									</div>
-									</div>
-
-					<label style="margin-top:10px" class="col-md-3">Atiende * </label>
-					<div style="margin-top:10px" class="col-md-8">
-					<div class="col-md-8">';
-					$result.=$this->cajaDesplegable("usuarios","empledo_asignado_id","id","nombre_usuario",isset($registro)?$registro['empledo_asignado_id']:"");
-					$result.='
-					</div>
-					</div>
-
-					<label style="margin-top:10px" class="col-md-3">Nivel Soporte *</label>
-									<div style="margin-top:10px" class="col-md-8">
-									<div class="col-md-8">';
-									$result.=$this->cajaDesplegablelocal($nivelesSoporte,"nivel_ticket",isset($registro)?$registro['nivel_ticket']:"");
-									$result.='
-									</div>
-									</div>
-
-					<label style="margin-top:10px" class="col-md-3" class="form-group">Nota * </label>
-					<div style="margin-top:10px" class="col-md-8">
-      				<textarea type="text" name="nota_ticket" class="form-control" value="'.(isset($registro)?$registro['nota_ticket']:"").'" rows="2"></textarea>
-					</div>
-
-					<small style="margin-top:10px" >* Campo Obligatorio</small><br>
-
-    				<div style="float:right;width:500px;margin-top:3%" class="form-group">
-      				<input class="form-control" type="file" name="imagen">
-   					</div>
-
-					</div>
-					</div>
-					</div>
-					</div>
-					</div>
-
-
-					<div style="background-color:;height:auto;float:right;width:50%">
-
-						<div style="background-color:;height:50%;float:top;width:auto;">
-							<div style="margin-top:"class="">
-							<div style="margin-left:9%" class="col-md-10">
-							<div class="row">
-
-								<label class="col-md-3">Nombre Equipo * </label>
-								<div class="col-md-8">
-								<input placeholder="Nombre Equipo" required="" type="text" name="nombre_equipo_ticket" class="form-control" value="'.(isset($registro)?$registro['nombre_equipo_ticket']:"").'">
-								</div>
-
-								<label style="margin-top:10px" class="col-md-3">Fabricante *</label>
-									<div style="margin-top:10px" class="col-md-8">
-									<div class="col-md-8">';
-									$result.=$this->cajaDesplegablelocal($fabricantes,"fabricante_ticket",isset($registro)?$registro['fabricante_ticket']:"");
-									$result.='
-									</div>
-									</div>
-
-								<label style="margin-top:10px" class="col-md-3">Modelo *</label>
-									<div style="margin-top:10px" class="col-md-8">
-									<div class="col-md-8">';
-									$result.=$this->cajaDesplegablelocal($modelos,"modelo_equipo_ticket",isset($registro)?$registro['modelo_equipo_ticket']:"");
-									$result.='
-									</div>
-									</div>
-
-								<label style="margin-top:10px" class="col-md-3">S.O *</label>
-									<div style="margin-top:10px" class="col-md-8">
-									<div class="col-md-8">';
-									$result.=$this->cajaDesplegablelocal($sistemasOperativos,"sistema_operativo_ticket",isset($registro)?$registro['sistema_operativo_ticket']:"");
-									$result.='
-									</div>
-									</div>
-
-							</div>
-							</div>
-							</div>
-
-						</div>
-
-						<div style=";background-color:;height:50%;float:top;width:auto">
-
-							<div style=";background-color:;height:auto;float:right;width:50%;height:auto">
-							
-								<div style="margin-top:"class="">
-								<div style="margin-left:" class="col-md-10">
-								<div class="row">
-
-									<label class="form-label mt-4">Autor</label>
-									<div style="" class="col-md-8">
-									<div class="col-md-8">';
-									$result.=$this->cajaDesplegable("usuarios","autor_id","id","nombre_usuario",isset($registro)?$registro['autor_id']:"");
-									$result.='
-									</div>
-									</div>
-
-
-									<label class="form-label mt-4">Tipo de cuestionario *</label>
-									<div class="col-md-8">
-									<div class="form-group">';
-									$result.=$this->cajaDesplegablelocal($tiposCuestionario,"tipo_cuestionario",isset($registro)?$registro['tipo_cuestionario']:"");
-									$result.='
-									</div>
-									</div>
-
-								</div>
-								</div>
-								</div>
-							</div>
-
-							<div style="margin-top:"class="">
-							<div style="margin-left:9%" class="col-md-10">
-							<div class="row">
-
-								<label class="form-label mt-4">¿Que tipo de conexion tiene actualmente?</label>
-									<div class="col-md-8">
-									<div class="form-group">';
-									$result.=$this->cajaDesplegablelocal($tiposConexion,"tipo_conexion_ticket",isset($registro)?$registro['tipo_conexion_ticket']:"");
-									$result.='
-									</div>
-									</div>
-
-								<label class="form-label mt-4">¿Que aplicacion usaba cuando sucedio el error?</label>
-									<div class="col-md-8">
-									<div class="form-group">';
-									$result.=$this->cajaDesplegablelocal($aplicaciones,"nombre_aplicacion_ticket",isset($registro)?$registro['nombre_aplicacion_ticket']:"");
-									$result.='
-									</div>
-									</div>
-
-								<label class="form-label mt-4">¿A instalado drivers o actualizaciones recientemente?</label>
-									<div class="col-md-8">
-									<div class="form-group">';
-									$result.=$this->cajaDesplegablelocal($ifinstalldrivers,"si_driver_update",isset($registro)?$registro['si_driver_update']:"");
-									$result.='
-									</div>
-									</div>
-
-							</div>
-							</div>
-							
-							</div>
-
-							
-
-						</div>
-
-					
-					</div>
-
-					<div style="background-color:;margin-top:30%">
-						<div style="background-color:;margin-left: 80%;width: 313px;">
-							<input style=";margin-left:; aling:" type="submit" class="btn btn-secondary" value="Guardar">
-							<button style="margin-left:50px;width: auto" type="button" class="btn btn-secondary"><a href="../admin/home_admin.php">Cancelar</a></button>	
-						</div>
-					</div>
-					
-					</form>
-					
-					</div>';
-
-					//echo var_dump($_POST);
-					
-					break;
+				
 
 			}
 			// puede retirnar el resultado o imprimirlo con echo
 			return $result;
 		}
 
-		function insertcuestionario($arrayidquestions,$arrayanswers,$idRegistro){
-
-			echo "entre";
-			echo count($arrayidquestions);
-			echo var_dump($arrayidquestions);
-			echo var_dump($arrayanswers);
-			echo $idRegistro;
-			//exit;
-
-			for ($i=0; $i < count($arrayidquestions); $i++) {
-
-				$cad='INSERT INTO cuestionarios 
-                        (respuesta_pregunta,ticket_id,pregunta_id,) 
-                        values("'.$arrayanswers[$i].'","'.$idRegistro.'"
-						,"'.$arrayidquestions[$i].'")';
-
-				$this->consult($cad);
-
-			}
-
-			return "echo";
-		}
+		
 
         // funcion que cnsulta el tipo de cuestionario
-        function consultartipo(){
+        function consultartipo($idRegistro){
+			
             $tipo_cuestionario = "";
 
-            $cad="SELECT tipo_cuestionario FROM tickets WHERE id = ".$_POST["idRegistro"]." ";
+            $query="SELECT tipo_cuestionario FROM tickets WHERE id = ".$idRegistro." ";
 
 
-			$res = $this->consult($cad);
+			$res = $this->consult($query);
 			// echo var_dump($res);
 
 			// volcar datos, provenientes de una consulta mysql, dentro de un array php
