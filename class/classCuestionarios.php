@@ -39,7 +39,7 @@ if(!isset($_SESSION['nombre_usuario']))
 
 		// que quiero hacer con esta tabla
 		function proceso($accion){
-			echo var_dump($_POST);
+			//echo var_dump($_POST);
 			$idRegistro = $_POST["idRegistro"];
             $tipo_cuestionario = $this->consultartipo($idRegistro);
 			$arrayanswers;
@@ -53,7 +53,6 @@ if(!isset($_SESSION['nombre_usuario']))
 
                 case 'insert':
 
-					echo "pase por insert";
 
 					if($tipo_cuestionario == "CCP"){
 						// IDAREA = 1
@@ -300,6 +299,7 @@ if(!isset($_SESSION['nombre_usuario']))
                     //echo var_dump($arrayanswers);
                     //echo var_dump($_POST);
                      
+						echo "meta"; 
                         
                         //$result.=$this->proceso('list');
                         
@@ -331,8 +331,8 @@ if(!isset($_SESSION['nombre_usuario']))
 
                 if($tipo_cuestionario == 'CCP'){
 
-                    echo "formulario de Componentes de computadora portatil";
-					echo $_POST["idRegistro"];
+                    //echo "formulario de Componentes de computadora portatil";
+					//echo $_POST["idRegistro"];
 
                     $result.='
                     <div style="width: auto;background:green; aling-items:right">
@@ -460,7 +460,7 @@ if(!isset($_SESSION['nombre_usuario']))
 					</div>';
 
                 }else if($tipo_cuestionario == 'SO'){
-                    echo "formulario de Sistemas operativos";
+                    //echo "formulario de Sistemas operativos";
 
 					$result.='
                     <div style="width: auto;background:green; aling-items:right">
@@ -573,7 +573,7 @@ if(!isset($_SESSION['nombre_usuario']))
 					</div>';
 
                 }else if($tipo_cuestionario == 'RED'){
-                    echo "formulario de Redes";
+                    //echo "formulario de Redes";
 
 					$result.='
                     <div style="width: auto;background:green; aling-items:right">
@@ -662,7 +662,7 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					</div>';
                 }else if($tipo_cuestionario == 'CP'){
-                    echo "formulario de Cumputadora portatil";
+                    //echo "formulario de Cumputadora portatil";
 
 					$result.='
                     <div style="width: auto;background:green; aling-items:right">
@@ -780,7 +780,7 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					</div>';
                 }else if($tipo_cuestionario == 'SEG'){
-                    echo "formulario de Seguridad";
+                    //echo "formulario de Seguridad";
 
 					$result.='
                     <div style="width: auto;background:green; aling-items:right">
@@ -922,7 +922,7 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					</div>';
                 }else if($tipo_cuestionario == 'IMP'){
-                    echo "formulario de Impresoras";
+                    //echo "formulario de Impresoras";
 
 					$result.='
                     <div style="width: auto;background:green; aling-items:right">
@@ -1064,7 +1064,7 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					</div>';
                 }else if($tipo_cuestionario == 'SOF'){
-                    echo "formulario de software";
+                    //echo "formulario de software";
 
 					$result.='
                     <div style="width: auto;background:green; aling-items:right">
@@ -1203,7 +1203,7 @@ if(!isset($_SESSION['nombre_usuario']))
 			$volcadoarray = mysqli_fetch_array($res);
 			$tipo_cuestionario = $volcadoarray['tipo_cuestionario'];
 
-            echo $tipo_cuestionario;
+            //echo $tipo_cuestionario;
 			return $tipo_cuestionario;
 
         }
