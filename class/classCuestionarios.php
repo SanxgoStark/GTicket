@@ -92,6 +92,8 @@ if(!isset($_SESSION['nombre_usuario']))
     
                         //ejecuta la cadena
                         $this->consulta($cad);
+
+						echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
 						
 					}
 					if($tipo_cuestionario == "SO"){
@@ -126,6 +128,7 @@ if(!isset($_SESSION['nombre_usuario']))
 						//ejecuta la cadena
                         $this->consulta($cad);
 
+						echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
 					}
 					if($tipo_cuestionario == "RED"){
 						// IDAREA = 3
@@ -152,6 +155,8 @@ if(!isset($_SESSION['nombre_usuario']))
 
 						//ejecuta la cadena
                         $this->consulta($cad);
+
+						echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
 					}
 					if($tipo_cuestionario == "CP"){
 						// IDAREA = 4
@@ -186,6 +191,8 @@ if(!isset($_SESSION['nombre_usuario']))
 
 						//ejecuta la cadena
                         $this->consulta($cad);
+
+						echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
 					}
 					if($tipo_cuestionario == "SEG"){
 						// IDAREA = 5
@@ -226,6 +233,8 @@ if(!isset($_SESSION['nombre_usuario']))
 
 						//ejecuta la cadena
                         $this->consulta($cad);
+
+						echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
 					}
 					if($tipo_cuestionario == "IMP"){
 						// IDAREA = 6
@@ -266,6 +275,8 @@ if(!isset($_SESSION['nombre_usuario']))
 
 						//ejecuta la cadena
                         $this->consulta($cad);
+
+						echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
 					}
 					if($tipo_cuestionario == "SOF"){
 						// IDAREA = 7
@@ -294,12 +305,14 @@ if(!isset($_SESSION['nombre_usuario']))
 
 						//ejecuta la cadena
                         $this->consulta($cad);
+
+						echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
 					}
 
                     //echo var_dump($arrayanswers);
                     //echo var_dump($_POST);
                      
-						echo "meta"; 
+						
                         
                         //$result.=$this->proceso('list');
                         

@@ -252,10 +252,10 @@ if(!isset($_SESSION['nombre_usuario']))
 									</div>
 									</div>
 
-					<label style="margin-top:10px" class="col-md-3" class="form-group">Nota * </label>
-					<div style="margin-top:10px" class="col-md-8">
-      				<textarea type="text" name="nota_ticket" class="form-control" value="'.(isset($registro)?$registro['nota_ticket']:"").'" rows="2"></textarea>
-					</div>
+					<label style="margin-top:10px" class="col-md-3">Nota * </label>
+						<div style="margin-top:10px" class="col-md-8">
+							<input placeholder="Notas" required="" type="text" name="nota_ticket" class="form-control" value="'.(isset($registro)?$registro['nota_ticket']:"").'">
+						</div>
 
 					<small style="margin-top:10px" >* Campo Obligatorio</small><br>
 
