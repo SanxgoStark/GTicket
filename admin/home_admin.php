@@ -34,7 +34,7 @@ if(!isset($_SESSION['nombre_usuario']))
 	<h2 style="margin-top:" align="center">Tickets Recientes</h2>
 	<form id="formTickets" style="width:400px;">
 			<input type="hidden" name="accion" value="buscar">
-			<input class="form-control" type="text" name="ticket" id="ticket" onkeyup="tickets('buscar')" placeholder="">
+			<input class="form-control" type="text" name="ticket" id="ticket" onkeyup="tickets('buscar')" placeholder="buscar">
 		</form>
 		
 	
