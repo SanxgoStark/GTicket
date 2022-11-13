@@ -25,9 +25,9 @@ if(!isset($_SESSION['nombre_usuario']))
 
 	<? include "menu.php" ?>
 	<h2 style="margin-top: 15px" align="center">Cuestionario </h2>
-
-	<div style="overflow-y: scroll;height:auto;margin-top:30%px;margin-left:1%; margin-right:1%;background-color:rgba(255,255,255,0.7)" class="">
-
+	
+	<div style="border-radius:;overflow-y: hidden;height:auto;margin-top:30%px;margin-left:1%; margin-right:1%;background-color:rgba(255,255,255,0.7)" class="">
+		
 		<? include "../class/classCuestionarios.php" ?>
 		
 	</div>

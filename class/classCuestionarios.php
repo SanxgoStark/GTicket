@@ -348,8 +348,8 @@ if(!isset($_SESSION['nombre_usuario']))
 					//echo $_POST["idRegistro"];
 
                     $result.='
-                    <div style="width: auto;background:green; aling-items:right">
-                    <span style="width:60px;height:25px;border-left:0px" class="badge bg-primary">'.$tipo_cuestionario.'</span>
+                    <div style="height:auto;margin-top:30%px;margin-left:; margin-right:;float:right">
+                    <span style="width:60px;height:25px;" class="badge bg-primary">'.$tipo_cuestionario.'</span>
                     </div>
                         
                     <div class="" style="">
@@ -476,8 +476,8 @@ if(!isset($_SESSION['nombre_usuario']))
                     //echo "formulario de Sistemas operativos";
 
 					$result.='
-                    <div style="width: auto;background:green; aling-items:right">
-                    <span style="width:60px;height:25px;border-left:0px" class="badge bg-primary">'.$tipo_cuestionario.'</span>
+					<div style="height:auto;margin-top:30%px;margin-left:; margin-right:;float:right">
+                    <span style="width:60px;height:25px;" class="badge bg-primary">'.$tipo_cuestionario.'</span>
                     </div>
                         
                     <div class="" style="">
@@ -589,8 +589,8 @@ if(!isset($_SESSION['nombre_usuario']))
                     //echo "formulario de Redes";
 
 					$result.='
-                    <div style="width: auto;background:green; aling-items:right">
-                    <span style="width:60px;height:25px;border-left:0px" class="badge bg-primary">'.$tipo_cuestionario.'</span>
+                    <div style="height:auto;margin-top:30%px;margin-left:; margin-right:;float:right">
+                    <span style="width:60px;height:25px;" class="badge bg-primary">'.$tipo_cuestionario.'</span>
                     </div>
                         
                     <div class="" style="">
@@ -678,8 +678,8 @@ if(!isset($_SESSION['nombre_usuario']))
                     //echo "formulario de Cumputadora portatil";
 
 					$result.='
-                    <div style="width: auto;background:green; aling-items:right">
-                    <span style="width:60px;height:25px;border-left:0px" class="badge bg-primary">'.$tipo_cuestionario.'</span>
+                    <div style="height:auto;margin-top:30%px;margin-left:; margin-right:;float:right">
+                    <span style="width:60px;height:25px;" class="badge bg-primary">'.$tipo_cuestionario.'</span>
                     </div>
                         
                     <div class="" style="">
@@ -796,8 +796,8 @@ if(!isset($_SESSION['nombre_usuario']))
                     //echo "formulario de Seguridad";
 
 					$result.='
-                    <div style="width: auto;background:green; aling-items:right">
-                    <span style="width:60px;height:25px;border-left:0px" class="badge bg-primary">'.$tipo_cuestionario.'</span>
+                    <div style="height:auto;margin-top:30%px;margin-left:; margin-right:;float:right">
+                    <span style="width:60px;height:25px;" class="badge bg-primary">'.$tipo_cuestionario.'</span>
                     </div>
                         
                     <div class="" style="">
@@ -938,8 +938,8 @@ if(!isset($_SESSION['nombre_usuario']))
                     //echo "formulario de Impresoras";
 
 					$result.='
-                    <div style="width: auto;background:green; aling-items:right">
-                    <span style="width:60px;height:25px;border-left:0px" class="badge bg-primary">'.$tipo_cuestionario.'</span>
+					<div style="height:auto;margin-top:30%px;margin-left:; margin-right:;float:right">
+                    <span style="width:60px;height:25px;" class="badge bg-primary">'.$tipo_cuestionario.'</span>
                     </div>
                         
                     <div class="" style="">
@@ -1080,8 +1080,8 @@ if(!isset($_SESSION['nombre_usuario']))
                     //echo "formulario de software";
 
 					$result.='
-                    <div style="width: auto;background:green; aling-items:right">
-                    <span style="width:60px;height:25px;border-left:0px" class="badge bg-primary">'.$tipo_cuestionario.'</span>
+                    <div style="height:auto;margin-top:30%px;margin-left:; margin-right:;float:right">
+                    <span style="width:60px;height:25px;" class="badge bg-primary">'.$tipo_cuestionario.'</span>
                     </div>
                         
                     <div class="" style="">

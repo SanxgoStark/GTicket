@@ -42,7 +42,7 @@ if(!isset($_SESSION['nombre_usuario']))
 	</div>
     	
     <script> setInterval("tickets('list')",240000);</script> <!--reload de tickets en 4 min-->
-    <div id="IDTickets" style="overflow-y: scroll;height: auto;width;margin-top: 40px;margin-left:1%; margin-right:1%; background-color: rgba(255,255,255,0.7);" class="">
+    <div id="IDTickets" style="border-radius:22px;overflow-y: hidden;height: auto;width;margin-top: 40px;margin-left:1%; margin-right:1%; background-color: rgba(255,255,255,0.7);" class="">
 
 		<? include "../class/classTickets.php" ?>
 		

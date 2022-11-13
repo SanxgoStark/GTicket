@@ -182,11 +182,13 @@ if(!isset($_SESSION['nombre_usuario']))
 					<form method="post">';
 					if (isset($registro))
 						$result.='
+					<script>document.getElementById("cabecera").innerHTML = "<h2>Modificacion Usuario</h2>";</script>
 					<input type="hidden" name="accion" value="updateuser">
 					<input type="hidden" name="idRegistro" value="'.$registro['id'].'">';
 					
 					else
 					$result.='
+					<script>document.getElementById("cabecera").innerHTML = "<h2>Nuevo Usuario</h2>";</script>
 					<input type="hidden" name="accion" value="insertuser">';
 					$result.='
 					<div class="row mt-4">
@@ -243,14 +245,13 @@ if(!isset($_SESSION['nombre_usuario']))
 					if (isset($registro))
 						$result.='
 
-						<script>
-							document.getElementById("titulo").innerHTML="crear empleado";
-						</script>
+						<script>document.getElementById("cabecera").innerHTML = "<h2>Modificacion Empleado</h2>";</script>
 
 					<input type="hidden" name="accion" value="update">
 					<input type="hidden" name="idRegistro" value="'.$registro['id'].'">';
 					else
 						$result.='
+					<script>document.getElementById("cabecera").innerHTML = "<h2>Nuevo Empleado</h2>";</script>
 					<input type="hidden" name="accion" value="insert">';
 					$result.='
 					<div class="row mt-4">
