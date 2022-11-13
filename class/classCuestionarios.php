@@ -1177,19 +1177,121 @@ if(!isset($_SESSION['nombre_usuario']))
 				
 				case 'update':
 
-					echo "pase por update";
+					if($tipo_cuestionario == 'CCP'){
 
-					// armado de cadena de insersion
-					$cad = 'UPDATE cuestionarios SET respuesta_pregunta ="'.$_POST["r1"].'", 
-													 ticket_id="'.$idRegistro.'",
-											pregunta_id="'.$arrayanswers[0].'"
-					WHERE (ticket_id,pregunta_id) = "('.$idRegistro.','.$arrayanswers[0].')"';
+						$arrayidquestions = [1,2,3,4,5,6,7,8,9,10,11,12];
 
-					//ejecuta la cadena
-					$this->consulta($cad);
+						$this->update($_POST["r1"],$idRegistro,$arrayidquestions[0]);
+						$this->update($_POST["r2"],$idRegistro,$arrayidquestions[1]);
+						$this->update($_POST["r3"],$idRegistro,$arrayidquestions[2]);
+						$this->update($_POST["r4"],$idRegistro,$arrayidquestions[3]);
+						$this->update($_POST["r5"],$idRegistro,$arrayidquestions[4]);
+						$this->update($_POST["r6"],$idRegistro,$arrayidquestions[5]);
+						$this->update($_POST["r7"],$idRegistro,$arrayidquestions[6]);
+						$this->update($_POST["r8"],$idRegistro,$arrayidquestions[7]);
+						$this->update($_POST["r9"],$idRegistro,$arrayidquestions[8]);
+						$this->update($_POST["r10"],$idRegistro,$arrayidquestions[9]);
+						$this->update($_POST["r11"],$idRegistro,$arrayidquestions[10]);
+						$this->update($_POST["r12"],$idRegistro,$arrayidquestions[11]);
 
-					//$result.=$this->proceso('list');
+					}else if ($tipo_cuestionario == 'SO'){
+						
+						$arrayidquestions = [14,15,16,17,18,19,20,21,22,23];
 
+						$this->update($_POST["r14"],$idRegistro,$arrayidquestions[0]);
+						$this->update($_POST["r15"],$idRegistro,$arrayidquestions[1]);
+						$this->update($_POST["r16"],$idRegistro,$arrayidquestions[2]);
+						$this->update($_POST["r17"],$idRegistro,$arrayidquestions[3]);
+						$this->update($_POST["r18"],$idRegistro,$arrayidquestions[4]);
+						$this->update($_POST["r19"],$idRegistro,$arrayidquestions[5]);
+						$this->update($_POST["r20"],$idRegistro,$arrayidquestions[6]);
+						$this->update($_POST["r21"],$idRegistro,$arrayidquestions[7]);
+						$this->update($_POST["r22"],$idRegistro,$arrayidquestions[8]);
+						$this->update($_POST["r23"],$idRegistro,$arrayidquestions[9]);
+
+					}else if($tipo_cuestionario =='RED'){
+
+						$arrayidquestions = [24,25,26,27,28,31,33];
+
+						$this->update($_POST["r24"],$idRegistro,$arrayidquestions[0]);
+						$this->update($_POST["r25"],$idRegistro,$arrayidquestions[1]);
+						$this->update($_POST["r26"],$idRegistro,$arrayidquestions[2]);
+						$this->update($_POST["r27"],$idRegistro,$arrayidquestions[3]);
+						$this->update($_POST["r28"],$idRegistro,$arrayidquestions[4]);
+						$this->update($_POST["r31"],$idRegistro,$arrayidquestions[5]);
+						$this->update($_POST["r33"],$idRegistro,$arrayidquestions[6]);
+					
+					}else if($tipo_cuestionario =='CP'){
+
+						$arrayidquestions = [34,35,36,37,38,39,40,41,42,43,44];
+
+						$this->update($_POST["r34"],$idRegistro,$arrayidquestions[0]);
+						$this->update($_POST["r35"],$idRegistro,$arrayidquestions[1]);
+						$this->update($_POST["r36"],$idRegistro,$arrayidquestions[2]);
+						$this->update($_POST["r37"],$idRegistro,$arrayidquestions[3]);
+						$this->update($_POST["r38"],$idRegistro,$arrayidquestions[4]);
+						$this->update($_POST["r39"],$idRegistro,$arrayidquestions[5]);
+						$this->update($_POST["r40"],$idRegistro,$arrayidquestions[6]);
+						$this->update($_POST["r41"],$idRegistro,$arrayidquestions[7]);
+						$this->update($_POST["r42"],$idRegistro,$arrayidquestions[8]);
+						$this->update($_POST["r43"],$idRegistro,$arrayidquestions[9]);
+						$this->update($_POST["r44"],$idRegistro,$arrayidquestions[10]);
+
+					}else if($tipo_cuestionario =='SEG'){
+
+						$arrayidquestions = [61,62,63,65,66,67,69,70,71,72,73,74,75,76];
+
+						$this->update($_POST["r61"],$idRegistro,$arrayidquestions[0]);
+						$this->update($_POST["r62"],$idRegistro,$arrayidquestions[1]);
+						$this->update($_POST["r63"],$idRegistro,$arrayidquestions[2]);
+						$this->update($_POST["r65"],$idRegistro,$arrayidquestions[3]);
+						$this->update($_POST["r66"],$idRegistro,$arrayidquestions[4]);
+						$this->update($_POST["r67"],$idRegistro,$arrayidquestions[5]);
+						$this->update($_POST["r69"],$idRegistro,$arrayidquestions[6]);
+						$this->update($_POST["r70"],$idRegistro,$arrayidquestions[7]);
+						$this->update($_POST["r71"],$idRegistro,$arrayidquestions[8]);
+						$this->update($_POST["r72"],$idRegistro,$arrayidquestions[9]);
+						$this->update($_POST["r73"],$idRegistro,$arrayidquestions[10]);
+						$this->update($_POST["r74"],$idRegistro,$arrayidquestions[11]);
+						$this->update($_POST["r75"],$idRegistro,$arrayidquestions[12]);
+						$this->update($_POST["r76"],$idRegistro,$arrayidquestions[13]);
+
+					}else if($tipo_cuestionario =='IMP'){
+
+						$arrayidquestions = [46,47,48,49,50,51,53,54,55,56,57,58,59,60];
+
+						$this->update($_POST["r46"],$idRegistro,$arrayidquestions[0]);
+						$this->update($_POST["r47"],$idRegistro,$arrayidquestions[1]);
+						$this->update($_POST["r48"],$idRegistro,$arrayidquestions[2]);
+						$this->update($_POST["r49"],$idRegistro,$arrayidquestions[3]);
+						$this->update($_POST["r50"],$idRegistro,$arrayidquestions[4]);
+						$this->update($_POST["r51"],$idRegistro,$arrayidquestions[5]);
+						$this->update($_POST["r53"],$idRegistro,$arrayidquestions[6]);
+						$this->update($_POST["r54"],$idRegistro,$arrayidquestions[7]);
+						$this->update($_POST["r55"],$idRegistro,$arrayidquestions[8]);
+						$this->update($_POST["r56"],$idRegistro,$arrayidquestions[9]);
+						$this->update($_POST["r57"],$idRegistro,$arrayidquestions[10]);
+						$this->update($_POST["r58"],$idRegistro,$arrayidquestions[11]);
+						$this->update($_POST["r59"],$idRegistro,$arrayidquestions[12]);
+						$this->update($_POST["r60"],$idRegistro,$arrayidquestions[13]);
+
+					}else if($tipo_cuestionario =='SOF'){
+
+						$arrayidquestions = [77,78,79,80,81,82,83,84];
+
+						$this->update($_POST["r77"],$idRegistro,$arrayidquestions[0]);
+						$this->update($_POST["r78"],$idRegistro,$arrayidquestions[1]);
+						$this->update($_POST["r79"],$idRegistro,$arrayidquestions[2]);
+						$this->update($_POST["r80"],$idRegistro,$arrayidquestions[3]);
+						$this->update($_POST["r81"],$idRegistro,$arrayidquestions[4]);
+						$this->update($_POST["r82"],$idRegistro,$arrayidquestions[5]);
+						$this->update($_POST["r83"],$idRegistro,$arrayidquestions[6]);
+						$this->update($_POST["r84"],$idRegistro,$arrayidquestions[7]);
+
+					}
+
+					echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
+					
 					break;
 
 				
@@ -1199,7 +1301,16 @@ if(!isset($_SESSION['nombre_usuario']))
 			return $result;
 		}
 
-		
+		function update($respuesta_pregunta,$idRegistro,$posicionarrayid){
+
+			$cad = 'UPDATE cuestionarios SET respuesta_pregunta ="'.$respuesta_pregunta.'", 
+			ticket_id="'.$idRegistro.'", pregunta_id="'.$posicionarrayid.'" 
+			WHERE (ticket_id,pregunta_id) = ('.$idRegistro.','.$posicionarrayid.')';
+
+			//ejecuta la cadena
+			$this->consulta($cad);
+
+		}
 
         // funcion que cnsulta el tipo de cuestionario
         function consultartipo($idRegistro){
@@ -1220,7 +1331,7 @@ if(!isset($_SESSION['nombre_usuario']))
 			return $tipo_cuestionario;
 
         }
-		
+
 
 		function creausuario(){
 
