@@ -46,7 +46,7 @@ if(!isset($_SESSION['nombre_usuario']))
 					//$consulta ="SELECT E.id as Ticket,fecha_creacion_ticket as Creado,fecha_modificacion_ticket as Modificado,asunto_ticket as Asunto,estatus_ticket as Estatus,prioridad_ticket as Prioridad,nivel_ticket as Nivel, CONCAT(nombre_empleado,' ',apellido_paterno) as Atiende FROM tickets T
                     //join empleados E ON E.id = T.empledo_asignado_id where estatus_ticket like '%".$_REQUEST['ticket']."%' order by estatus_ticket";
 					$consulta = "SELECT E.id,nombre_empleado as Nombre,apellido_paterno as Apellido_P,apellido_materno as Apellido_M,titulo_empleado as Titulo,numero_telefono as Telefono,correo_empleado as Correo,D.nombre_departamento as Departamento FROM empleados E
-					INNER JOIN `departamentos` D ON E.`departamento_id` = D.`id` where titulo_empleado like '%".$_REQUEST['empleado']."%' order by titulo_empleado";
+					INNER JOIN `departamentos` D ON E.`departamento_id` = D.`id` where titulo_empleado like '%".$_REQUEST['empleado']."%' OR CONCAT(nombre_empleado,' ',apellido_paterno) like '%".$_REQUEST['empleado']."%' AND estado_empleado = 0 order by id";
 					$this->consulta($consulta);
 
 					
