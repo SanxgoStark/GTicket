@@ -177,16 +177,18 @@ if(!isset($_SESSION['nombre_usuario']))
 					<form action="" method="post" enctype="multipart/form-data">';
 					if (isset($registro))
 						$result.='
+					<script>document.getElementById("cabecera").innerHTML = "<h2> Recientes</h2>";</script>
 					<input type="hidden" name="accion" value="update">
 					<input type="hidden" name="idRegistro" value="'.$registro['id'].'">';
 					else
 						$result.='
+					<script>document.getElementById("cabecera").innerHTML = "Nuevo Ticket";</script>
 					<input type="hidden" name="accion" value="insert">';
 					$result.='
 
 					<div style="background-color:;height:auto;float:left;width:50%">
 
-					<div class="content-flexbox" style="background-color:;height:auto;float:left;width:100%">
+					<div class="content-flexbox" style="background-color:;height:auto;float:left;width:100%;margin-top:2%">
 
 						<div style="background-color:;height:auto;width:32.3%;display:inline-block;">
 							<div>
@@ -199,8 +201,8 @@ if(!isset($_SESSION['nombre_usuario']))
 							</div>
 						</div>
 						<div  style=";background-color:;height:auto;width:31.3%;float:right;">
-							<div style="height:55px;margin-top:15px">
-								<h4 style="font-weight: 900; margin-top:" align="center">NT: "'.(isset($registro)?$registro['id']:"").'"</h4>
+							<div style="backgroundcolor:;height:55px;margin-top:15px">
+								<h4 style="font-weight: 900; margin-top:" align="center">NT:'.(isset($registro)?$registro['id']:"").'</h4>
 							</div>
 						</div>
 
@@ -271,7 +273,7 @@ if(!isset($_SESSION['nombre_usuario']))
 					</div>
 
 
-					<div style="background-color:;height:auto;float:right;width:50%">
+					<div style="margin-top:2%;background-color:;height:auto;float:right;width:50%">
 
 						<div style="background-color:;height:50%;float:top;width:auto;">
 							<div style="margin-top:"class="">

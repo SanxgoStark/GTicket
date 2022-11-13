@@ -1,28 +1,22 @@
-var ventana;
-var estado = false;
+//var ventana;
+//var estado = false;
 
-
+// si se agrega un nuevo case y el navegador no lo detecta, borrar datos de navegacion del navegador actual
 
 function tickets(accion,Id){
 	//console.log('entre controlador');
 	switch(accion){
 		
-		case 'addCanasta':
-			alert(accion);
-			// agregar producto a canasta (grafico y en session)
-			datos= "accion=" + accion +
-			       "&Id=" + Id;
+		case 'list':
 
 			$.ajax({
- 				url:'../class/classNewventa.php?',
- 				type:"POST",
- 				data: datos,
-				success:function(datos){
-
-					$('#tCanasta').append(datos); 
- 					// $('#total').html(datos);
-			}})
-
+				url:'../class/classTickets.php',
+				beforeSend:function(){
+					$("#IDTickets").fadeOut(500);
+					IDTickets.innerHTML='<div class="spinner-grow" role="status"><span class="sr-only">Loading...</span></div>';}, // antes de que lo traigas, innerHTML es el contenido
+			   success:function(datos){$('#IDTickets').html(datos);
+			   $("#IDTickets").fadeIn(500);}, //se ejecuta despeus de regresar
+			})
 		break;
 
 		case 'buscar':
@@ -72,7 +66,7 @@ function tickets(accion,Id){
 					document.getElementById("total").innerHTML = 0.00;
 					document.getElementById("pago").innerHTML = 0;
 					document.getElementById("cambio").innerHTML = 0;
-	
+
 				
 					$.alert({
    						 title: 'Venta Cancelada!',
@@ -161,7 +155,7 @@ function tickets(accion,Id){
 
 		break;
 
-		default: alert(accion + "en venta.js " + "no ha sido programada");
+		default: alert(accion + " en ticket.js " + "no ha sido programada");
 
 	}
 
