@@ -31,7 +31,7 @@ if(!isset($_SESSION['nombre_usuario']))
 
 	<? include "menu.php" ?>
 
-	<div id="cabecera" style="background-color:;margin-top: 15px;margin-left:1%; margin-right:1%; ">
+	<div id="cabecera" style="text-align: center;background-color:;margin-top: 15px;margin-left:1%; margin-right:1%; ">
 	<h2 style="margin-top:" align="center">Tickets Recientes</h2>
 	<form id="formTickets" style="width:400px;">
 			<input type="hidden" name="accion" value="buscar">

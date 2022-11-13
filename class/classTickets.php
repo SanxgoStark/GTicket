@@ -77,7 +77,7 @@ if(!isset($_SESSION['nombre_usuario']))
 				
 				//echo var_dump($_POST);
 				//exit;
-
+					
 				// armado de cadena de insersion
 					$cad='INSERT INTO tickets 
 					(fecha_creacion_ticket,fecha_modificacion_ticket,asunto_ticket,descripcion_ticket,estatus_ticket,prioridad_ticket,empledo_asignado_id,autor_id,nivel_ticket,nota_ticket,nombre_equipo_ticket,fabricante_ticket,modelo_equipo_ticket,tipo_conexion_ticket,nombre_aplicacion_ticket,si_driver_update,nombre_driver_update,sistema_operativo_ticket,tipo_cuestionario) 
@@ -177,12 +177,12 @@ if(!isset($_SESSION['nombre_usuario']))
 					<form action="" method="post" enctype="multipart/form-data">';
 					if (isset($registro))
 						$result.='
-					<script>document.getElementById("cabecera").innerHTML = "<h2> Recientes</h2>";</script>
+					<script>document.getElementById("cabecera").innerHTML = "<h2>Modificacion Ticket</h2>";</script>
 					<input type="hidden" name="accion" value="update">
 					<input type="hidden" name="idRegistro" value="'.$registro['id'].'">';
 					else
 						$result.='
-					<script>document.getElementById("cabecera").innerHTML = "Nuevo Ticket";</script>
+					<script>document.getElementById("cabecera").innerHTML = "<h2>Nuevo Ticket</h2>";</script>
 					<input type="hidden" name="accion" value="insert">';
 					$result.='
 
