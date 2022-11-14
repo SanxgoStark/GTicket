@@ -5,8 +5,6 @@
  * MODELO , CONTROLADOR
  */
 
-
-
 // las sesiones es el ecanismo de asegurarnos que el usuario se logeo correctamente
 date_default_timezone_set('America/Mexico_City');
 // asegurarme que la ssession existe
@@ -27,16 +25,10 @@ if(!isset($_SESSION['nombre_usuario']))
 	// clase de estatus de espacios
 	class Tickets extends BaseDatos // clase referente a tabla espacios en la base de datos
 	{
-
-
 		// al poner extends la tabla podra heredar el conportamiento de la calse BaseDatos
 		
 		// funcion constructor por defecto
-		function __construct(){
-
-		}
-
-		// $nomb_emp = $_POST["nomb_emp"];
+		function __construct(){}
 
 		// que quiero hacer con esta tabla
 		function proceso($accion){
@@ -52,10 +44,7 @@ if(!isset($_SESSION['nombre_usuario']))
 			$aplicaciones = array("Word","Excel","Power Point","SAP","JBA","Nonconformance","ninguna");
 			$ifinstalldrivers = array("Si","No");
 			$tiposCuestionario = array("CCP","SO","RED","CP","SEG","IMP","SOF");
-			
-			
-			
-			// echo "pase por proceso";
+		
 
 			$result=""; // variable para acumular el resultado
 			switch ($accion) {
@@ -69,7 +58,6 @@ if(!isset($_SESSION['nombre_usuario']))
 					$this->consulta($consulta);
 
 					$result=$this->imprimeTabla($consulta,true,array("formupdate","delete","cuestionario"));
-
 
 				break;
 
@@ -95,13 +83,11 @@ if(!isset($_SESSION['nombre_usuario']))
 					// funcion para insertar imagen en bd
 					$this->insertarimagen();
 					
-					
 					$result.=$this->proceso('list');
-					
 					
 					break;
 
-				// listado que me permite hacer cosas	
+				// listado 
 				case 'list': 
 				
                 $cad = "SELECT T.id as Ticket,fecha_creacion_ticket as Creado,fecha_modificacion_ticket as Modificado,asunto_ticket as Asunto,estatus_ticket as Estatus,prioridad_ticket as Prioridad,nivel_ticket as Nivel, CONCAT(nombre_empleado,' ',apellido_paterno) as Atiende FROM tickets T
@@ -113,7 +99,6 @@ if(!isset($_SESSION['nombre_usuario']))
 					break;
 
 				case 'delete':
-					//$this->consulta("DELETE FROM tickets WHERE Id ='".$_POST['idRegistro']."'");
 
 					// armado de cadena de actualizacion de estado
 					$cad = 'UPDATE tickets SET estado_ticket = 1 WHERE id = "'.$_POST["idRegistro"].'"';
@@ -126,7 +111,6 @@ if(!isset($_SESSION['nombre_usuario']))
 				
 				case 'update':
 
-					// armado de cadena de insersion
 					$cad = 'UPDATE tickets SET fecha_creacion_ticket ="'.$_POST["fecha_creacion_ticket"].'", 
 								fecha_modificacion_ticket="'.$_POST['fecha_modificacion_ticket'].'",
 											asunto_ticket="'.$_POST['asunto_ticket'].'",
@@ -159,18 +143,15 @@ if(!isset($_SESSION['nombre_usuario']))
 
 
 				case 'formupdate':
-					//$registro=$this->sacaTupla("SELECT * FROM empleado WHERE Id=".$_POST['idRegistro']); 
 
-					// registro usuario
 					$registro=$this->sacaTupla("SELECT * FROM tickets WHERE id=".$_POST['idRegistro']);
 
 				case 'formNew':
 
-					
-					
 					//echo "formNew";
 					//echo $registro["tipo_conexion_ticket"];
 					//exit;
+
 					$fechaActual = date('y-m-d h:i:s'); // obtencion de la fecha actual
 
 					$result.='<div class="" style="margin-top:">
@@ -473,30 +454,6 @@ if(!isset($_SESSION['nombre_usuario']))
 			$idmaxticket = $volcadoarray['id'];
 
 			return $idmaxticket;
-		}
-		
-
-		function creausuario(){
-
-			// id maximo de empleado
-			$maximoemp=$this->maxempleado();
-
-			// echo var_dump($maxemp);
-
-			$cad='INSERT INTO usuario 
-			(Id,nomb_usua,pass_usua,fk_id_rol,clave_cancelv) 
-				values('.$maximoemp.',"'.$_POST["nomb_usua"].'","'.$_POST["pass_usua"].'","'.$_POST["fk_id_rol"].'","'.$_POST["clave_cancelv"].'")';
-
-					//ejecuta la cadena
-					$this->consulta($cad);
-
-					// creaciond e relacion usuario empleado
-					// en empleado como en usuario se creo anterior mente un
-					// registro con el mismo id, ahora se utliza el mismo id
-					// para la relacion 
-					$this->usuario_emp($maximoemp,$maximoemp);
-
-					
 		}
 
 		// creacion de relacion usuario y empleado
