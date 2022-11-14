@@ -5,8 +5,6 @@
  * MODELO , CONTROLADOR
  */
 
-
-
 // las sesiones es el ecanismo de asegurarnos que el usuario se logeo correctamente
 date_default_timezone_set('America/Mexico_City');
 // asegurarme que la ssession existe
@@ -31,11 +29,7 @@ if(!isset($_SESSION['nombre_usuario']))
 		// al poner extends la tabla podra heredar el conportamiento de la calse BaseDatos
 		
 		// funcion constructor por defecto
-		function __construct(){
-
-		}
-
-		// $nomb_emp = $_POST["nomb_emp"];
+		function __construct(){}
 
 		// que quiero hacer con esta tabla
 		function proceso($accion){
@@ -52,7 +46,6 @@ if(!isset($_SESSION['nombre_usuario']))
 			switch ($accion) {
 
                 case 'insert':
-
 
 					if($tipo_cuestionario == "CCP"){
 						// IDAREA = 1
@@ -71,9 +64,6 @@ if(!isset($_SESSION['nombre_usuario']))
 						$arrayanswers [9] = $_POST["r10"];
 						$arrayanswers [10] = $_POST["r11"];
 						$arrayanswers [11] = $_POST["r12"];
-						
-						// FUNCION PARA HACER INSERCION EN LA BASE DE DATOS (ARRAYANWERS,ARRAYIDPREGUNTA,idRegistro)
-						// $this->insertcuestionario($arrayidquestions,$arrayanswers,$idRegistro);
 
 						$cad='INSERT INTO cuestionarios 
                         (respuesta_pregunta,ticket_id,pregunta_id) 
@@ -93,6 +83,7 @@ if(!isset($_SESSION['nombre_usuario']))
                         //ejecuta la cadena
                         $this->consulta($cad);
 
+						// redireccionamiento automatico a recurso indicado
 						echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
 						
 					}
@@ -128,6 +119,7 @@ if(!isset($_SESSION['nombre_usuario']))
 						//ejecuta la cadena
                         $this->consulta($cad);
 
+						// redireccionamiento automatico a recurso indicado
 						echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
 					}
 					if($tipo_cuestionario == "RED"){
@@ -156,6 +148,7 @@ if(!isset($_SESSION['nombre_usuario']))
 						//ejecuta la cadena
                         $this->consulta($cad);
 
+						// redireccionamiento automatico a recurso indicado
 						echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
 					}
 					if($tipo_cuestionario == "CP"){
@@ -192,6 +185,7 @@ if(!isset($_SESSION['nombre_usuario']))
 						//ejecuta la cadena
                         $this->consulta($cad);
 
+						// redireccionamiento automatico a recurso indicado
 						echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
 					}
 					if($tipo_cuestionario == "SEG"){
@@ -234,6 +228,7 @@ if(!isset($_SESSION['nombre_usuario']))
 						//ejecuta la cadena
                         $this->consulta($cad);
 
+						// redireccionamiento automatico a recurso indicado
 						echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
 					}
 					if($tipo_cuestionario == "IMP"){
@@ -276,6 +271,7 @@ if(!isset($_SESSION['nombre_usuario']))
 						//ejecuta la cadena
                         $this->consulta($cad);
 
+						// redireccionamiento automatico a recurso indicado
 						echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
 					}
 					if($tipo_cuestionario == "SOF"){
@@ -306,22 +302,16 @@ if(!isset($_SESSION['nombre_usuario']))
 						//ejecuta la cadena
                         $this->consulta($cad);
 
+						// redireccionamiento automatico a recurso indicado
 						echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
 					}
 
-                    //echo var_dump($arrayanswers);
-                    //echo var_dump($_POST);
-                     
-						
-                        
-                        //$result.=$this->proceso('list');
-                        
-                        
                         break;
 
 
                 case 'cuestionario':
 
+					// inicio: se hace consulta a bd para extraer las respuestas si existen
 					$cad = "SELECT respuesta_pregunta FROM cuestionarios WHERE ticket_id=".$_POST['idRegistro']."";
 					
 					$reg = $this->consult($cad);
@@ -337,7 +327,8 @@ if(!isset($_SESSION['nombre_usuario']))
 						}
 			
 					}
-					
+					// fin: las respuestas se guardan en el array registros
+
 					//echo count($registro);
 					//echo var_dump($registro);
 					//exit;
@@ -1312,7 +1303,7 @@ if(!isset($_SESSION['nombre_usuario']))
 
 		}
 
-        // funcion que cnsulta el tipo de cuestionario
+        // funcion que consulta el tipo de cuestionario en funcion de su id
         function consultartipo($idRegistro){
 			
             $tipo_cuestionario = "";
@@ -1331,41 +1322,6 @@ if(!isset($_SESSION['nombre_usuario']))
 			return $tipo_cuestionario;
 
         }
-
-
-		function creausuario(){
-
-			// id maximo de empleado
-			$maximoemp=$this->maxempleado();
-
-			// echo var_dump($maxemp);
-
-			$cad='INSERT INTO usuario 
-			(Id,nomb_usua,pass_usua,fk_id_rol,clave_cancelv) 
-				values('.$maximoemp.',"'.$_POST["nomb_usua"].'","'.$_POST["pass_usua"].'","'.$_POST["fk_id_rol"].'","'.$_POST["clave_cancelv"].'")';
-
-					//ejecuta la cadena
-					$this->consulta($cad);
-
-					// creaciond e relacion usuario empleado
-					// en empleado como en usuario se creo anterior mente un
-					// registro con el mismo id, ahora se utliza el mismo id
-					// para la relacion 
-					$this->usuario_emp($maximoemp,$maximoemp);
-
-					
-		}
-
-		// creacion de relacion usuario y empleado
-		function usuario_emp($id_usuario,$id_empleado){
-
-			$cad='INSERT INTO usuario_emp 
-			(fk_id_usua,Id) 
-				values('.$id_usuario.','.$id_empleado.')';
-
-					//ejecuta la cadena
-					$this->consulta($cad);
-		}
 
 		function imprimeTabla($query,$formNew=false,$iconos=array()){
 
