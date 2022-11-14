@@ -5,7 +5,7 @@
  * MODELO , CONTROLADOR
  */
 
-// las sesiones es el ecanismo de asegurarnos que el usuario se logeo correctamente
+// las sesiones es el ecanismo de asegurarnos que el usuario se logio correctamente
 
 // asegurarme que la ssession existe
 // isset permite saber si una variable existe
@@ -28,44 +28,31 @@ if(!isset($_SESSION['nombre_usuario']))
 		// al poner extends la tabla podra heredar el conportamiento de la calse BaseDatos
 		
 		// funcion constructor por defecto
-		function __construct(
-		){}
-
-		// $nomb_emp = $_POST["nomb_emp"];
+		function __construct(){}
 
 		// que quiero hacer con esta tabla
 		function proceso($accion){
-			// echo "pase por proceso";
 
 			$result=""; // variable para acumular el resultado
 			switch ($accion) {
 
-				// metodo para caja de busqueda de tickets (barra)
+				// metodo para caja de busqueda de empleados (barra)
                 case 'buscar':
-					//echo "entre";
-					//$consulta ="SELECT E.id as Ticket,fecha_creacion_ticket as Creado,fecha_modificacion_ticket as Modificado,asunto_ticket as Asunto,estatus_ticket as Estatus,prioridad_ticket as Prioridad,nivel_ticket as Nivel, CONCAT(nombre_empleado,' ',apellido_paterno) as Atiende FROM tickets T
-                    //join empleados E ON E.id = T.empledo_asignado_id where estatus_ticket like '%".$_REQUEST['ticket']."%' order by estatus_ticket";
+
 					$consulta = "SELECT E.id,nombre_empleado as Nombre,apellido_paterno as Apellido_P,apellido_materno as Apellido_M,titulo_empleado as Titulo,numero_telefono as Telefono,correo_empleado as Correo,D.nombre_departamento as Departamento FROM empleados E
 					INNER JOIN `departamentos` D ON E.`departamento_id` = D.`id` where titulo_empleado like '%".$_REQUEST['empleado']."%' OR CONCAT(nombre_empleado,' ',apellido_paterno) like '%".$_REQUEST['empleado']."%' AND estado_empleado = 0 order by id";
 					$this->consulta($consulta);
 
-					
-
 					$result=$this->imprimeTabla($consulta,true,array("formupdate","delete","formuser"));
-
 
 				break;
 
 				case 'insert':
 
-				// echo var_dump($_POST['idRegistro']);
-
 				// armado de cadena de insersion
 					$cad='INSERT INTO empleados 
 					(nombre_empleado,apellido_paterno,apellido_materno,titulo_empleado,numero_telefono,correo_empleado,departamento_id) 
 					values("'.$_POST["nombre_empleado"].'","'.$_POST['apellido_paterno'].'","'.$_POST['apellido_materno'].'","'.$_POST['titulo_empleado'].'","'.$_POST['numero_telefono'].'","'.$_POST['correo_empleado'].'","'.$_POST['departamento_id'].'")';
-
-
 
 					//ejecuta la cadena
 					$this->consulta($cad);
@@ -76,12 +63,11 @@ if(!isset($_SESSION['nombre_usuario']))
 					
 					break;
 
-				// listado que me permite hacer cosas	
+				// listado
 				case 'list': 
 
 				$cad = "SELECT E.id,nombre_empleado as Nombre,apellido_paterno as Apellido_P,apellido_materno as Apellido_M,titulo_empleado as Titulo,numero_telefono as Telefono,correo_empleado as Correo,D.nombre_departamento as Departamento FROM empleados E
 				INNER JOIN `departamentos` D ON E.`departamento_id` = D.`id` WHERE estado_empleado =! 1 ORDER BY E.id";
-				//$cad = "Select * from empleados";
 
 					$result=$this->imprimeTabla($cad,true,array("formupdate","delete","formuser"));
 
@@ -90,7 +76,6 @@ if(!isset($_SESSION['nombre_usuario']))
 				case 'delete':
 					//$this->consulta("DELETE FROM empleados WHERE id ='".$_POST['idRegistro']."'");
 
-					// armado de cadena de insersion
 					$cad = 'UPDATE empleados SET estado_empleado = 1 WHERE id = "'.$_POST["idRegistro"].'"';
 
 					//ejecuta la cadena
@@ -100,7 +85,7 @@ if(!isset($_SESSION['nombre_usuario']))
 					break;
 		
 				case 'update':
-					
+
 					// armado de cadena de insersion
 					$cad = 'UPDATE empleados SET nombre_empleado ="'.$_POST["nombre_empleado"].'", 
 											apellido_paterno="'.$_POST['apellido_paterno'].'",
@@ -114,13 +99,7 @@ if(!isset($_SESSION['nombre_usuario']))
 					//ejecuta la cadena
 					$this->consulta($cad);
 
-					// Update para usuario
-					//$this->updateUsuario();
-
-
 					$result.=$this->proceso('list');
-
-
 
 					break;
 
@@ -139,6 +118,8 @@ if(!isset($_SESSION['nombre_usuario']))
 					//echo "/----/";
 					//echo $_POST['password_usuario'];
 					//exit;
+
+					// se compara el password, si fue modificado agrega la incriptacion MD5 al password y lo almacena en la bd
 					if($_SESSION['password_usuarioold'] !== $_POST['password_usuario']){
 						//echo "la contraseña es diferente a la anterior";
 						$cad = 'UPDATE usuarios SET nombre_usuario ="'.$_POST["nombre_usuario"].'", 
@@ -151,19 +132,15 @@ if(!isset($_SESSION['nombre_usuario']))
 						rol_id="'.$_POST['rol_id'].'"WHERE id = "'.$_POST["idRegistro"].'"';
 					}
 					
-
 					//ejecuta la cadena
 					$this->consulta($cad);
-
-					// Update para usuario
-					//$this->updateUsuario();
-
 
 					$result.=$this->proceso('list');
 					break;
  
 					
 				case 'formuser':
+
 					$registro=$this->sacaTupla("SELECT * FROM usuarios WHERE id=".$_POST['idRegistro']);
 					//var_dump($registro);
 					// seccion para comprobar si $registro['password_usuario'] contiene algo
@@ -234,12 +211,11 @@ if(!isset($_SESSION['nombre_usuario']))
 					break;
 
 				case 'formupdate':
+
 					$registro=$this->sacaTupla("SELECT * FROM empleados WHERE id=".$_POST['idRegistro']); 
 
-					// registro usuario
-					//$registrou=$this->sacaTupla("SELECT * FROM usuario WHERE Id=".$_POST['idRegistro']);
-
 				case 'formNew':
+					
 					$result.='<div class="" style="margin-top:40px;margin-left:1%;margin-right:1%">
 					<form method="post">';
 					if (isset($registro))
