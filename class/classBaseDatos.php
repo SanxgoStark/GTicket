@@ -77,9 +77,29 @@ class BaseDatos
    return $result;
 	}
 
+	function cajaDesplegablebloq($table,$nombCampFormulario,$nombPK,$nombCampDesplegar,$seleccionado){
+		
+		$result='<select name="'.$nombCampFormulario.'" class="form-control" disabled>';
+		$this->consulta("SELECT * FROM ".$table." order by ".$nombCampDesplegar);
+		foreach ($this->bloqueRegistros as $registro) 
+     $result.='<option value="'.$registro[$nombPK].'" '.(($seleccionado == $registro[$nombPK])?" selected ":"").' >'.$registro[$nombCampDesplegar].'</option>';
+   $result.="</select>";
+   return $result;
+	}
+
 	function cajaDesplegablelocal($arreglo,$campoFormulario,$registro){
 
 		$result='<select name="'.$campoFormulario.'" class="form-control">';
+		foreach ((array)$arreglo as $elemento) 
+     $result.='<option value="'.$elemento.'" '.(($registro == $elemento)?" selected ":"").'>'.$elemento.'</option>';
+   $result.="</select>";
+
+   return $result;
+	}
+	
+	function cajaDesplegablelocalbloq($arreglo,$campoFormulario,$registro){
+
+		$result='<select name="'.$campoFormulario.'" class="form-control" disabled>';
 		foreach ((array)$arreglo as $elemento) 
      $result.='<option value="'.$elemento.'" '.(($registro == $elemento)?" selected ":"").'>'.$elemento.'</option>';
    $result.="</select>";

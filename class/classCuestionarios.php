@@ -1,6 +1,6 @@
 
 <?
-
+echo var_dump($_SESSION);
 /**
  * MODELO , CONTROLADOR
  */
@@ -83,8 +83,17 @@ if(!isset($_SESSION['nombre_usuario']))
                         //ejecuta la cadena
                         $this->consulta($cad);
 
-						// redireccionamiento automatico a recurso indicado
-						echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
+						if($_SESSION["rol_id"] == 1 ){
+							// user
+							// redireccionamiento automatico a recurso indicado
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
+							
+						}else{
+							//admin
+							// redireccionamiento automatico a recurso indicado
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=home_user.php'>"; 
+						}
+						
 						
 					}
 					if($tipo_cuestionario == "SO"){
@@ -119,8 +128,16 @@ if(!isset($_SESSION['nombre_usuario']))
 						//ejecuta la cadena
                         $this->consulta($cad);
 
-						// redireccionamiento automatico a recurso indicado
-						echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
+						if($_SESSION["rol_id"] == 1 ){
+							// user
+							// redireccionamiento automatico a recurso indicado
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
+							
+						}else{
+							//admin
+							// redireccionamiento automatico a recurso indicado
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=home_user.php'>"; 
+						}
 					}
 					if($tipo_cuestionario == "RED"){
 						// IDAREA = 3
@@ -148,8 +165,16 @@ if(!isset($_SESSION['nombre_usuario']))
 						//ejecuta la cadena
                         $this->consulta($cad);
 
-						// redireccionamiento automatico a recurso indicado
-						echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
+						if($_SESSION["rol_id"] == 1 ){
+							// user
+							// redireccionamiento automatico a recurso indicado
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
+							
+						}else{
+							//admin
+							// redireccionamiento automatico a recurso indicado
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=home_user.php'>"; 
+						}
 					}
 					if($tipo_cuestionario == "CP"){
 						// IDAREA = 4
@@ -185,8 +210,16 @@ if(!isset($_SESSION['nombre_usuario']))
 						//ejecuta la cadena
                         $this->consulta($cad);
 
-						// redireccionamiento automatico a recurso indicado
-						echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
+						if($_SESSION["rol_id"] == 1 ){
+							// user
+							// redireccionamiento automatico a recurso indicado
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
+							
+						}else{
+							//admin
+							// redireccionamiento automatico a recurso indicado
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=home_user.php'>"; 
+						}
 					}
 					if($tipo_cuestionario == "SEG"){
 						// IDAREA = 5
@@ -228,8 +261,16 @@ if(!isset($_SESSION['nombre_usuario']))
 						//ejecuta la cadena
                         $this->consulta($cad);
 
-						// redireccionamiento automatico a recurso indicado
-						echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
+						if($_SESSION["rol_id"] == 1 ){
+							// user
+							// redireccionamiento automatico a recurso indicado
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
+							
+						}else{
+							//admin
+							// redireccionamiento automatico a recurso indicado
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=home_user.php'>"; 
+						}
 					}
 					if($tipo_cuestionario == "IMP"){
 						// IDAREA = 6
@@ -271,8 +312,16 @@ if(!isset($_SESSION['nombre_usuario']))
 						//ejecuta la cadena
                         $this->consulta($cad);
 
-						// redireccionamiento automatico a recurso indicado
-						echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
+						if($_SESSION["rol_id"] == 1 ){
+							// user
+							// redireccionamiento automatico a recurso indicado
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
+							
+						}else{
+							//admin
+							// redireccionamiento automatico a recurso indicado
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=home_user.php'>"; 
+						}
 					}
 					if($tipo_cuestionario == "SOF"){
 						// IDAREA = 7
@@ -302,8 +351,16 @@ if(!isset($_SESSION['nombre_usuario']))
 						//ejecuta la cadena
                         $this->consulta($cad);
 
-						// redireccionamiento automatico a recurso indicado
-						echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
+						if($_SESSION["rol_id"] == 1 ){
+							// user
+							// redireccionamiento automatico a recurso indicado
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
+							
+						}else{
+							//admin
+							// redireccionamiento automatico a recurso indicado
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=home_user.php'>"; 
+						}
 					}
 
                         break;
@@ -454,8 +511,9 @@ if(!isset($_SESSION['nombre_usuario']))
 
                     <div style="background-color:;">
 						<div style="background-color:;margin-left:80%;width: 313px;">
-							<input style=";margin-left:; aling:" type="submit" class="btn btn-secondary" value="Guardar">
-							<button style="margin-left:50px;width: auto" type="button" class="btn btn-secondary"><a href="../admin/home_admin.php">Cancelar</a></button>	
+							<input style=";margin-left:; aling:" type="submit" class="btn btn-secondary" value="Guardar">';
+							$result.= $this->rolcancelbtn($_SESSION["rol_id"]);
+							$result.='	
 						</div>
 					</div>
 					
@@ -567,8 +625,9 @@ if(!isset($_SESSION['nombre_usuario']))
 
                     <div style="background-color:;">
 						<div style="background-color:;margin-left:80%;width: 313px;">
-							<input style=";margin-left:; aling:" type="submit" class="btn btn-secondary" value="Guardar">
-							<button style="margin-left:50px;width: auto" type="button" class="btn btn-secondary"><a href="../admin/home_admin.php">Cancelar</a></button>	
+							<input style=";margin-left:; aling:" type="submit" class="btn btn-secondary" value="Guardar">';
+							$result.= $this->rolcancelbtn($_SESSION["rol_id"]);
+							$result.='
 						</div>
 					</div>
 					
@@ -657,8 +716,9 @@ if(!isset($_SESSION['nombre_usuario']))
 
                     <div style="background-color:;">
 						<div style="background-color:;margin-left:80%;width: 313px;">
-							<input style=";margin-left:; aling:" type="submit" class="btn btn-secondary" value="Guardar">
-							<button style="margin-left:50px;width: auto" type="button" class="btn btn-secondary"><a href="../admin/home_admin.php">Cancelar</a></button>	
+							<input style=";margin-left:; aling:" type="submit" class="btn btn-secondary" value="Guardar">';
+							$result.= $this->rolcancelbtn($_SESSION["rol_id"]);
+							$result.='	
 						</div>
 					</div>
 					
@@ -775,8 +835,9 @@ if(!isset($_SESSION['nombre_usuario']))
 
                     <div style="background-color:;">
 						<div style="background-color:;margin-left:80%;width: 313px;">
-							<input style=";margin-left:; aling:" type="submit" class="btn btn-secondary" value="Guardar">
-							<button style="margin-left:50px;width: auto" type="button" class="btn btn-secondary"><a href="../admin/home_admin.php">Cancelar</a></button>	
+							<input style=";margin-left:; aling:" type="submit" class="btn btn-secondary" value="Guardar">';
+							$result.= $this->rolcancelbtn($_SESSION["rol_id"]);
+							$result.='	
 						</div>
 					</div>
 					
@@ -917,8 +978,9 @@ if(!isset($_SESSION['nombre_usuario']))
 
                     <div style="background-color:;">
 						<div style="background-color:;margin-left:80%;width: 313px;">
-							<input style=";margin-left:; aling:" type="submit" class="btn btn-secondary" value="Guardar">
-							<button style="margin-left:50px;width: auto" type="button" class="btn btn-secondary"><a href="../admin/home_admin.php">Cancelar</a></button>	
+							<input style=";margin-left:; aling:" type="submit" class="btn btn-secondary" value="Guardar">';
+							$result.= $this->rolcancelbtn($_SESSION["rol_id"]);
+							$result.='	
 						</div>
 					</div>
 					
@@ -1059,8 +1121,9 @@ if(!isset($_SESSION['nombre_usuario']))
 
                     <div style="background-color:;">
 						<div style="background-color:;margin-left:80%;width: 313px;">
-							<input style=";margin-left:; aling:" type="submit" class="btn btn-secondary" value="Guardar">
-							<button style="margin-left:50px;width: auto" type="button" class="btn btn-secondary"><a href="../admin/home_admin.php">Cancelar</a></button>	
+							<input style=";margin-left:; aling:" type="submit" class="btn btn-secondary" value="Guardar">';
+							$result.= $this->rolcancelbtn($_SESSION["rol_id"]);
+							$result.='	
 						</div>
 					</div>
 					
@@ -1153,8 +1216,9 @@ if(!isset($_SESSION['nombre_usuario']))
 
                     <div style="background-color:;">
 						<div style="background-color:;margin-left:80%;width: 313px;">
-							<input style=";margin-left:; aling:" type="submit" class="btn btn-secondary" value="Guardar">
-							<button style="margin-left:50px;width: auto" type="button" class="btn btn-secondary"><a href="../admin/home_admin.php">Cancelar</a></button>	
+							<input style=";margin-left:; aling:" type="submit" class="btn btn-secondary" value="Guardar">';
+							$result.= $this->rolcancelbtn($_SESSION["rol_id"]);
+							$result.='	
 						</div>
 					</div>
 					
@@ -1281,7 +1345,17 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					}
 
-					echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
+					if($_SESSION["rol_id"] == 1 ){
+						// user
+						// redireccionamiento automatico a recurso indicado
+						echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=home_user.php'>";
+						
+						
+					}else{
+						//admin
+						// redireccionamiento automatico a recurso indicado
+						echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
+					}
 					
 					break;
 
@@ -1322,6 +1396,20 @@ if(!isset($_SESSION['nombre_usuario']))
 			return $tipo_cuestionario;
 
         }
+
+		function rolcancelbtn($rol){
+			
+			if($rol == 1){
+				//user
+				$result = '<button style="margin-left:50px;width: auto" type="button" class="btn btn-secondary"><a href="home_user.php">Cancelar</a></button>';
+				
+			}else{
+				//admin
+				$result = '<button style="margin-left:50px;width: auto" type="button" class="btn btn-secondary"><a href="../admin/home_admin.php">Cancelar</a></button>';
+			}
+			
+			return $result;
+		}
 
 		function imprimeTabla($query,$formNew=false,$iconos=array()){
 

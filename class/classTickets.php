@@ -71,16 +71,16 @@ if(!isset($_SESSION['nombre_usuario']))
 					//user
 
 					// el 1 en la consulta refiere al epleado con id 1 que es Ulises Estrada (IT/Sistemas)
+					// S/A = Sin asignar
 
 					$cad='INSERT INTO tickets 
 					(fecha_creacion_ticket,fecha_modificacion_ticket,asunto_ticket,descripcion_ticket,estatus_ticket,prioridad_ticket,empledo_asignado_id,autor_id,nivel_ticket,nota_ticket,nombre_equipo_ticket,fabricante_ticket,modelo_equipo_ticket,tipo_conexion_ticket,nombre_aplicacion_ticket,si_driver_update,nombre_driver_update,sistema_operativo_ticket,tipo_cuestionario) 
 					values("'.$_POST["fecha_creacion_ticket"].'","'.$_POST['fecha_modificacion_ticket'].'"
-					,"'.$_POST['asunto_ticket'].'","'.$_POST['descripcion_ticket'].'","'.$_POST['estatus_ticket'].'"
-					,"'.$_POST['prioridad_ticket'].'","1","'.$_SESSION['id'].'"
-					,"'.$_POST['nivel_ticket'].'","'.$_POST['nota_ticket'].'","'.$_POST['nombre_equipo_ticket'].'"
+					,"'.$_POST['asunto_ticket'].'","'.$_POST['descripcion_ticket'].'","Abierto","Normal","1","'.$_SESSION['id'].'"
+					,"N1","'.$_POST['nota_ticket'].'","'.$_POST['nombre_equipo_ticket'].'"
 					,"'.$_POST['fabricante_ticket'].'","'.$_POST['modelo_equipo_ticket'].'","'.$_POST['tipo_conexion_ticket'].'"
 					,"'.$_POST['nombre_aplicacion_ticket'].'","'.$_POST['si_driver_update'].'","/*nombre_driver_update*/"
-					,"'.$_POST['sistema_operativo_ticket'].'","Por asignar")';
+					,"'.$_POST['sistema_operativo_ticket'].'","S/A")';
 				}else{
 					//admin
 
@@ -239,7 +239,7 @@ if(!isset($_SESSION['nombre_usuario']))
 					<label style="margin-top:10px" class="col-md-3">Estatus *</label>
 									<div style="margin-top:10px" class="col-md-8">
 									<div class="col-md-8">';
-									$result.=$this->cajaDesplegablelocal($estatusTickets,"estatus_ticket",isset($registro)?$registro['estatus_ticket']:"");
+									$result.=$this->cajaDesplegablelocalbloq($estatusTickets,"estatus_ticket",isset($registro)?$registro['estatus_ticket']:"");
 									$result.='
 									</div>
 									</div>
@@ -247,7 +247,7 @@ if(!isset($_SESSION['nombre_usuario']))
 					<label style="margin-top:10px" class="col-md-3">Prioridad *</label>
 									<div style="margin-top:10px" class="col-md-8">
 									<div class="col-md-8">';
-									$result.=$this->cajaDesplegablelocal($prioridadTickets,"prioridad_ticket",isset($registro)?$registro['prioridad_ticket']:"");
+									$result.=$this->cajaDesplegablelocalbloq($prioridadTickets,"prioridad_ticket",isset($registro)?$registro['prioridad_ticket']:"");
 									$result.='
 									</div>
 									</div>
@@ -255,7 +255,7 @@ if(!isset($_SESSION['nombre_usuario']))
 					<label style="margin-top:10px" class="col-md-3">Atiende * </label>
 					<div style="margin-top:10px" class="col-md-8">
 					<div class="col-md-8">';
-					$result.=$this->cajaDesplegable("usuarios","empledo_asignado_id","id","nombre_usuario",isset($registro)?$registro['empledo_asignado_id']:"");
+					$result.=$this->cajaDesplegablebloq("usuarios","empledo_asignado_id","id","nombre_usuario",isset($registro)?$registro['empledo_asignado_id']:"");
 					$result.='
 					</div>
 					</div>
@@ -263,14 +263,14 @@ if(!isset($_SESSION['nombre_usuario']))
 					<label style="margin-top:10px" class="col-md-3">Nivel Soporte *</label>
 									<div style="margin-top:10px" class="col-md-8">
 									<div class="col-md-8">';
-									$result.=$this->cajaDesplegablelocal($nivelesSoporte,"nivel_ticket",isset($registro)?$registro['nivel_ticket']:"");
+									$result.=$this->cajaDesplegablelocalbloq($nivelesSoporte,"nivel_ticket",isset($registro)?$registro['nivel_ticket']:"");
 									$result.='
 									</div>
 									</div>
 
 					<label style="margin-top:10px" class="col-md-3">Nota * </label>
 						<div style="margin-top:10px" class="col-md-8">
-							<input placeholder="Notas" required="" type="text" name="nota_ticket" class="form-control" value="'.(isset($registro)?$registro['nota_ticket']:"").'">
+							<input readonly="readonly" placeholder="Notas" required="" type="text" name="nota_ticket" class="form-control" value="'.(isset($registro)?$registro['nota_ticket']:"").'">
 						</div>
 
 					<small style="margin-top:10px" >* Campo Obligatorio</small><br>
@@ -373,7 +373,7 @@ if(!isset($_SESSION['nombre_usuario']))
 					<div style="background-color:;margin-top:30%">
 						<div style="background-color:;margin-left: 80%;width: 313px;">
 							<input style=";margin-left:; aling:" type="submit" class="btn btn-secondary" value="Guardar">
-							<button style="margin-left:50px;width: auto" type="button" class="btn btn-secondary"><a href="../admin/home_admin.php">Cancelar</a></button>	
+							<button style="margin-left:50px;width: auto" type="button" class="btn btn-secondary"><a href="home_user.php">Cancelar</a></button>	
 						</div>
 					</div>
 					
@@ -622,7 +622,14 @@ if(!isset($_SESSION['nombre_usuario']))
 
 		function insertarimagen(){
 
-			$carpeta = "../imagenes/";
+			if($_SESSION["rol_id"] == 1){
+				//user
+				$carpeta = "imagenes/";
+			}else{
+				//admin
+				$carpeta = "../imagenes/";
+			}
+			
 
 			$file = $_FILES["imagen"];
 			$nombre = $file["name"];
@@ -797,7 +804,8 @@ if(!isset($_SESSION['nombre_usuario']))
 
 				// por es un refiere a "Por asignar" solo que en la base de datos solo se pueden guardar 3 caracteres
 
-				if($registro[8] == "Por"){
+				if($registro[8] == "S/A"){
+					// S/A = Sin asignar
 					// si el tipo de cuestionario aun no esta definido
 
 					foreach ($iconos as $value) {
