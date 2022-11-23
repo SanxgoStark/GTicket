@@ -1,6 +1,6 @@
 
 <?
-echo var_dump($_SESSION);
+
 /**
  * MODELO , CONTROLADOR
  */
