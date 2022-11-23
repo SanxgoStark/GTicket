@@ -55,12 +55,22 @@ if(!isset($_SESSION['nombre_usuario']))
 					//echo "entre";
 
 					$consulta ="SELECT T.id as Ticket,fecha_creacion_ticket as Creado,fecha_modificacion_ticket as Modificado,asunto_ticket as Asunto,estatus_ticket as Estatus,prioridad_ticket as Prioridad,nivel_ticket as Nivel, CONCAT(nombre_empleado,' ',apellido_paterno) as Atiende FROM tickets T
-                    join empleados E ON E.id = T.empledo_asignado_id where estatus_ticket like '%".$_REQUEST['ticket']."%' OR fecha_creacion_ticket like '%".$_REQUEST['ticket']."%' OR CONCAT(nombre_empleado,' ',apellido_paterno) like '%".$_REQUEST['ticket']."%' AND estado_ticket = 0 order by estatus_ticket";
-					$this->consulta($consulta);
+                    	join empleados E ON E.id = T.empledo_asignado_id where estatus_ticket like '%".$_REQUEST['ticket']."%' OR fecha_creacion_ticket like '%".$_REQUEST['ticket']."%' OR CONCAT(nombre_empleado,' ',apellido_paterno) like '%".$_REQUEST['ticket']."%' AND estado_ticket = 0 order by estatus_ticket";
+						$this->consulta($consulta);
 
-					$result=$this->imprimeTabla($consulta,true,array("formupdate","delete","cuestionario"));
+						$result=$this->imprimeTabla($consulta,true,array("formupdate","delete","cuestionario"));
+					
 
 				break;
+
+				case 'buscar_user':
+
+					$cadUser = "SELECT T.id as Ticket,fecha_creacion_ticket as Creado,fecha_modificacion_ticket as Modificado,asunto_ticket as Asunto,estatus_ticket as Estatus,prioridad_ticket as Prioridad,nivel_ticket as Nivel, CONCAT(nombre_empleado,' ',apellido_paterno) as Atiende, tipo_cuestionario FROM tickets T
+					join empleados E ON E.id = T.empledo_asignado_id where (estatus_ticket like '%".$_REQUEST['ticket']."%' OR fecha_creacion_ticket like '%".$_REQUEST['ticket']."%' OR CONCAT(nombre_empleado,' ',apellido_paterno) like '%".$_REQUEST['ticket']."%') AND (estado_ticket = 0 AND autor_id like '%".$_SESSION["id"]."%') order by estatus_ticket";
+
+						$result=$this->imprimeTablauser($cadUser,true,array("cuestionario"));
+
+					break;
 
 				case 'insert':
 				
@@ -124,7 +134,13 @@ if(!isset($_SESSION['nombre_usuario']))
 						$result=$this->imprimeTabla($cadAdmin,true,array("formupdate","delete","cuestionario"));
 					}
 					
+					break;
 
+				case 'list_user':
+					$cadUser = "SELECT T.id as Ticket,fecha_creacion_ticket as Creado,fecha_modificacion_ticket as Modificado,asunto_ticket as Asunto,estatus_ticket as Estatus,prioridad_ticket as Prioridad,nivel_ticket as Nivel, CONCAT(nombre_empleado,' ',apellido_paterno) as Atiende, tipo_cuestionario FROM tickets T
+					join empleados E ON E.id = T.empledo_asignado_id WHERE estado_ticket = 0 AND autor_id = ".$_SESSION["id"]." ORDER BY T.id";
+					
+					$result=$this->imprimeTablauser($cadUser,true,array("cuestionario"));
 					break;
 
 				case 'delete':
