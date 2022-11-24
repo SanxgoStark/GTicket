@@ -766,18 +766,31 @@ if(!isset($_SESSION['nombre_usuario']))
 		        			</form>
 		        			</td>';
 		        			break;
-
+						
 						case 'cuestionario':
 		        		
-		        			$result.='<td width="6%">
-		        			<form method="post" action="cuestionario.php">
-		        			<input type="hidden" value="'.$value.'" name="accion">
-		        			<input type="hidden" value="'.$registro[0].'" name="idRegistro">
-		        			<button class="btn btn-warning">
-		        			<i title="Cuestionario" class="fa fa-list-alt"></i>
-		        			</button>
-		        			</form>
-		        			</td>';
+							if($registro[8] == "S/A"){
+								$result.='<td width="6%">
+								<form method="post" action="cuestionario.php">
+								<input type="hidden" value="'.$value.'" name="accion">
+								<input type="hidden" value="'.$registro[0].'" name="idRegistro">
+								<button type="button" disabled class="btn btn-warning">
+								<i title="Cuestionario" class="fa fa-list-alt"></i>
+								</button>
+								</form>
+								</td>';
+							}else{
+								$result.='<td width="6%">
+								<form method="post" action="cuestionario.php">
+								<input type="hidden" value="'.$value.'" name="accion">
+								<input type="hidden" value="'.$registro[0].'" name="idRegistro">
+								<button class="btn btn-warning">
+								<i title="Cuestionario" class="fa fa-list-alt"></i>
+								</button>
+								</form>
+								</td>';
+							}
+		        			
 		        			break;	
 		        	}
 		        	

@@ -91,7 +91,7 @@ if(!isset($_SESSION['nombre_usuario']))
 						}else{
 							//admin
 							// redireccionamiento automatico a recurso indicado
-							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=home_user.php'>"; 
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../home_user.php'>"; 
 						}
 						
 						
@@ -136,7 +136,7 @@ if(!isset($_SESSION['nombre_usuario']))
 						}else{
 							//admin
 							// redireccionamiento automatico a recurso indicado
-							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=home_user.php'>"; 
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../home_user.php'>"; 
 						}
 					}
 					if($tipo_cuestionario == "RED"){
@@ -173,7 +173,7 @@ if(!isset($_SESSION['nombre_usuario']))
 						}else{
 							//admin
 							// redireccionamiento automatico a recurso indicado
-							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=home_user.php'>"; 
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../home_user.php'>"; 
 						}
 					}
 					if($tipo_cuestionario == "CP"){
@@ -218,7 +218,7 @@ if(!isset($_SESSION['nombre_usuario']))
 						}else{
 							//admin
 							// redireccionamiento automatico a recurso indicado
-							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=home_user.php'>"; 
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../home_user.php'>"; 
 						}
 					}
 					if($tipo_cuestionario == "SEG"){
@@ -269,7 +269,7 @@ if(!isset($_SESSION['nombre_usuario']))
 						}else{
 							//admin
 							// redireccionamiento automatico a recurso indicado
-							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=home_user.php'>"; 
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../home_user.php'>"; 
 						}
 					}
 					if($tipo_cuestionario == "IMP"){
@@ -320,7 +320,7 @@ if(!isset($_SESSION['nombre_usuario']))
 						}else{
 							//admin
 							// redireccionamiento automatico a recurso indicado
-							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=home_user.php'>"; 
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../home_user.php'>"; 
 						}
 					}
 					if($tipo_cuestionario == "SOF"){
@@ -359,7 +359,7 @@ if(!isset($_SESSION['nombre_usuario']))
 						}else{
 							//admin
 							// redireccionamiento automatico a recurso indicado
-							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=home_user.php'>"; 
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../home_user.php'>"; 
 						}
 					}
 
