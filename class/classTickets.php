@@ -54,7 +54,7 @@ if(!isset($_SESSION['nombre_usuario']))
                 case 'buscar':
 					//echo "entre";
 
-					$consulta ="SELECT T.id as Ticket,fecha_creacion_ticket as Creado,fecha_modificacion_ticket as Modificado,asunto_ticket as Asunto,estatus_ticket as Estatus,prioridad_ticket as Prioridad,nivel_ticket as Nivel, CONCAT(nombre_empleado,' ',apellido_paterno) as Atiende FROM tickets T
+					$consulta ="SELECT T.id as Ticket,fecha_creacion_ticket as Creado,fecha_modificacion_ticket as Modificado,asunto_ticket as Asunto,estatus_ticket as Estatus,prioridad_ticket as Prioridad,nivel_ticket as Nivel, CONCAT(nombre_empleado,' ',apellido_paterno) as Atiende, tipo_cuestionario FROM tickets T
                     	join empleados E ON E.id = T.empledo_asignado_id where estatus_ticket like '%".$_REQUEST['ticket']."%' OR fecha_creacion_ticket like '%".$_REQUEST['ticket']."%' OR CONCAT(nombre_empleado,' ',apellido_paterno) like '%".$_REQUEST['ticket']."%' AND estado_ticket = 0 order by estatus_ticket";
 						$this->consulta($consulta);
 
