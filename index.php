@@ -9,26 +9,29 @@
 	<link rel="stylesheet" type="text/css" href="css/bootstraplux.css">
   <link rel="stylesheet" type="text/css" href="css/custom.css">
 </head>
-<body style="background-image: radial-gradient(circle at 0% 0%, #c2ff83 0, #a3ff8d 12.5%, #81ff96 25%, #5aff9d 37.5%, #1ef3a3 50%, #00e5a7 62.5%, #00d8ac 75%, #00cdb1 87.5%, #00c4b6 100%);">
+<body style="">
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav style="backgrund-color:#005195 !important" class="navbar navbar-expand-lg navbar-light bg-light">
 
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">GTicket</a>
+    <a style="color:white" class="navbar-brand" href="#">GTicket</a>
   </div>
-
+  <div style="margin-right:15px">
+  <img width="80" src="graficos/grammer-logo.svg">
+  </div>
+  
 </nav>
 
 <!-- contenedor -->
 <div id="centrar">
 
-  <div id="centrar" style="border-style: solid; border-color: black; height: 450px;width: 400px;background: rgba(0,0,0,0.9);"class="row renglon">
+  <div id="centrar" style="border-radius:22px;border-style: solid; border-color: #005195; height: 450px;width: 400px;background: #005195;"class="row renglon">
 
 
       <!--  -->
 <form action="veriLogin.php" method="post">
 
-   <h1 align="center" style="color: white">LOGIN</h1>
+   <h1 align="center" style="color: #E5EEF7">LOGIN</h1>
 
    <div align="center">
 

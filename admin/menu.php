@@ -10,9 +10,9 @@
 </head>
 <body>
 
-<nav style="position:;" class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav style="background-color:#005195 !important" class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">GTicket</a>
+    <a style="color:white" class="navbar-brand" href="#">GTicket</a>
     <ul class="navbar-nav me-auto">
       <li class="nav-item">
         <a style="color: white" class="nav-link" href="home_admin.php"><i class="<--!aqui icono de fontawesome!-->"></i> Home</a>
@@ -23,6 +23,9 @@
         <a style="color: white" class="nav-link" href="gestion_emp.php"><i class=""></i>G.Empleados</a>
       </li>
     </ul>
+    <div style="margin-right:30px">
+  <img width="80" src="../graficos/grammer-logo.svg">
+  </div>
  <div>
    <button type="button" class="btn btn-dark disabled"><?=$_SESSION['nombre_usuario'];
  ?></button>
