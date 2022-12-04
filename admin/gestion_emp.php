@@ -38,7 +38,7 @@ if(!isset($_SESSION['nombre_usuario']))
     </div>
     
 
-	<div id="IDEmpleados" style="border-radius:22px;overflow-y: hidden;height: auto;margin-top: 40px;background-color: rgba(255,255,255,0.7);margin-left:1%; margin-right:1%;" class="">
+	<div id="IDEmpleados" style="border-radius:22px;overflow-y: hidden;height: auto;margin-top: 40px;background-color: ;margin-left:1%; margin-right:1%;" class="">
 
 		<? include "../class/classEmpleados.php" ?>
 		

@@ -388,8 +388,8 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					<div style="background-color:;margin-top:30%">
 						<div style="background-color:;margin-left: 80%;width: 313px;">
-							<input style=";margin-left:; aling:" type="submit" class="btn btn-secondary" value="Guardar">
-							<button style="margin-left:50px;width: auto" type="button" class="btn btn-secondary"><a href="home_user.php">Cancelar</a></button>	
+							<input style=";margin-left:; aling:" type="submit" class="btn btn-primary" value="Guardar">
+							<button style="margin-left:50px;width: auto" type="button" class="btn btn-primary"><a style="color:white" href="home_user.php">Cancelar</a></button>	
 						</div>
 					</div>
 					
@@ -614,8 +614,8 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					<div style="background-color:;margin-top:30%">
 						<div style="background-color:;margin-left: 80%;width: 313px;">
-							<input style=";margin-left:; aling:" type="submit" class="btn btn-secondary" value="Guardar">
-							<button style="margin-left:50px;width: auto" type="button" class="btn btn-secondary"><a href="../admin/home_admin.php">Cancelar</a></button>	
+							<input style=";margin-left:; aling:" type="submit" class="btn btn-primary" value="Guardar">
+							<button style="margin-left:50px;width: auto" type="button" class="btn btn-primary"><a style="color:white" href="../admin/home_admin.php">Cancelar</a></button>	
 						</div>
 					</div>
 					

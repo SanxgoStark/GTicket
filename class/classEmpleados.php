@@ -200,8 +200,8 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					<div style="background-color:;margin-top:22%">
 						<div style="background-color:;margin-left: 80%;width: 313px;">
-							<input style=";margin-left:; aling:" type="submit" class="btn btn-secondary" value="Guardar">
-							<button style="margin-left:50px;width: auto" type="button" class="btn btn-secondary"><a href="../admin/gestion_emp.php">Cancelar</a></button>	
+							<input style=";margin-left:; aling:" type="submit" class="btn btn-primary" value="Guardar">
+							<button style="margin-left:50px;width: auto" type="button" class="btn btn-primary"><a style="color:white" href="../admin/gestion_emp.php">Cancelar</a></button>	
 						</div>
 					</div>
 
@@ -281,8 +281,8 @@ if(!isset($_SESSION['nombre_usuario']))
 					
 					<div style="background-color:;margin-top:10%">
 						<div style="background-color:;margin-left: 80%;width: 313px;">
-							<input style=";margin-left:; aling:" type="submit" class="btn btn-secondary" value="Guardar">
-							<button style="margin-left:50px;width: auto" type="button" class="btn btn-secondary"><a href="../admin/gestion_emp.php">Cancelar</a></button>	
+							<input style=";margin-left:; aling:" type="submit" class="btn btn-primary" value="Guardar">
+							<button style="margin-left:50px;width: auto" type="button" class="btn btn-primary"><a style="color:white" href="../admin/gestion_emp.php">Cancelar</a></button>	
 						</div>
 					</div>
 					
