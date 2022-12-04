@@ -121,7 +121,7 @@ if(!isset($_SESSION['nombre_usuario']))
 				case 'list': 
 				
                 $cadAdmin = "SELECT T.id as Ticket,fecha_creacion_ticket as Creado,fecha_modificacion_ticket as Modificado,asunto_ticket as Asunto,estatus_ticket as Estatus,prioridad_ticket as Prioridad,nivel_ticket as Nivel, CONCAT(nombre_empleado,' ',apellido_paterno) as Atiende, tipo_cuestionario FROM tickets T
-                    join empleados E ON E.id = T.empledo_asignado_id WHERE estado_ticket = 0 ORDER BY T.id";
+                    join empleados E ON E.id = T.empledo_asignado_id WHERE estado_ticket = 0 ORDER BY fecha_creacion_ticket";
 
 				$cadUser = "SELECT T.id as Ticket,fecha_creacion_ticket as Creado,fecha_modificacion_ticket as Modificado,asunto_ticket as Asunto,estatus_ticket as Estatus,prioridad_ticket as Prioridad,nivel_ticket as Nivel, CONCAT(nombre_empleado,' ',apellido_paterno) as Atiende, tipo_cuestionario FROM tickets T
 					join empleados E ON E.id = T.empledo_asignado_id WHERE estado_ticket = 0 AND autor_id = ".$_SESSION["id"]." ORDER BY T.id";

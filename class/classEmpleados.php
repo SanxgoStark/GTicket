@@ -40,7 +40,7 @@ if(!isset($_SESSION['nombre_usuario']))
                 case 'buscar':
 
 					$consulta = "SELECT E.id,nombre_empleado as Nombre,apellido_paterno as Apellido_P,apellido_materno as Apellido_M,titulo_empleado as Titulo,numero_telefono as Telefono,correo_empleado as Correo,D.nombre_departamento as Departamento FROM empleados E
-					INNER JOIN `departamentos` D ON E.`departamento_id` = D.`id` where titulo_empleado like '%".$_REQUEST['empleado']."%' OR CONCAT(nombre_empleado,' ',apellido_paterno) like '%".$_REQUEST['empleado']."%' AND estado_empleado = 0 order by id";
+					INNER JOIN `departamentos` D ON E.`departamento_id` = D.`id` where (titulo_empleado like '%".$_REQUEST['empleado']."%' OR CONCAT(nombre_empleado,' ',apellido_paterno) like '%".$_REQUEST['empleado']."%') AND (estado_empleado = 0) order by id";
 					$this->consulta($consulta);
 
 					$result=$this->imprimeTabla($consulta,true,array("formupdate","delete","formuser"));
@@ -67,7 +67,7 @@ if(!isset($_SESSION['nombre_usuario']))
 				case 'list': 
 
 				$cad = "SELECT E.id,nombre_empleado as Nombre,apellido_paterno as Apellido_P,apellido_materno as Apellido_M,titulo_empleado as Titulo,numero_telefono as Telefono,correo_empleado as Correo,D.nombre_departamento as Departamento FROM empleados E
-				INNER JOIN `departamentos` D ON E.`departamento_id` = D.`id` WHERE estado_empleado =! 1 ORDER BY E.id";
+				INNER JOIN `departamentos` D ON E.`departamento_id` = D.`id` WHERE estado_empleado = 0 ORDER BY E.id";
 
 					$result=$this->imprimeTabla($cad,true,array("formupdate","delete","formuser"));
 
