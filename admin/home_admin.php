@@ -46,7 +46,6 @@ if(!isset($_SESSION['nombre_usuario']))
 
 		<? include "../class/classTickets.php" ?>
 		
-		
 	</div>
 
 </body>

@@ -20,7 +20,7 @@ if($EstatusConexion==null){
 // codigo sql
 // $consulta = "SELECT * FROM usuario where Email='".$_POST['email']."' and Clave=password('".$_POST['clave']."')";
 
-// consulta de maestro
+// consulta
 $consulta="SELECT * FROM usuarios where nombre_usuario='".$_POST['usuario']."' and password_usuario=MD5('".$_POST['contraseña']."')   ";
 
 echo $consulta;
@@ -58,12 +58,8 @@ if(mysqli_num_rows($bloqueRegistros))
 		// mysqli_query($query);
 
 		if ($_SESSION['rol_id'] == 2) { // 2 es admin
-			// se inicializa la variable ed sesion para lalista de compra
 			header("location: admin/home_admin.php");
 		}else{ // 1 es user
-			// $_SESSION['nombre']=$_SESSION['idUsuario']= // variable global, SE GENERA SESSION
-			
-			// se inicializa la variable ed sesion para lalista de compra
 			header("location: home_user.php");	
 		}
 

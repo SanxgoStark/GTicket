@@ -26,8 +26,6 @@
 <div id="centrar">
 
   <div id="centrar" style="border-radius:22px;border-style: solid; border-color: #005195; height: 450px;width: 400px;background: #005195;"class="row renglon">
-
-
       <!--  -->
 <form action="veriLogin.php" method="post">
 
@@ -54,11 +52,7 @@
       </form></td>
     </div>
 
-
-
    </div>
-    
-    
     <!-- <input id="btn" onclick="ocultaralert()" type="button"  value="alerta"></input> -->
 </form>
 
