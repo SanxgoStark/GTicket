@@ -1,13 +1,11 @@
 
 <?
+// Modelo y controlador de Empleado
 
-/**
- * MODELO , CONTROLADOR
- */
-
-// las sesiones es el ecanismo de asegurarnos que el usuario se logeo correctamente
+ // establecimiento del uso horario en el recurso
 date_default_timezone_set('America/Mexico_City');
-// asegurarme que la ssession existe
+
+// verificacion de sesion existente
 // isset permite saber si una variable existe
 if(!isset($_SESSION['nombre_usuario'])) 
 	{
@@ -15,43 +13,50 @@ if(!isset($_SESSION['nombre_usuario']))
 
 		session_start(); // si no existe arracca las sesiones
 		// si se inician las sesiones y aun asi no existe es acceso ilegal
-		if(!isset($_SESSION['nombre_usuario'])) exit; // ya no hagas nada}
-		//else // si es un administrador dejrlo pasar aqui con codigo
+		if(!isset($_SESSION['nombre_usuario'])) exit; 
 	}
 	
+	// Inclusion de recurso base de datos en recurso actual
 	include "classBaseDatos.php";
 
-	// si el usaurio se logeo correctamente pasa
-	// clase de estatus de espacios
-	class Cuestionarios extends BaseDatos // clase referente a tabla espacios en la base de datos
-	{
+	// si el usuario inicio sesion correctamente pasa
 
-		// al poner extends la tabla podra heredar el conportamiento de la calse BaseDatos
-		
+	// clase Empleados hereda comportamiento de la clase BaseDatos
+	class Cuestionarios extends BaseDatos
+	{
 		// funcion constructor por defecto
 		function __construct(){}
 
 		// que quiero hacer con esta tabla
 		function proceso($accion){
-			//echo var_dump($_POST);
+
+			// almacenamiento de id de registro
 			$idRegistro = $_POST["idRegistro"];
+			// consulta y almacenamiento de tipo de cuestionario
             $tipo_cuestionario = $this->consultartipo($idRegistro);
+			// declaracion de variables para arreglos de respuestas y preguntas 
 			$arrayanswers;
 			$arrayidquestions;
 
-			//arreglos de selects
+			// array que almacena respuesta booleana
 			$selectboolean = array("Si","No");	
 
 			$result=""; // variable para acumular el resultado
+
+			// Switch para ejecutar accion enviada
 			switch ($accion) {
 
+				// caso para insertar cuestionario en la base de datos
                 case 'insert':
 
+					// la insercion de las respuestas en la base se hace en funcion del tipo de cuestionario
 					if($tipo_cuestionario == "CCP"){
-						// IDAREA = 1
+						// IDAREA = 1 (CCP) en la base de datos
 
+						// arreglo para almacenar preguntas
 						$arrayidquestions = [1,2,3,4,5,6,7,8,9,10,11,12];
 
+						// en las posiciones del array de respuestas se almacenan las respuestas enviadas por post
 						$arrayanswers [0] = $_POST["r1"];
 						$arrayanswers [1] = $_POST["r2"];
 						$arrayanswers [2] = $_POST["r3"];
@@ -65,6 +70,7 @@ if(!isset($_SESSION['nombre_usuario']))
 						$arrayanswers [10] = $_POST["r11"];
 						$arrayanswers [11] = $_POST["r12"];
 
+						// consulta para insertar respuestas de cuestionario en la base de datos
 						$cad='INSERT INTO cuestionarios 
                         (respuesta_pregunta,ticket_id,pregunta_id) 
                         values("'.$_POST["r1"].'",'.$idRegistro.','.$arrayidquestions[0].'),
@@ -80,27 +86,31 @@ if(!isset($_SESSION['nombre_usuario']))
 							  ("'.$_POST["r11"].'",'.$idRegistro.','.$arrayidquestions[10].'),
 							  ("'.$_POST["r12"].'",'.$idRegistro.','.$arrayidquestions[11].')';
     
-                        //ejecuta la cadena
+                        // ejecucion de consulta
                         $this->consulta($cad);
 
+						// redireccionamiento a recurso en funcion a el rol del usuario
 						if($_SESSION["rol_id"] == 1 ){
 							// user
 							// redireccionamiento automatico a recurso indicado
-							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=home_user.php'>";
 							
 						}else{
 							//admin
 							// redireccionamiento automatico a recurso indicado
-							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../home_user.php'>"; 
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
 						}
 						
 						
 					}
+					// la insercion de las respuestas en la base se hace en funcion del tipo de cuestionario
 					if($tipo_cuestionario == "SO"){
-						// IDAREA = 2
+						// IDAREA = 2 (SO) en la base de datos
 
+						// arreglo para almacenar preguntas
 						$arrayidquestions = [14,15,16,17,18,19,20,21,22,23];
 
+						// en las posiciones del array de respuestas se almacenan las respuestas enviadas por post
 						$arrayanswers [0] = $_POST["r14"];
 						$arrayanswers [1] = $_POST["r15"];
 						$arrayanswers [2] = $_POST["r16"];
@@ -112,6 +122,7 @@ if(!isset($_SESSION['nombre_usuario']))
 						$arrayanswers [8] = $_POST["r22"];
 						$arrayanswers [9] = $_POST["r23"];
 
+						// consulta para insertar respuestas de cuestionario en la base de datos
 						$cad='INSERT INTO cuestionarios 
                         (respuesta_pregunta,ticket_id,pregunta_id) 
                         values("'.$_POST["r14"].'",'.$idRegistro.','.$arrayidquestions[0].'),
@@ -125,25 +136,30 @@ if(!isset($_SESSION['nombre_usuario']))
 							  ("'.$_POST["r22"].'",'.$idRegistro.','.$arrayidquestions[8].'),
 							  ("'.$_POST["r23"].'",'.$idRegistro.','.$arrayidquestions[9].')';
 
-						//ejecuta la cadena
+						// ejecucion de consulta
                         $this->consulta($cad);
 
+						// redireccionamiento a recurso en funcion a el rol del usuario
 						if($_SESSION["rol_id"] == 1 ){
 							// user
 							// redireccionamiento automatico a recurso indicado
-							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=home_user.php'>";
 							
 						}else{
 							//admin
 							// redireccionamiento automatico a recurso indicado
-							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../home_user.php'>"; 
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
 						}
+						
 					}
+					// la insercion de las respuestas en la base se hace en funcion del tipo de cuestionario
 					if($tipo_cuestionario == "RED"){
-						// IDAREA = 3
+						// IDAREA = 3 (RED) en la base de datos
 
+						// arreglo para almacenar preguntas
 						$arrayidquestions = [24,25,26,27,28,31,33];
 
+						// en las posiciones del array de respuestas se almacenan las respuestas enviadas por post
 						$arrayanswers [0] = $_POST["r24"];
 						$arrayanswers [1] = $_POST["r25"];
 						$arrayanswers [2] = $_POST["r26"];
@@ -152,6 +168,7 @@ if(!isset($_SESSION['nombre_usuario']))
 						$arrayanswers [5] = $_POST["r31"];
 						$arrayanswers [6] = $_POST["r33"];
 
+						// consulta para insertar respuestas de cuestionario en la base de datos
 						$cad='INSERT INTO cuestionarios 
                         (respuesta_pregunta,ticket_id,pregunta_id) 
                         values("'.$_POST["r24"].'",'.$idRegistro.','.$arrayidquestions[0].'),
@@ -162,25 +179,30 @@ if(!isset($_SESSION['nombre_usuario']))
 							  ("'.$_POST["r31"].'",'.$idRegistro.','.$arrayidquestions[5].'),
 							  ("'.$_POST["r33"].'",'.$idRegistro.','.$arrayidquestions[6].')';
 
-						//ejecuta la cadena
+						// ejecucion de consulta
                         $this->consulta($cad);
 
+						// redireccionamiento a recurso en funcion a el rol del usuario
 						if($_SESSION["rol_id"] == 1 ){
 							// user
 							// redireccionamiento automatico a recurso indicado
-							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=home_user.php'>";
 							
 						}else{
 							//admin
 							// redireccionamiento automatico a recurso indicado
-							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../home_user.php'>"; 
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
 						}
+						
 					}
+					// la insercion de las respuestas en la base se hace en funcion del tipo de cuestionario
 					if($tipo_cuestionario == "CP"){
-						// IDAREA = 4
+						// IDAREA = 4 (CP) en la base de datos
 
+						// arreglo para almacenar preguntas
 						$arrayidquestions = [34,35,36,37,38,39,40,41,42,43,44];
 
+						// consulta para insertar respuestas de cuestionario en la base de datos
 						$arrayanswers [0] = $_POST["r34"];
 						$arrayanswers [1] = $_POST["r35"];
 						$arrayanswers [2] = $_POST["r36"];
@@ -193,6 +215,7 @@ if(!isset($_SESSION['nombre_usuario']))
 						$arrayanswers [9] = $_POST["r43"];
 						$arrayanswers [10] = $_POST["r44"];
 
+						// consulta para insertar respuestas de cuestionario en la base de datos
 						$cad='INSERT INTO cuestionarios 
                         (respuesta_pregunta,ticket_id,pregunta_id) 
                         values("'.$_POST["r34"].'",'.$idRegistro.','.$arrayidquestions[0].'),
@@ -207,25 +230,30 @@ if(!isset($_SESSION['nombre_usuario']))
 							  ("'.$_POST["r43"].'",'.$idRegistro.','.$arrayidquestions[9].'),
 							  ("'.$_POST["r44"].'",'.$idRegistro.','.$arrayidquestions[10].')';
 
-						//ejecuta la cadena
+						// ejecucion de consulta
                         $this->consulta($cad);
 
+						// redireccionamiento a recurso en funcion a el rol del usuario
 						if($_SESSION["rol_id"] == 1 ){
 							// user
 							// redireccionamiento automatico a recurso indicado
-							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=home_user.php'>";
 							
 						}else{
 							//admin
 							// redireccionamiento automatico a recurso indicado
-							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../home_user.php'>"; 
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
 						}
+						
 					}
+					// la insercion de las respuestas en la base se hace en funcion del tipo de cuestionario
 					if($tipo_cuestionario == "SEG"){
-						// IDAREA = 5
+						// IDAREA = 5 (SEG) en la base de datos
 
+						// arreglo para almacenar preguntas
 						$arrayidquestions = [61,62,63,65,66,67,69,70,71,72,73,74,75,76];
 
+						// consulta para insertar respuestas de cuestionario en la base de datos
 						$arrayanswers [0] = $_POST["r61"];
 						$arrayanswers [1] = $_POST["r62"];
 						$arrayanswers [2] = $_POST["r63"];
@@ -241,6 +269,7 @@ if(!isset($_SESSION['nombre_usuario']))
 						$arrayanswers [12] = $_POST["r75"];
 						$arrayanswers [13] = $_POST["r76"];
 
+						// consulta para insertar respuestas de cuestionario en la base de datos
 						$cad='INSERT INTO cuestionarios 
                         (respuesta_pregunta,ticket_id,pregunta_id) 
                         values("'.$_POST["r61"].'",'.$idRegistro.','.$arrayidquestions[0].'),
@@ -258,25 +287,30 @@ if(!isset($_SESSION['nombre_usuario']))
 							  ("'.$_POST["r75"].'",'.$idRegistro.','.$arrayidquestions[12].'),
 							  ("'.$_POST["r76"].'",'.$idRegistro.','.$arrayidquestions[13].')';
 
-						//ejecuta la cadena
+						// ejecucion de la consulta
                         $this->consulta($cad);
 
+						// redireccionamiento a recurso en funcion a el rol del usuario
 						if($_SESSION["rol_id"] == 1 ){
 							// user
 							// redireccionamiento automatico a recurso indicado
-							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=home_user.php'>";
 							
 						}else{
 							//admin
 							// redireccionamiento automatico a recurso indicado
-							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../home_user.php'>"; 
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
 						}
+						
 					}
+					// la insercion de las respuestas en la base se hace en funcion del tipo de cuestionario
 					if($tipo_cuestionario == "IMP"){
-						// IDAREA = 6
+						// IDAREA = 6 (IMP) en la base de datos
 
+						// arreglo para almacenar preguntas
 						$arrayidquestions = [46,47,48,49,50,51,53,54,55,56,57,58,59,60];
 
+						// consulta para insertar respuestas de cuestionario en la base de datos
 						$arrayanswers [0] = $_POST["r46"];
 						$arrayanswers [1] = $_POST["r47"];
 						$arrayanswers [2] = $_POST["r48"];
@@ -292,6 +326,7 @@ if(!isset($_SESSION['nombre_usuario']))
 						$arrayanswers [12] = $_POST["r59"];
 						$arrayanswers [13] = $_POST["r60"];
 
+						// consulta para insertar respuestas de cuestionario en la base de datos
 						$cad='INSERT INTO cuestionarios 
                         (respuesta_pregunta,ticket_id,pregunta_id) 
                         values("'.$_POST["r46"].'",'.$idRegistro.','.$arrayidquestions[0].'),
@@ -309,25 +344,30 @@ if(!isset($_SESSION['nombre_usuario']))
 							  ("'.$_POST["r59"].'",'.$idRegistro.','.$arrayidquestions[12].'),
 							  ("'.$_POST["r60"].'",'.$idRegistro.','.$arrayidquestions[13].')';
 
-						//ejecuta la cadena
+						// ejecucion de consulta
                         $this->consulta($cad);
 
+						// redireccionamiento a recurso en funcion a el rol del usuario
 						if($_SESSION["rol_id"] == 1 ){
 							// user
 							// redireccionamiento automatico a recurso indicado
-							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=home_user.php'>";
 							
 						}else{
 							//admin
 							// redireccionamiento automatico a recurso indicado
-							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../home_user.php'>"; 
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
 						}
+						
 					}
+					// la insercion de las respuestas en la base se hace en funcion del tipo de cuestionario
 					if($tipo_cuestionario == "SOF"){
-						// IDAREA = 7
+						// IDAREA = 7 (SOF) en la base de datos
 
+						// arreglo para almacenar preguntas
 						$arrayidquestions = [77,78,79,80,81,82,83,84];
 
+						// consulta para insertar respuestas de cuestionario en la base de datos
 						$arrayanswers [0] = $_POST["r77"];
 						$arrayanswers [1] = $_POST["r78"];
 						$arrayanswers [2] = $_POST["r79"];
@@ -337,6 +377,7 @@ if(!isset($_SESSION['nombre_usuario']))
 						$arrayanswers [6] = $_POST["r83"];
 						$arrayanswers [7] = $_POST["r84"];
 
+						// consulta para insertar respuestas de cuestionario en la base de datos
 						$cad='INSERT INTO cuestionarios 
                         (respuesta_pregunta,ticket_id,pregunta_id) 
                         values("'.$_POST["r77"].'",'.$idRegistro.','.$arrayidquestions[0].'),
@@ -348,33 +389,38 @@ if(!isset($_SESSION['nombre_usuario']))
 							  ("'.$_POST["r83"].'",'.$idRegistro.','.$arrayidquestions[6].'),
 							  ("'.$_POST["r84"].'",'.$idRegistro.','.$arrayidquestions[7].')';
 
-						//ejecuta la cadena
+						// ejecucion de consulta
                         $this->consulta($cad);
 
+						// redireccionamiento a recurso en funcion a el rol del usuario
 						if($_SESSION["rol_id"] == 1 ){
 							// user
 							// redireccionamiento automatico a recurso indicado
-							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=home_user.php'>";
 							
 						}else{
 							//admin
 							// redireccionamiento automatico a recurso indicado
-							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../home_user.php'>"; 
+							echo "<META  HTTP-EQUIV ='REFRESH' CONTENT='1; URL=../admin/home_admin.php'>"; 
 						}
+						
 					}
 
                         break;
 
-
+				// caso para despliegue y rellenado de formularios en funcion de su tipo
                 case 'cuestionario':
 
 					// inicio: se hace consulta a bd para extraer las respuestas si existen
 					$cad = "SELECT respuesta_pregunta FROM cuestionarios WHERE ticket_id=".$_POST['idRegistro']."";
 					
+					// ejecucion de la consulta
 					$reg = $this->consult($cad);
 
+					// se consulta y almacena el numero de registros
 					$nreg = mysqli_num_rows($reg);
 
+					// las resgpuestas se almacenan en un array
 					if ($nreg > 0)
 					{
 						for ($i=0; $i<$nreg; $i++)
@@ -384,16 +430,11 @@ if(!isset($_SESSION['nombre_usuario']))
 						}
 			
 					}
-					// fin: las respuestas se guardan en el array registros
 
-					//echo count($registro);
-					//echo var_dump($registro);
-					//exit;
-
+				// condicion para despliegue de formulario en funcion de su tipo
                 if($tipo_cuestionario == 'CCP'){
 
-                    //echo "formulario de Componentes de computadora portatil";
-					//echo $_POST["idRegistro"];
+                    // "formulario de Componentes de computadora portatil";
 
                     $result.='
                     <div style="height:auto;margin-top:30%px;margin-left:; margin-right:;float:right">
@@ -522,7 +563,7 @@ if(!isset($_SESSION['nombre_usuario']))
 					</div>';
 
                 }else if($tipo_cuestionario == 'SO'){
-                    //echo "formulario de Sistemas operativos";
+                    // "formulario de Sistemas operativos";
 
 					$result.='
 					<div style="height:auto;margin-top:30%px;margin-left:; margin-right:;float:right">
@@ -636,7 +677,7 @@ if(!isset($_SESSION['nombre_usuario']))
 					</div>';
 
                 }else if($tipo_cuestionario == 'RED'){
-                    //echo "formulario de Redes";
+                    // "formulario de Redes";
 
 					$result.='
                     <div style="height:auto;margin-top:30%px;margin-left:; margin-right:;float:right">
@@ -726,7 +767,7 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					</div>';
                 }else if($tipo_cuestionario == 'CP'){
-                    //echo "formulario de Cumputadora portatil";
+                    // "formulario de Cumputadora portatil";
 
 					$result.='
                     <div style="height:auto;margin-top:30%px;margin-left:; margin-right:;float:right">
@@ -845,7 +886,7 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					</div>';
                 }else if($tipo_cuestionario == 'SEG'){
-                    //echo "formulario de Seguridad";
+                    // "formulario de Seguridad";
 
 					$result.='
                     <div style="height:auto;margin-top:30%px;margin-left:; margin-right:;float:right">
@@ -988,7 +1029,7 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					</div>';
                 }else if($tipo_cuestionario == 'IMP'){
-                    //echo "formulario de Impresoras";
+                    // "formulario de Impresoras";
 
 					$result.='
 					<div style="height:auto;margin-top:30%px;margin-left:; margin-right:;float:right">
@@ -1131,7 +1172,7 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					</div>';
                 }else if($tipo_cuestionario == 'SOF'){
-                    //echo "formulario de software";
+                    // "formulario de software";
 
 					$result.='
                     <div style="height:auto;margin-top:30%px;margin-left:; margin-right:;float:right">
@@ -1226,16 +1267,20 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					</div>';
                 }
-
+					// se retorna el resultado
                     return $result;
                 break;
 				
+				// caso para actualizacion de cuestionarios
 				case 'update':
 
+					// condicion para actualizar los cuestionarios en funcion de su tipo
 					if($tipo_cuestionario == 'CCP'){
 
+						// arreglo de preguntas, contiene los ids de las preguntas
 						$arrayidquestions = [1,2,3,4,5,6,7,8,9,10,11,12];
 
+						// ejecucion de la funcion update que actualiza las respuestas en cada pregunta
 						$this->update($_POST["r1"],$idRegistro,$arrayidquestions[0]);
 						$this->update($_POST["r2"],$idRegistro,$arrayidquestions[1]);
 						$this->update($_POST["r3"],$idRegistro,$arrayidquestions[2]);
@@ -1251,8 +1296,10 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					}else if ($tipo_cuestionario == 'SO'){
 						
+						// arreglo de preguntas, contiene los ids de las preguntas
 						$arrayidquestions = [14,15,16,17,18,19,20,21,22,23];
 
+						// ejecucion de la funcion update que actualiza las respuestas en cada pregunta
 						$this->update($_POST["r14"],$idRegistro,$arrayidquestions[0]);
 						$this->update($_POST["r15"],$idRegistro,$arrayidquestions[1]);
 						$this->update($_POST["r16"],$idRegistro,$arrayidquestions[2]);
@@ -1266,8 +1313,10 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					}else if($tipo_cuestionario =='RED'){
 
+						// arreglo de preguntas, contiene los ids de las preguntas
 						$arrayidquestions = [24,25,26,27,28,31,33];
 
+						// ejecucion de la funcion update que actualiza las respuestas en cada pregunta
 						$this->update($_POST["r24"],$idRegistro,$arrayidquestions[0]);
 						$this->update($_POST["r25"],$idRegistro,$arrayidquestions[1]);
 						$this->update($_POST["r26"],$idRegistro,$arrayidquestions[2]);
@@ -1278,8 +1327,10 @@ if(!isset($_SESSION['nombre_usuario']))
 					
 					}else if($tipo_cuestionario =='CP'){
 
+						// arreglo de preguntas, contiene los ids de las preguntas
 						$arrayidquestions = [34,35,36,37,38,39,40,41,42,43,44];
 
+						// ejecucion de la funcion update que actualiza las respuestas en cada pregunta
 						$this->update($_POST["r34"],$idRegistro,$arrayidquestions[0]);
 						$this->update($_POST["r35"],$idRegistro,$arrayidquestions[1]);
 						$this->update($_POST["r36"],$idRegistro,$arrayidquestions[2]);
@@ -1294,8 +1345,10 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					}else if($tipo_cuestionario =='SEG'){
 
+						// arreglo de preguntas, contiene los ids de las preguntas
 						$arrayidquestions = [61,62,63,65,66,67,69,70,71,72,73,74,75,76];
 
+						// ejecucion de la funcion update que actualiza las respuestas en cada pregunta
 						$this->update($_POST["r61"],$idRegistro,$arrayidquestions[0]);
 						$this->update($_POST["r62"],$idRegistro,$arrayidquestions[1]);
 						$this->update($_POST["r63"],$idRegistro,$arrayidquestions[2]);
@@ -1313,8 +1366,10 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					}else if($tipo_cuestionario =='IMP'){
 
+						// arreglo de preguntas, contiene los ids de las preguntas
 						$arrayidquestions = [46,47,48,49,50,51,53,54,55,56,57,58,59,60];
 
+						// ejecucion de la funcion update que actualiza las respuestas en cada pregunta
 						$this->update($_POST["r46"],$idRegistro,$arrayidquestions[0]);
 						$this->update($_POST["r47"],$idRegistro,$arrayidquestions[1]);
 						$this->update($_POST["r48"],$idRegistro,$arrayidquestions[2]);
@@ -1332,8 +1387,10 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					}else if($tipo_cuestionario =='SOF'){
 
+						// arreglo de preguntas, contiene los ids de las preguntas
 						$arrayidquestions = [77,78,79,80,81,82,83,84];
 
+						// ejecucion de la funcion update que actualiza las respuestas en cada pregunta
 						$this->update($_POST["r77"],$idRegistro,$arrayidquestions[0]);
 						$this->update($_POST["r78"],$idRegistro,$arrayidquestions[1]);
 						$this->update($_POST["r79"],$idRegistro,$arrayidquestions[2]);
@@ -1345,6 +1402,7 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					}
 
+					// redireccionamiento a recurso en funcion a el rol del usuario
 					if($_SESSION["rol_id"] == 1 ){
 						// user
 						// redireccionamiento automatico a recurso indicado
@@ -1362,43 +1420,50 @@ if(!isset($_SESSION['nombre_usuario']))
 				
 
 			}
-			// puede retirnar el resultado o imprimirlo con echo
+			// retorno del resultado
 			return $result;
 		}
 
+		// funcion para actualizar respuestas de cuestionarios
 		function update($respuesta_pregunta,$idRegistro,$posicionarrayid){
 
+			// consulta para actualizar respuesta de preguna
 			$cad = 'UPDATE cuestionarios SET respuesta_pregunta ="'.$respuesta_pregunta.'", 
 			ticket_id="'.$idRegistro.'", pregunta_id="'.$posicionarrayid.'" 
 			WHERE (ticket_id,pregunta_id) = ('.$idRegistro.','.$posicionarrayid.')';
 
-			//ejecuta la cadena
+			// ejecucion de cadena
 			$this->consulta($cad);
 
 		}
 
-        // funcion que consulta el tipo de cuestionario en funcion de su id
+        // funcion para consultar el tipo de cuestionario en funcion de su id
         function consultartipo($idRegistro){
 			
+			// declaracion de variable que alamacenara el tipo de cuestionario
             $tipo_cuestionario = "";
 
+			// consulta para obtener el tipo de cuestionario con el id del ticket
             $query="SELECT tipo_cuestionario FROM tickets WHERE id = ".$idRegistro." ";
 
-
+			// ejecucion de consulta
 			$res = $this->consult($query);
-			// echo var_dump($res);
 
-			// volcar datos, provenientes de una consulta mysql, dentro de un array php
+			// volcado de datos, provenientes de una consulta mysql, dentro de un array php
 			$volcadoarray = mysqli_fetch_array($res);
+			
+			// extraccion y alamacenamiento de tipo de cuestionario
 			$tipo_cuestionario = $volcadoarray['tipo_cuestionario'];
 
-            //echo $tipo_cuestionario;
+            // retorno del tipo de cuestionario
 			return $tipo_cuestionario;
 
         }
 
+		// funcion para accion de redireccion a recurso al presionar boton de cancelar
 		function rolcancelbtn($rol){
 			
+			// en funcion del rol se redirige a recurso
 			if($rol == 1){
 				//user
 				$result = '<button style="margin-left:50px;width: auto" type="button" class="btn btn-primary"><a style="color:white" href="home_user.php">Cancelar</a></button>';
@@ -1408,9 +1473,11 @@ if(!isset($_SESSION['nombre_usuario']))
 				$result = '<button style="margin-left:50px;width: auto" type="button" class="btn btn-primary"><a style="color:white" href="../admin/home_admin.php">Cancelar</a></button>';
 			}
 			
+			// se retorna el resultado
 			return $result;
 		}
 
+		// funcion para impresion de tabla
 		function imprimeTabla($query,$formNew=false,$iconos=array()){
 
 			$result="";
@@ -1432,15 +1499,18 @@ if(!isset($_SESSION['nombre_usuario']))
 		        
 		        foreach ($iconos as $value) {
 		        	switch ($value) {
+						// caso para agregacion de boton de borrado a registro
 		        		case 'delete':
-		        		// echo $registro[0];
+
 		        			$result.='<td width="6%"><form method="post"><input type="hidden" value="'.$value.'" name="accion"/>
-                     <input type="hidden" name="idRegistro" value = "'.$registro[0].'">
-        			<button class="btn btn-danger"><i title="Borrar registro" class="fas fa-trash"></i></button></form></td>';
+                    		<input type="hidden" name="idRegistro" value = "'.$registro[0].'">
+        					<button class="btn btn-danger"><i title="Borrar registro" class="fas fa-trash"></i></button></form></td>';
 		        			break;
+							// caso para agregacion de boton de edicion a registro
 		        		case 'editar':
 		        			$result.='<td colspan="'.count($iconos).'">'.(($formNew)?'<form method="post"><input type="hidden" value="formNew" name="accion"/><button class="btn btn-success"><i title="Editar registro" class="fas fa-plus-circle"></i></button></form>':"&nbsp;").'</td>';
 		        			break;
+						// caso para agregacion de boton de actualizacion a registro
 		        		case 'formupdate':
 		        		
 		        			$result.='<td width="6%">
@@ -1453,7 +1523,8 @@ if(!isset($_SESSION['nombre_usuario']))
 		        			</form>
 		        			</td>';
 		        			break;
-
+						
+						// caso para agregacion de boton de cuestionario a registro
 						case 'cuestionario':
 		        		
 		        			$result.='<td width="6%">
@@ -1469,7 +1540,7 @@ if(!isset($_SESSION['nombre_usuario']))
 		        	}
 		        	
 		        }
-
+				// despliegue de las demas columnas de un registro
 				for ($col=0; $col < count($registro); $col++) { 
 					$result.='<td>'.$registro[$col].'</td>';
 					
@@ -1481,20 +1552,18 @@ if(!isset($_SESSION['nombre_usuario']))
 		}
 	}
 
-// construccion de objeto
+// construccion de objeto de clase
 $oCuestionarios = new Cuestionarios();
 
-// echo var_dump($_REQUEST['accion']);
-// enseguida puedo ejecutar una opcion
 if (isset($_REQUEST['accion'])) // se ejecuta si se esta recibiendo una accion
 
 	// como el switch se programo con un return a continucaion se agrega echo
 	echo $oCuestionarios->proceso($_REQUEST['accion']);
 	
 else
-	// echo 'se incluyo bien el archivo';
+	// por defecto se ejecuta la accion de list que despliega la tabla de registros
 	echo $oCuestioarios->proceso("list");
 
-// yo sobre este recurso puedo recibir sobre get o post
+// este recurso puedo recibir sobre get o post
 
 ?>

@@ -1,8 +1,7 @@
 <?
-session_start();
-// var_dump($_SESSION);
+session_start(); // creacion de sesion en recurso
 
-// por cada recurso restringido,debemos preguntar si paso porel sistema de logeo
+// verificacion para saber si se paso por el sistema de login
 // isset permite saber si una variable existe
 if(!isset($_SESSION['nombre_usuario']))
 	{header("location: ../index.php?e=2"); // acceso ilegal
@@ -11,15 +10,14 @@ if(!isset($_SESSION['nombre_usuario']))
 
 ?>
 
-
-<!-- <a href="../index.php">cerrar sesion</a> -->
-
 <!DOCTYPE html>
 <html>
 <head>
+	<!-- Importacion de recursos css -->
     <link rel="stylesheet" type="text/css" href="../css/custom.css">
 	<link rel="stylesheet" type="text/css" href="../css/bootstraplux.css">
 
+	<!-- Importacion de recursos javascript -->
     <script src="../controllers/empleados.js"></script>
 
 	<script src="../js/jquery-3.6.0.min.js"></script>
@@ -27,8 +25,10 @@ if(!isset($_SESSION['nombre_usuario']))
 </head>
 <body style="">
 
+	<!-- Inclusion de recurso menu en recurso actual -->
 	<? include "menu.php" ?>
 
+	<!-- Contendor de titulo de recurso y barra de busqueda -->
     <div id="cabecera"style="text-align: center;background-color:;margin-top: 15px;margin-left:1%; margin-right:1%; ">
 	    <h2 style="margin-top: 15px" align="center" id="titulo">Empleados </h2>
         <form id="formEmpleados" style="width:400px;">
@@ -37,9 +37,10 @@ if(!isset($_SESSION['nombre_usuario']))
 		</form>
     </div>
     
-
+	<!-- Contendor donde se retorna el resultado de la ejecucion de una accion en la clase-->
 	<div id="IDEmpleados" style="border-radius:22px;overflow-y: hidden;height: auto;margin-top: 40px;background-color: ;margin-left:1%; margin-right:1%;" class="">
-
+		
+		<!-- Inclusion de recurso classEmpleados en recurso actual -->
 		<? include "../class/classEmpleados.php" ?>
 		
 	</div>

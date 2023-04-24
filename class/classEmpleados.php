@@ -1,31 +1,26 @@
 
 <?
+// Modelo y controlador de Empleado
 
-/**
- * MODELO , CONTROLADOR
- */
-
-// las sesiones es el ecanismo de asegurarnos que el usuario se logio correctamente
-
-// asegurarme que la ssession existe
+// verificacion de sesion existente
 // isset permite saber si una variable existe
 if(!isset($_SESSION['nombre_usuario'])) 
 	{
-		// si no esta el isset de la sesion has esto
+		// si no esta el isset de la sesion
 
 		session_start(); // si no existe arracca las sesiones
 		// si se inician las sesiones y aun asi no existe es acceso ilegal
-		if(!isset($_SESSION['nombre_usuario'])) exit; // ya no hagas nada}
-		//else // si es un administrador dejrlo pasar aqui con codigo
+		if(!isset($_SESSION['nombre_usuario'])) exit;
 	}
 	
+	// Inclusion de recurso base de datos en recurso actual
 	include "classBaseDatos.php";
 
-	// si el usaurio se logeo correctamente pasa
-	// clase de estatus de espacios
-	class Empleados extends BaseDatos // clase referente a tabla espacios en la base de datos
+	// si el usuario inicio sesion correctamente pasa
+
+	// clase Empleados hereda comportamiento de la clase BaseDatos
+	class Empleados extends BaseDatos
 	{
-		// al poner extends la tabla podra heredar el conportamiento de la calse BaseDatos
 		
 		// funcion constructor por defecto
 		function __construct(){}
@@ -34,59 +29,70 @@ if(!isset($_SESSION['nombre_usuario']))
 		function proceso($accion){
 
 			$result=""; // variable para acumular el resultado
+
+			// Switch para ejecutar accion enviada
 			switch ($accion) {
 
-				// metodo para caja de busqueda de empleados (barra)
+				// caso para caja de busqueda de tickets admin (barra de busqueda)
                 case 'buscar':
 
+					// consulta para buscar empleados con las caracteristicas de busqueda
 					$consulta = "SELECT E.id,nombre_empleado as Nombre,apellido_paterno as Apellido_P,apellido_materno as Apellido_M,titulo_empleado as Titulo,numero_telefono as Telefono,correo_empleado as Correo,D.nombre_departamento as Departamento FROM empleados E
 					INNER JOIN `departamentos` D ON E.`departamento_id` = D.`id` where (titulo_empleado like '%".$_REQUEST['empleado']."%' OR CONCAT(nombre_empleado,' ',apellido_paterno) like '%".$_REQUEST['empleado']."%') AND (estado_empleado = 0) order by id";
+					
+					// ejecucion de consulta
 					$this->consulta($consulta);
 
+					// despliegue de tabla
 					$result=$this->imprimeTabla($consulta,true,array("formupdate","delete","formuser"));
 
 				break;
 
+				// caso para insercion de empleado en base de datos
 				case 'insert':
 
-				// armado de cadena de insersion
+					// consulta para insertar empleado en la base de datos
 					$cad='INSERT INTO empleados 
 					(nombre_empleado,apellido_paterno,apellido_materno,titulo_empleado,numero_telefono,correo_empleado,departamento_id) 
 					values("'.$_POST["nombre_empleado"].'","'.$_POST['apellido_paterno'].'","'.$_POST['apellido_materno'].'","'.$_POST['titulo_empleado'].'","'.$_POST['numero_telefono'].'","'.$_POST['correo_empleado'].'","'.$_POST['departamento_id'].'")';
 
-					//ejecuta la cadena
+					// ejecucion de consulta
 					$this->consulta($cad);
-					// se llama a funcion que crea usuario con el mismo id que el 
-					// empleado y ademas crea la relacion de usuario con empleado
-					//$this->creausuario();------------------------------------------ importante
+					
+					// ejecucion de proceso de listado 
 					$result.=$this->proceso('list');
 					
 					break;
 
-				// listado
+				// caso para listar o desplegar tabla
 				case 'list': 
 
-				$cad = "SELECT E.id,nombre_empleado as Nombre,apellido_paterno as Apellido_P,apellido_materno as Apellido_M,titulo_empleado as Titulo,numero_telefono as Telefono,correo_empleado as Correo,D.nombre_departamento as Departamento FROM empleados E
-				INNER JOIN `departamentos` D ON E.`departamento_id` = D.`id` WHERE estado_empleado = 0 ORDER BY E.id";
+					// consulta para listado de tabla
+					$cad = "SELECT E.id,nombre_empleado as Nombre,apellido_paterno as Apellido_P,apellido_materno as Apellido_M,titulo_empleado as Titulo,numero_telefono as Telefono,correo_empleado as Correo,D.nombre_departamento as Departamento FROM empleados E
+					INNER JOIN `departamentos` D ON E.`departamento_id` = D.`id` WHERE estado_empleado = 0 ORDER BY E.id";
 
+					// despliegue de tabla
 					$result=$this->imprimeTabla($cad,true,array("formupdate","delete","formuser"));
 
 					break;
 
+				// caso para eliminacion de empleados (por solicitud de asesor interno el registro no se borra solo de oculta de la vista del usuario final)
 				case 'delete':
-					//$this->consulta("DELETE FROM empleados WHERE id ='".$_POST['idRegistro']."'");
-
+					
+					// consulta para actualizar estado de empleado (1 = oculto)
 					$cad = 'UPDATE empleados SET estado_empleado = 1 WHERE id = "'.$_POST["idRegistro"].'"';
 
-					//ejecuta la cadena
+					// ejecucion de consulta
 					$this->consulta($cad);
 
+					// ejecucion de proceso de listado 
 					$result.= $this->proceso('list');
 					break;
-		
+				
+				// caso para actualizacion de empleado
 				case 'update':
 
-					// armado de cadena de insersion
+					// consulta para actualizacion de empleados
 					$cad = 'UPDATE empleados SET nombre_empleado ="'.$_POST["nombre_empleado"].'", 
 											apellido_paterno="'.$_POST['apellido_paterno'].'",
 											apellido_materno="'.$_POST['apellido_materno'].'",
@@ -96,65 +102,61 @@ if(!isset($_SESSION['nombre_usuario']))
 									  departamento_id="'.$_POST['departamento_id'].'"
 					WHERE id = "'.$_POST["idRegistro"].'"';
 
-					//ejecuta la cadena
+					// ejecucion de consulta
 					$this->consulta($cad);
 
+					// ejecucion de proceso de listado 
 					$result.=$this->proceso('list');
 
 					break;
 
+				// caso para creacion de usuario
 				case 'insertuser':
 
 					// se llama a funcion que crea usuario con el mismo id que el 
 					// empleado y ademas crea la relacion de usuario con empleado
 					$this->creausuario();
 
+					// ejecucion de proceso de listado 
 					$result.=$this->proceso('list');
 					break;
-
+				
+				// caso para actualizacion de usuario
 				case 'updateuser':
-					//echo "entre a updateuser";
-					//echo $_SESSION['password_usuarioold'];
-					//echo "/----/";
-					//echo $_POST['password_usuario'];
-					//exit;
 
 					// se compara el password, si fue modificado agrega la incriptacion MD5 al password y lo almacena en la bd
 					if($_SESSION['password_usuarioold'] !== $_POST['password_usuario']){
-						//echo "la contraseña es diferente a la anterior";
+						// consulta para actualizacion de usuario
 						$cad = 'UPDATE usuarios SET nombre_usuario ="'.$_POST["nombre_usuario"].'", 
 						password_usuario=MD5("'.$_POST['password_usuario'].'"),
 						rol_id="'.$_POST['rol_id'].'"WHERE id = "'.$_POST["idRegistro"].'"';
 					}else{
-						//echo "la contraseña no es diferente de la anterior";
+						// consulta para actualizacion de usuario
 						$cad = 'UPDATE usuarios SET nombre_usuario ="'.$_POST["nombre_usuario"].'", 
 						password_usuario="'.$_POST['password_usuario'].'",
 						rol_id="'.$_POST['rol_id'].'"WHERE id = "'.$_POST["idRegistro"].'"';
 					}
 					
-					//ejecuta la cadena
+					// ejecucion de consulta
 					$this->consulta($cad);
 
+					// ejecucion de proceso de listado 
 					$result.=$this->proceso('list');
 					break;
  
-					
+				// caso para despliegue de formulario de usuario
 				case 'formuser':
 
+					// se optienen los datos de un registro
 					$registro=$this->sacaTupla("SELECT * FROM usuarios WHERE id=".$_POST['idRegistro']);
-					//var_dump($registro);
+
 					// seccion para comprobar si $registro['password_usuario'] contiene algo
 					if(isset($registro['password_usuario'])){
 						// si contiene algo lo salva en una variable de sesion
 						$_SESSION['password_usuarioold'] = $registro['password_usuario'];
 					}
 					
-					//echo $_SESSION['password_usuarioold'];
-					//var_dump($_SESSION);
-					
-					//echo $_POST['idRegistro']; // id del empleado
-					//echo var_dump($registro);
-					// caso para form de creacion de nuevo usuario
+					// formulario de creacion de nuevo usuario
 					$result.='<div class="" style="margin-top:40px;margin-left:1%;margin-right:1%">
 					<form method="post">';
 					if (isset($registro))
@@ -209,11 +211,14 @@ if(!isset($_SESSION['nombre_usuario']))
 					</div>';
 					
 					break;
-
+				
+				// caso para actualizacion de empleado
 				case 'formupdate':
 
+					// consulta para extraer datos de registro si existe
 					$registro=$this->sacaTupla("SELECT * FROM empleados WHERE id=".$_POST['idRegistro']); 
-
+				
+				// caso para nuevo empleado
 				case 'formNew':
 					
 					$result.='<div class="" style="margin-top:40px;margin-left:1%;margin-right:1%">
@@ -291,11 +296,13 @@ if(!isset($_SESSION['nombre_usuario']))
 					break;
 
 			}
-			// puede retirnar el resultado o imprimirlo con echo
+			// se retorna el resultado
 			return $result;
 		}
 
+		// funcion para actualizar usuario
 		function updateUsuario(){
+			// consulta para actualizar usuario
 			$cad = 'UPDATE usuario SET nomb_usua="'.$_POST["nomb_usua"].'",
 									   pass_usua="'.$_POST["pass_usua"].'",
 									   fk_id_rol="'.$_POST["fk_id_rol"].'",
@@ -306,53 +313,58 @@ if(!isset($_SESSION['nombre_usuario']))
 
 		// funcion para obtener el ultimo empleado
 		function maxempleado(){
+
+			// consulta para extraer el ultimo registro
 			$cad="SELECT * FROM empleadoS ORDER BY Id DESC LIMIT 1";
 
-
+			// ejecucion de consulta
 			$res = $this->consult($cad);
-			// echo var_dump($res);
 
 			// volcar datos, provenientes de una consulta mysql, dentro de un array php
 			$volcadoarray = mysqli_fetch_array($res);
+
+			// extracion y almacenamiento de id de registro
 			$maxemp = $volcadoarray['id'];
 
+			// retorno de ultimo id
 			return $maxemp;
 		}
 
+		// funcion para crear usuario en la base de datos
 		function creausuario(){
 
-			// id maximo de empleado
+			// almacenamiento de id maximo de empleado
 			$maximoemp=$this->maxempleado();
 
-			// echo var_dump($maxemp);
-
+			// consulta para insertar usuario
 			$cad='INSERT INTO usuarios 
 			(id,nombre_usuario,password_usuario,rol_id) 
 				values('.$maximoemp.',"'.$_POST["nombre_usuario"].'","'.MD5($_POST["password_usuario"]).'","'.$_POST["rol_id"].'")';
 
-					//ejecuta la cadena
-					$this->consulta($cad);
+			// ejecucion de consulta
+			$this->consulta($cad);
 
-					// creaciond e relacion usuario empleado
-					// en empleado como en usuario se creo anterior mente un
-					// registro con el mismo id, ahora se utliza el mismo id
-					// para la relacion 
-					$this->usuario_empleado($maximoemp,$maximoemp);
-
-					
+			/* creacion de relacion usuario empleado
+			   en empleado como en usuario se creo anterior mente un
+			   registro con el mismo id, ahora se utliza el mismo id
+			   para la relacion */ 
+			$this->usuario_empleado($maximoemp,$maximoemp);
+		
 		}
 
-		// creacion de relacion usuario y empleado
+		// funcion para creacion de relacion usuario y empleado
 		function usuario_empleado($id_usuario,$id_empleado){
 
+			// consulta insertar la relacion en la base de datos
 			$cad='INSERT INTO usuario_empleado 
 			(usuario_id,empleado_id) 
 				values('.$id_usuario.','.$id_empleado.')';
 
-					//ejecuta la cadena
-					$this->consulta($cad);
+			// ejecucion de la consulta
+			$this->consulta($cad);
 		}
 
+		// funcion para imprimir tabla
 		function imprimeTabla($query,$formNew=false,$iconos=array("")){
 			$result="";
 			$this->consulta($query);
@@ -374,7 +386,7 @@ if(!isset($_SESSION['nombre_usuario']))
 		        foreach ($iconos as $value) {
 		        	switch ($value) {
 
-						// metodo para caja de busqueda de tickets (barra)
+						// metodo para caja de busqueda de tickets (barra de busqueda)
 						case 'buscar':
 							echo "entre";
 							exit;
@@ -384,9 +396,9 @@ if(!isset($_SESSION['nombre_usuario']))
 		
 							$result=$this->imprimeTabla($consulta,true,array("formupdate","delete","formNewuser"));
 						break;
-
+						
+						// caso para agregacion de boton de borrado a registro
 		        		case 'delete':
-		        		// echo $registro[0];
 		        			$result.='<td width="6%">
 							<form method="post"><input type="hidden" value="'.$value.'" name="accion"/>
                      		<input type="hidden" name="idRegistro" value = "'.$registro[0].'">
@@ -396,6 +408,7 @@ if(!isset($_SESSION['nombre_usuario']))
 							</form></td>';
 		        			break;
 
+						// caso para agregacion de boton de edicion a registro
 		        		case 'editar':
 		        			$result.='<td colspan="'.count($iconos).'">'.(($formNew)?'<form method="post">
 							<input type="hidden" value="formNew" name="accion"/>
@@ -405,8 +418,8 @@ if(!isset($_SESSION['nombre_usuario']))
 							</form>':"&nbsp;").'</td>';
 		        			break;
 
+						// caso para agregacion de boton de actualizacion a registro
 		        		case 'formupdate':
-		        		
 		        			$result.='<td width="6%">
 		        			<form method="post">
 		        			<input type="hidden" value="'.$value.'" name="accion">
@@ -417,7 +430,8 @@ if(!isset($_SESSION['nombre_usuario']))
 		        			</form>
 		        			</td>';
 		        			break;
-
+						
+						// caso para agregacion de boton de usuario a registro
 						case 'formuser':
 							$result.='<td width="6%">
 		        			<form method="post">
@@ -433,6 +447,7 @@ if(!isset($_SESSION['nombre_usuario']))
 		        	
 		        }
 
+				// despliegue de las demas columnas de un registro
 				for ($col=0; $col < count($registro); $col++) { 
 					$result.='<td>'.$registro[$col].'</td>';
 					
@@ -444,20 +459,18 @@ if(!isset($_SESSION['nombre_usuario']))
 		}
 	}
 
-// construccion de objeto
+// construccion de objeto de clase
 $oEmpleados = new Empleados();
 
-// echo var_dump($_REQUEST['accion']);
-// enseguida puedo ejecutar una opcion
 if (isset($_REQUEST['accion'])) // se ejecuta si se esta recibiendo una accion
 
 	// como el switch se programo con un return a continucaion se agrega echo
 	echo $oEmpleados->proceso($_REQUEST['accion']);
 	
 else
-	// echo 'se incluyo bien el archivo';
+	// por defecto se ejecuta la accion de list que despliega la tabla de registros
 	echo $oEmpleados->proceso("list");
 
-// yo sobre este recurso puedo recibir sobre get o post
+// este recurso puedo recibir sobre get o post
 
 ?>

@@ -1,16 +1,17 @@
 <?
-  session_start();
-  session_destroy();
+  session_start(); // creacion de sesion en recurso
+  session_destroy(); // destruccion de sesion en el recurso
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+  <!-- Importacion de recursos -->
 	<link rel="stylesheet" type="text/css" href="css/bootstraplux.css">
   <link rel="stylesheet" type="text/css" href="css/custom.css">
 </head>
 <body style="">
 
+<!-- Barra de navegacion -->
 <nav style="backgrund-color:#005195 !important" class="navbar navbar-expand-lg navbar-light bg-light">
 
   <div class="container-fluid">
@@ -26,7 +27,7 @@
 <div id="centrar">
 
   <div id="centrar" style="border-radius:22px;border-style: solid; border-color: #005195; height: 450px;width: 400px;background: #005195;"class="row renglon">
-      <!--  -->
+      <!-- Formulario LOGIN-->
 <form action="veriLogin.php" method="post">
 
    <h1 align="center" style="color: #E5EEF7">LOGIN</h1>
@@ -53,7 +54,7 @@
     </div>
 
    </div>
-    <!-- <input id="btn" onclick="ocultaralert()" type="button"  value="alerta"></input> -->
+
 </form>
 
 

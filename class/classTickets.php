@@ -1,32 +1,29 @@
 
 <?
-//echo var_dump($_POST);
-//echo var_dump($_SESSION);
-/**
- * MODELO , CONTROLADOR
- */
+// Modelo y controlador de Ticket
 
-// las sesiones es el ecanismo de asegurarnos que el usuario se logeo correctamente
+ // establecimiento del uso horario en el recurso
 date_default_timezone_set('America/Mexico_City');
-// asegurarme que la ssession existe
+
+// verificacion de sesion existente
 // isset permite saber si una variable existe
 if(!isset($_SESSION['nombre_usuario'])) 
 	{
-		// si no esta el isset de la sesion has esto
 
 		session_start(); // si no existe arracca las sesiones
 		// si se inician las sesiones y aun asi no existe es acceso ilegal
 		if(!isset($_SESSION['nombre_usuario'])) exit; // ya no hagas nada}
-		//else // si es un administrador dejrlo pasar aqui con codigo
+
 	}
-	
+
+	// Inclusion de recurso base de datos en recurso actual
 	include "classBaseDatos.php";
 
-	// si el usaurio se logeo correctamente pasa
-	// clase de estatus de espacios
-	class Tickets extends BaseDatos // clase referente a tabla espacios en la base de datos
+	// si el usuario inicio sesion correctamente pasa
+
+	// clase Tickets hereda comportamiento de la clase BaseDatos
+	class Tickets extends BaseDatos 
 	{
-		// al poner extends la tabla podra heredar el conportamiento de la calse BaseDatos
 		
 		// funcion constructor por defecto
 		function __construct(){}
@@ -34,7 +31,9 @@ if(!isset($_SESSION['nombre_usuario']))
 		// que quiero hacer con esta tabla
 		function proceso($accion){
 			
-			//arreglos de selects
+			// Arreglos que contienen las opciones de los comboBox de un Ticket (ArraysOpT)
+			/* Cada una de esto bloque de variables alamacena un array con opciones, estas opciones pertenecen a
+			   las que se despliegan en las cajas desplegables cuando se crea un Ticket */
 			$estatusTickets = array("Abierto","Cerrado");
 			$prioridadTickets = array("Normal","Media","Alta");
 			$nivelesSoporte = array("N1","N2");
@@ -46,13 +45,13 @@ if(!isset($_SESSION['nombre_usuario']))
 			$ifinstalldrivers = array("Si","No");
 			$tiposCuestionario = array("CCP","SO","RED","CP","SEG","IMP","SOF");
 		
-
 			$result=""; // variable para acumular el resultado
+
+			// Switch para ejecutar accion enviada
 			switch ($accion) {
                 
-                // metodo para caja de busqueda de tickets (barra)
+                // caso para caja de busqueda de tickets admin (barra de busqueda)
                 case 'buscar':
-					//echo "entre";
 
 					$consulta ="SELECT T.id as Ticket,fecha_creacion_ticket as Creado,fecha_modificacion_ticket as Modificado,asunto_ticket as Asunto,estatus_ticket as Estatus,prioridad_ticket as Prioridad,nivel_ticket as Nivel, CONCAT(nombre_empleado,' ',apellido_paterno) as Atiende, tipo_cuestionario FROM tickets T
                     	join empleados E ON E.id = T.empledo_asignado_id where estatus_ticket like '%".$_REQUEST['ticket']."%' OR fecha_creacion_ticket like '%".$_REQUEST['ticket']."%' OR CONCAT(nombre_empleado,' ',apellido_paterno) like '%".$_REQUEST['ticket']."%' AND estado_ticket = 0 order by estatus_ticket";
@@ -62,7 +61,8 @@ if(!isset($_SESSION['nombre_usuario']))
 					
 
 				break;
-
+				
+				// caso para caja de busqueda de tickets user (barra de busqueda)
 				case 'buscar_user':
 
 					$cadUser = "SELECT T.id as Ticket,fecha_creacion_ticket as Creado,fecha_modificacion_ticket as Modificado,asunto_ticket as Asunto,estatus_ticket as Estatus,prioridad_ticket as Prioridad,nivel_ticket as Nivel, CONCAT(nombre_empleado,' ',apellido_paterno) as Atiende, tipo_cuestionario FROM tickets T
@@ -71,12 +71,11 @@ if(!isset($_SESSION['nombre_usuario']))
 						$result=$this->imprimeTablauser($cadUser,true,array("cuestionario"));
 
 					break;
-
+				
+				// caso para insercion de tickets en base de datos
 				case 'insert':
 				
-				//echo var_dump($_POST);
-				//exit;
-
+				// if para saber que tipo de consulta se debe de ejecutar, esto es en funcion del rol de un usuario
 				if($_SESSION["rol_id"] == 1){
 					//user
 
@@ -104,28 +103,29 @@ if(!isset($_SESSION['nombre_usuario']))
 					,"'.$_POST['nombre_aplicacion_ticket'].'","'.$_POST['si_driver_update'].'","/*nombre_driver_update*/"
 					,"'.$_POST['sistema_operativo_ticket'].'","'.$_POST['tipo_cuestionario'].'")';
 				}
-					
-					
 
-					//ejecuta la cadena
+					// ejecucion de consulta
 					$this->consulta($cad);
 
-					// funcion para insertar imagen en bd
+					// ejecucion de funcion para insertar imagen en bd
 					$this->insertarimagen();
 					
+					// se almacena el listado en variable
 					$result.=$this->proceso('list');
 					
 					break;
 
-				// listado 
+				// caso para listado de tickets
 				case 'list': 
 				
+				// consulta para administrador
                 $cadAdmin = "SELECT T.id as Ticket,fecha_creacion_ticket as Creado,fecha_modificacion_ticket as Modificado,asunto_ticket as Asunto,estatus_ticket as Estatus,prioridad_ticket as Prioridad,nivel_ticket as Nivel, CONCAT(nombre_empleado,' ',apellido_paterno) as Atiende, tipo_cuestionario FROM tickets T
                     join empleados E ON E.id = T.empledo_asignado_id WHERE estado_ticket = 0 ORDER BY fecha_creacion_ticket";
-
+				// consulta para usuario comun
 				$cadUser = "SELECT T.id as Ticket,fecha_creacion_ticket as Creado,fecha_modificacion_ticket as Modificado,asunto_ticket as Asunto,estatus_ticket as Estatus,prioridad_ticket as Prioridad,nivel_ticket as Nivel, CONCAT(nombre_empleado,' ',apellido_paterno) as Atiende, tipo_cuestionario FROM tickets T
 					join empleados E ON E.id = T.empledo_asignado_id WHERE estado_ticket = 0 AND autor_id = ".$_SESSION["id"]." ORDER BY T.id";
 
+					// se realiza el despliegue de los tickets en funcion del rol del usuario
 					if($_SESSION["rol_id"] == 1){
 						//user
 						$result=$this->imprimeTablauser($cadUser,true,array("cuestionario"));
@@ -136,26 +136,34 @@ if(!isset($_SESSION['nombre_usuario']))
 					
 					break;
 
+				// caso para listado de tickets (rol user)
 				case 'list_user':
+					// consulta para listar tickets 
 					$cadUser = "SELECT T.id as Ticket,fecha_creacion_ticket as Creado,fecha_modificacion_ticket as Modificado,asunto_ticket as Asunto,estatus_ticket as Estatus,prioridad_ticket as Prioridad,nivel_ticket as Nivel, CONCAT(nombre_empleado,' ',apellido_paterno) as Atiende, tipo_cuestionario FROM tickets T
 					join empleados E ON E.id = T.empledo_asignado_id WHERE estado_ticket = 0 AND autor_id = ".$_SESSION["id"]." ORDER BY T.id";
 					
+					// se imprime la tabal por medio de la funcion y el resultado se almacena
 					$result=$this->imprimeTablauser($cadUser,true,array("cuestionario"));
 					break;
-
+				
+				// caso para eliminacion de tickets (por solicitud de asesor interno el registro no se borra solo de oculta de la vista del usuario final)
 				case 'delete':
 
-					// armado de cadena de actualizacion de estado
+					// consulta para actualizar el campo estado de un registro
+					// estado_ticket = 1 (los registros que tengan este estado activo permaneceran ocultos de la vista)
 					$cad = 'UPDATE tickets SET estado_ticket = 1 WHERE id = "'.$_POST["idRegistro"].'"';
 
-					//ejecuta la cadena
+					// ejecucion de  consulta
 					$this->consulta($cad);
 
+					// el proceso de lista se ejecuta y se almacena el resultado
 					$result.= $this->proceso('list');
 					break;
 				
+				// caso para actualizacion de tickets
 				case 'update':
 
+					// consulta para actualizacion de tickets
 					$cad = 'UPDATE tickets SET fecha_creacion_ticket ="'.$_POST["fecha_creacion_ticket"].'", 
 								fecha_modificacion_ticket="'.$_POST['fecha_modificacion_ticket'].'",
 											asunto_ticket="'.$_POST['asunto_ticket'].'",
@@ -176,31 +184,30 @@ if(!isset($_SESSION['nombre_usuario']))
 									  tipo_cuestionario="'.$_POST['tipo_cuestionario'].'"
 					WHERE id = "'.$_POST["idRegistro"].'"';
 
-					//ejecuta la cadena
+					// ejecucion de consulta
 					$this->consulta($cad);
 
-					// funcion para insertar imagen en bd
+					// ejecucion de funcion para insertar imagen en bd
 					$this->insertarimagen();
 
+					// el proceso de lista se ejecuta y se almacena el resultado
 					$result.=$this->proceso('list');
 
 					break;
 
-
+				// caso para actualizacion de formulario ticket
 				case 'formupdate':
 
+					// si el ticket existe, se consulta a la base de datos y se extrae la informacion que se tenga acerca de el
 					$registro=$this->sacaTupla("SELECT * FROM tickets WHERE id=".$_POST['idRegistro']);
-
+				// caso para creacion de formulario ticket
 				case 'formNew':
-
-					//echo "formNew";
-					//echo $registro["tipo_conexion_ticket"];
-					//exit;
 					
 					$fechaActual = date('y-m-d h:i:s'); // obtencion de la fecha actual
 
+					// se lanza diseño de formulario en funcion de el rol que tenga el usuario (1 = usuario, 2 = admin)
 					if($_SESSION["rol_id"] == 1){
-						//user
+						// formulario de usuario
 
 						$result.='<div class="" style="margin-top:">
 					<form action="" method="post" enctype="multipart/form-data">';
@@ -398,7 +405,7 @@ if(!isset($_SESSION['nombre_usuario']))
 					</div>';
 
 					}else{
-						//admin
+						// formulario para administrador (incluye campos como el de seleccion de autor y el tipo de cuestionario)
 
 						$result.='<div class="" style="margin-top:">
 					<form action="" method="post" enctype="multipart/form-data">';
@@ -624,20 +631,17 @@ if(!isset($_SESSION['nombre_usuario']))
 					</div>';
 					}
 					
-
-					
-
-					//echo var_dump($_POST);
-					
 					break;
 
 			}
-			// puede retirnar el resultado o imprimirlo con echo
+			// se retorna el resultado o se puede imprimir con echo
 			return $result;
 		}
 
+		// funcion para insertar datos de imagen en base de datos (por opctimizacion se decidio no guardar la imagen en la base de datos)
 		function insertarimagen(){
 
+			// en funcion al rol del usuario que desea realizar la accion se asigna un inicio de ruta a la carpeta donde se almacenan las imagenes
 			if($_SESSION["rol_id"] == 1){
 				//user
 				$carpeta = "imagenes/";
@@ -646,16 +650,12 @@ if(!isset($_SESSION['nombre_usuario']))
 				$carpeta = "../imagenes/";
 			}
 			
-
+			// variables que almacenan datos de la imagen
 			$file = $_FILES["imagen"];
 			$nombre = $file["name"];
 			$tipo = $file["type"];
 			$size = $file["size"];
 			$ruta_provisional = $file["tmp_name"];
-
-		    //echo var_dump($_POST);
-			//exit;
-			//$picture = "imagenes/".$nombre;
 
 			if(isset($_POST["idRegistro"])){
 			 // cuando el ticket ya existe y se desea agregar una nueva imagen adicional
@@ -663,32 +663,38 @@ if(!isset($_SESSION['nombre_usuario']))
 				// si la longitud del nombre del archivo es diferente de 0 entonces se cargo una imagen
 				// se procede a guardarla en la ruta especificada
 				if(strlen($file["name"]) != 0){
-					$src = $carpeta.$nombre;
-					move_uploaded_file($ruta_provisional,$src);
+					$src = $carpeta.$nombre; // ruta
+					move_uploaded_file($ruta_provisional,$src); // se mueve imagen a ruta
 
+					// consulta para insertar datos de imagen
 					$cad='INSERT INTO imagenes 
 					(nombre_imagen,tipo_imagen,ticked_id) 
 					values("'.$file["name"].'"
 					,"'.$file["type"].'","'.$_POST["idRegistro"].'")';
 
+					// se almacena el resultado de la consulta
 					$res = $this->consult($cad);
 				}	
 
 			}else{
 				// cuando el ticket es nuevo aun no existe idRegistro
+
+				// se consulta el ultimo numero de ticket registrado y se alamacena
 				$lastticket = $this->maxticket();
 
 				// si la longitud del nombre del archivo es diferente de 0 entonces se cargo una imagen
 				// se procede a guardarla en la ruta especificada
 				if(strlen($file["name"]) != 0){
-					$src = $carpeta.$nombre;
-					move_uploaded_file($ruta_provisional,$src);
+					$src = $carpeta.$nombre; // ruta
+					move_uploaded_file($ruta_provisional,$src); // se mueve imagen a ruta
 
+					// consulta para insertar datos de imagen
 					$cad='INSERT INTO imagenes 
 					(nombre_imagen,tipo_imagen,ticked_id) 
 					values("'.$file["name"].'"
 					,"'.$file["type"].'","'.$lastticket.'")';
 
+					// se almacena el resultado de la consulta
 					$res = $this->consult($cad);
 				}
 				
@@ -700,36 +706,42 @@ if(!isset($_SESSION['nombre_usuario']))
 
 		// funcion para obtener el ultimo ticket creado (solo se usa en el insert de ticket)
 		function maxticket(){
+
+			// consulta para obtener el ultimo registro
 			$cad="SELECT * FROM tickets ORDER BY id DESC LIMIT 1";
 
-
+			// ejecucion de consulta
 			$res = $this->consult($cad);
-			// echo var_dump($res);
 
 			// volcar datos, provenientes de una consulta mysql, dentro de un array php
 			$volcadoarray = mysqli_fetch_array($res);
+
+			// almacenamiento del id del registro
 			$idmaxticket = $volcadoarray['id'];
 
+			// retorno del id
 			return $idmaxticket;
 		}
 
-		// creacion de relacion usuario y empleado
+		// cfuncion para reacion de relacion usuario y empleado
 		function usuario_emp($id_usuario,$id_empleado){
 
+			// consula para enlazar usuario y empleado
 			$cad='INSERT INTO usuario_emp 
 			(fk_id_usua,Id) 
 				values('.$id_usuario.','.$id_empleado.')';
 
-					//ejecuta la cadena
-					$this->consulta($cad);
+			// ejecucion de consulta
+			$this->consulta($cad);
 		}
 
+		// funcion para imprimir tabla con opciones de accion
 		function imprimeTabla($query,$formNew=false,$iconos=array()){
 
 			$result="";
 			$this->consulta($query);
 			$result.='<table style="margin-top:" class="table table-hover table-ligh table-striped">';
-			//Cabecera
+			//Cabecera de tabla
 		    $result.='<tr>';
 		    $result.='<td colspan="'.count($iconos).'" >'.(($formNew)?'<form method="post"><input type="hidden" value="formNew" name="accion"/><button class = "btn btn-sm btn-success"><i title="Agregar Registro" class="fa fa-plus-circle"></i></button></form>':"&nbsp;").'</td>';
 
@@ -743,17 +755,21 @@ if(!isset($_SESSION['nombre_usuario']))
 				$registro=$this->traeRegistro();
 				$result.='<tr>';
 		        
+				// despliegue de iconos de accion en registros
 		        foreach ($iconos as $value) {
 		        	switch ($value) {
+						// caso para agregar boton delete a registro
 		        		case 'delete':
-		        		// echo $registro[0];
+
 		        			$result.='<td width="6%"><form method="post"><input type="hidden" value="'.$value.'" name="accion"/>
                      <input type="hidden" name="idRegistro" value = "'.$registro[0].'">
         			<button class="btn btn-danger"><i title="Borrar registro" class="fas fa-trash"></i></button></form></td>';
 		        			break;
+						// // caso para agregar boton nuevo a registro
 		        		case 'editar':
 		        			$result.='<td colspan="'.count($iconos).'">'.(($formNew)?'<form method="post"><input type="hidden" value="formNew" name="accion"/><button class="btn btn-success"><i title="Editar registro" class="fas fa-plus-circle"></i></button></form>':"&nbsp;").'</td>';
 		        			break;
+						// caso para agregar boton actualizacion a registro
 		        		case 'formupdate':
 		        		
 		        			$result.='<td width="6%">
@@ -766,9 +782,11 @@ if(!isset($_SESSION['nombre_usuario']))
 		        			</form>
 		        			</td>';
 		        			break;
-						
+						// caso para agregar boton cuestionario a registro
 						case 'cuestionario':
 		        		
+							// condicion para habilitacion o deshabilitacion de boton cuestionario esto en funcion de la asignacion de un tipo de cuestionario
+							// si el registro en su campo tipo_cuestionario es igual a "S/A" el boton se deshabilitara
 							if($registro[8] == "S/A"){
 								$result.='<td width="6%">
 								<form method="post" action="cuestionario.php">
@@ -780,6 +798,7 @@ if(!isset($_SESSION['nombre_usuario']))
 								</form>
 								</td>';
 							}else{
+								// si el registro en su campo tipo_cuestionario es diferente de "S/A" el boton se habilitara
 								$result.='<td width="6%">
 								<form method="post" action="cuestionario.php">
 								<input type="hidden" value="'.$value.'" name="accion">
@@ -796,9 +815,10 @@ if(!isset($_SESSION['nombre_usuario']))
 		        	
 		        }
 
+				// despliegue de las demas columnas de un registro
 				for ($col=0; $col < count($registro); $col++) { 
 					$result.='<td>'.$registro[$col].'</td>';
-					
+				
 				}$result.='</tr>';
 				
 			}
@@ -806,32 +826,27 @@ if(!isset($_SESSION['nombre_usuario']))
 		    return $result;
 		}
 
+		// funcion para imprimir tabla de usurio comun 
 		function imprimeTablauser($query,$formNew=false,$iconos=array()){
 
 			$result="";
 			$this->consulta($query);
 			$result.='<table style="margin-top:" class="table table-hover table-ligh table-striped">';
-			//Cabecera
+			//Cabecera de tabla
 		    $result.='<tr>';
 		    $result.='<td colspan="'.count($iconos).'" >'.(($formNew)?'<form method="post"><input type="hidden" value="formNew" name="accion"/><button class = "btn btn-sm btn-success"><i title="Agregar Registro" class="fa fa-plus-circle"></i></button></form>':"&nbsp;").'</td>';
 
 		    for($c=0; $c < $this->numeCampos();$c++){
 		    $campo=$this->infoCampo($c);
 
-			/*if($campo->name != "tipo_cuestionario"){
-				$result.='<td>'.$campo->name.'</td>';
-			}**/
 		    $result.='<td>'.$campo->name.'</td>';
 		    }
 		    $result.='</tr>';
 
 			for ($i=0; $i < $this->numeroRegistros; $i++) { 
 				$registro=$this->traeRegistro();
-				//echo var_dump($registro);
 
 				$result.='<tr>';
-
-				// por es un refiere a "Por asignar" solo que en la base de datos solo se pueden guardar 3 caracteres
 
 				if($registro[8] == "S/A"){
 					// S/A = Sin asignar
@@ -839,7 +854,8 @@ if(!isset($_SESSION['nombre_usuario']))
 
 					foreach ($iconos as $value) {
 						switch ($value) {
-	
+
+							// caso para agregar boton deshabilitado cuestionario a registro
 							case 'cuestionario':
 							
 								$result.='<td width="6%">
@@ -861,6 +877,7 @@ if(!isset($_SESSION['nombre_usuario']))
 					foreach ($iconos as $value) {
 						switch ($value) {
 	
+							// caso para agregar boton habilitado cuestionario a registro
 							case 'cuestionario':
 							
 								$result.='<td width="6%">
@@ -878,9 +895,7 @@ if(!isset($_SESSION['nombre_usuario']))
 					}
 				}
 				
-		        
-		        
-
+				// despliegue de las demas columnas de un registro
 				for ($col=0; $col < count($registro); $col++) { 
 					$result.='<td>'.$registro[$col].'</td>';
 					
@@ -892,20 +907,18 @@ if(!isset($_SESSION['nombre_usuario']))
 		}
 	}
 
-// construccion de objeto
+// construccion de objeto de clase
 $oTickets = new Tickets();
 
-// echo var_dump($_REQUEST['accion']);
-// enseguida puedo ejecutar una opcion
 if (isset($_REQUEST['accion'])) // se ejecuta si se esta recibiendo una accion
 
 	// como el switch se programo con un return a continucaion se agrega echo
 	echo $oTickets->proceso($_REQUEST['accion']);
 	
 else
-	// echo 'se incluyo bien el archivo';
+	// por defecto se ejecuta la accion de list que despliega la tabla de registros
 	echo $oTickets->proceso("list");
 
-// yo sobre este recurso puedo recibir sobre get o post
+// Sobre este recurso puedo recibir sobre get o post
 
 ?>

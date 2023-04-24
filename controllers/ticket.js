@@ -1,13 +1,13 @@
-// si se agrega un nuevo case y el navegador no lo detecta, borrar datos de navegacion del navegador actual
-// borrar datos de navegacion chrome ctrl + shift + supr
-// borrado de cache de chrome ctrl + bloq mayus + r
+/* Controlador de Ticket */
 
+// funcion ejecuta acciones como Listado, recarga y busqueda de tickets con el nombre de la accion y el id del usuario
+// Se envia una accion a este recurso, entra en el switch, se envia al recurso de clase la misma accion y se ejecuta el caso que tenga el nombre de la accion finalmente se retornan resultados al recurso inicial
 function tickets(accion,Id){
-	//console.log('entre controlador');
+
 	switch(accion){
 		
 		case 'list':
-
+			// caso para listar y recargar tickets admin
 			$.ajax({
 				url:'../class/classTickets.php',
 				beforeSend:function(){
@@ -19,7 +19,7 @@ function tickets(accion,Id){
 		break;
 
 		case 'list_user':
-
+			// caso para listar y recargar tickets user
 			$.ajax({
 				url:'class/classTickets.php',
 				beforeSend:function(){
@@ -31,7 +31,7 @@ function tickets(accion,Id){
 		break;
 
 		case 'buscar':
-			
+			// caso para busqueda de tickets admin
 			datos=$("#formTickets").serialize();
 
 			$.ajax({
@@ -46,7 +46,7 @@ function tickets(accion,Id){
 		break;
 
 		case 'buscar_user':
-			//alert("buscar_user");
+			// caso para busqueda de tickets user
 			datos=$("#formTickets").serialize();
 
 			$.ajax({

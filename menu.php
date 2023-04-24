@@ -2,15 +2,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title></title>
+  <!-- Importaciones de recursos -->
   <link rel="stylesheet" type="text/css" href="css/bootstraplux.css">
   <link rel="stylesheet" type="text/css" href="css/all.css">
   <link rel="stylesheet" type="text/css" href="css/custom.css">
-
 </head>
 <body>
 
+<!-- Barra de navegacion -->
 <nav style="background-color:#005195 !important" class="navbar navbar-expand-lg navbar-light bg-light">
+
   <div class="container-fluid">
     <a style="color:white" class="navbar-brand" href="#">GTicket</a>
     <ul class="navbar-nav me-auto">
@@ -22,11 +23,12 @@
     <div style="margin-right:30px">
   <img width="80" src="graficos/grammer-logo.svg">
   </div>
- <div>
-   <button type="button" class="btn btn-dark disabled"><?=$_SESSION['nombre_usuario'];
- ?></button>
 
- <button onclick="" type="button" class="btn btn-success"><a style="color:white" href="index.php"><i class="fas fa-sign-out-alt"></i></a></button>
+ <div>
+
+   <button type="button" class="btn btn-dark disabled"><?=$_SESSION['nombre_usuario'];?></button>
+
+  <button onclick="" type="button" class="btn btn-success"><a style="color:white" href="index.php"><i class="fas fa-sign-out-alt"></i></a></button>
  </div>   
  
 
@@ -34,7 +36,7 @@
   
   
 </nav>
-</div> <!-- fin del div id fondo -->
+</div>
 
 
 </body>

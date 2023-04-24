@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title></title>
+    <!-- Importaciones de recursos -->
   <link rel="stylesheet" type="text/css" href="../css/bootstraplux.css">
   <link rel="stylesheet" type="text/css" href="../css/all.css">
   <link rel="stylesheet" type="text/css" href="../css/custom.css">
@@ -10,6 +10,7 @@
 </head>
 <body>
 
+<!-- Barra de navegacion -->
 <nav style="background-color:#005195 !important" class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <a style="color:white" class="navbar-brand" href="#">GTicket</a>

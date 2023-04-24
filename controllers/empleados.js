@@ -1,11 +1,14 @@
+/* Controlador de Empleado */
+
+// funcion ejecuta accione busqueda de empleados con el nombre de la accion y el id del usuario
+// Se envia una accion a este recurso, entra en el switch, se envia al recurso de clase la misma accion y se ejecuta el caso que tenga el nombre de la accion finalmente se retornan resultados al recurso inicial 
 function empleados(accion,Id){
-	//console.log('entre controlador');
+
 	switch(accion){
 
 		case 'buscar':
-			
-			// datos={'producto':$("#Producto").val(),'accion':accion}; // forma numero 1
-			datos=$("#formEmpleados").serialize(); // forma numero 2
+			// caso para busqueda de empleados admin
+			datos=$("#formEmpleados").serialize();
 
 			$.ajax({
  				url:'../class/classEmpleados.php',
